@@ -5,11 +5,10 @@ import React, {
     useContext
 } from "react";
 import {
-    Modal,
+    List,
     ListItemIcon,
     ListItemButton,
-    ListItemText,
-    List
+    ListItemText
 } from "@mui/material";
 import {
     DescriptionRounded as TextFileIcon,
@@ -66,17 +65,15 @@ function AttachmentList({ attachments }) {
     }, []);
     
     const props = {
-        fileViewer: ({ url, type }) => ({
-            filePath: url
-        }),
         listItem: (i, file) => ({
             key: i, 
             onClick: () => setOpenFile(file)
         }),
-        modal: {
-            open: !!openFile,
-            onClose: () => setOpenFile(null)
-        }
+        fileViewer:  () => ({
+            open: !!openFile && files.length > 0,
+            onClose: () => setOpenFile(null),
+            filePath: openFile.url? openFile.url : null
+        })
     };
     
     return (
@@ -95,11 +92,9 @@ function AttachmentList({ attachments }) {
                     </ListItemButton>
                 ))}
             </List>
-            <Modal {...props.modal}>
-                {(files.length > 0 && !!openFile) && (
-                    <FileViewer {...props.fileViewer(openFile)}/>
-                )}
-            </Modal>
+            {(files.length > 0 && !!openFile) && (
+                <FileViewer {...props.fileViewer()}/>
+            )}
         </>
     );
 }
