@@ -50,7 +50,7 @@ function AttachmentList({ attachments }) {
         }
         
         fetchFiles();
-    }, [attachments]);
+    }, [attachments, storage]);
     
     const props = {
         fileViewer: (url, type) => ({
