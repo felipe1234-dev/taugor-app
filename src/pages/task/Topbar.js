@@ -32,7 +32,7 @@ function Topbar({ taskUuid, senderUuid }) {
         },
         backButton: {
             component: Link,
-            to: "/home"
+            to: "/"
         },
         deleteButton: {
             className: "TaskPage-topbar-deleteButton",
