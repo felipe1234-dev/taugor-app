@@ -1,13 +1,24 @@
-function FileViewer({ filePath }) {
+import { Modal } from "@mui/material";
+
+function FileViewer({ open, onClose, onOpen, filePath }) {
     const props = {
+        modal: {
+            open: open,
+            onClose: () => onClose? onClose() : null,
+            onOpen: () => onOpen? onOpen() : null
+        },
         iframe: {
-            sandbox: true,
+            sandbox: "",
             src: filePath
         }
     };
     
     return (
-        <iframe {...props.iframe}></iframe>        
+        <Modal {...props.modal}>
+            {(filePath && open) && (
+                <iframe {...props.iframe}></iframe>
+            )}
+        </Modal>
     );
 }
 
