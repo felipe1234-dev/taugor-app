@@ -8,13 +8,13 @@ import {
     Button
 } from "@mui/material";
 import {
-    MailOutline as MailOutlineIcon,
+    MailOutline as MailOutlineIcon, 
     Visibility as VisibilityOnIcon,
     VisibilityOff as VisibilityOffIcon
 } from "@mui/icons-material";
 
 // Firebase API functions
-import { login } from "@app/auth";
+import { login, handleError } from "@app/auth";
 
 // Contexts
 import { PageContext, AlertContext } from "@app/contexts";
@@ -46,15 +46,10 @@ function LoginForm() {
             setPageIsLoading(true);
         })
         .catch((error) => {
-            if (error.code === "auth/wrong-password") {
-                setMessage("Sem resultados :( Tente verificar sua senha");
-            } else if (error.code === "auth/user-not-found") {
-                setMessage("Sem resultados :( Tente verificar seu email");
-            } else {
-                setMessage(`Erro desconhecido. Contacte o desenvolvedor: ${error.code}`);
-            }
+            const errData = handleError(error);
             
-            setSeverity("error");
+            setMessage(errData.message);
+            setSeverity(errData.severity);
         })
         .then(() => setTimeout(() => setFormIsLoading(false), 2000));
     }

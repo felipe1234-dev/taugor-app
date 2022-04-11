@@ -1,3 +1,13 @@
-import { login, logout, getCurrentUser } from "./sign-in";
+import { 
+    login, 
+    logout, 
+    getCurrentUser,
+    handleError
+} from "./sign-in";
 
-export { login, logout, getCurrentUser };
+export { 
+    login, 
+    logout, 
+    getCurrentUser, 
+    handleError 
+};

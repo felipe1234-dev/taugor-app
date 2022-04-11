@@ -32,4 +32,31 @@ const getCurrentUser = async (db) => {
     return user? user : false;
 }
 
-export { login, logout, getCurrentUser };
+const handleError = (error) => {
+    switch (error.code) {
+        case "auth/wrong-password":
+            return ({
+                severity: "error",
+                message: "Sem resultados :( Tente verificar sua senha"
+            });
+    
+        case "auth/user-not-found":
+            return ({
+                severity: "error",
+                message: "Sem resultados :( Tente verificar sua senha"
+            });
+            
+        default: 
+            return ({
+                severity: "error",
+                message: `Erro desconhecido: (${error.code}) ${error.message}`
+            });
+    }
+}
+
+export { 
+    login, 
+    logout, 
+    getCurrentUser,
+    handleError
+};
