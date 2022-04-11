@@ -1,0 +1,194 @@
+.HomePage {
+    &-navbar, &-header {
+        background-color: var(--blue) !important;
+    }
+    
+    &-navbar {
+        max-height: 3.5em !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        
+        &-burgerMenu {
+            .MuiDrawer-paper {
+                background-color: var(--blue);
+                color: var(--pale);
+            }
+            
+            &-header {
+                padding: 2em 0;
+                background-color: var(--blue);
+            }
+            
+            &-list {
+                background-color: var(--blue);
+            }
+        }
+        
+        &-logo {
+            width: 1.8em;
+            height: 1.5em;
+            margin-right: 1em;
+        }
+        
+        &-profileImage {
+            margin: 1px solid var(--pale);
+            transition: opacity .5s ease-in-out;
+            transform: scale(.9);
+            
+            &:hover {
+                opacity: .5;
+            } 
+        }
+        
+        &-appName {
+            color: var(--pale);
+            cursor: pointer;
+            width: fit-content;
+        }
+        
+        .MuiToolbar-root {
+            min-height: 0 !important;
+        }
+        
+        .MuiTabs-root {
+            margin: 0 0 0 1em;
+        }
+        
+        .MuiTab-root {
+            text-transform: none !important;
+            transition: background-color .5s ease-out;
+            padding: 12px 16px !important;
+            color: var(--pale) !important;
+            min-height: 0 !important;
+            
+            &:hover {
+                background-color: var(--primary-dark);
+            }
+        }
+        
+        .MuiIconButton-root {
+            color: var(--pale);
+        }
+    }
+     
+    &-header {
+        padding: 5em 2em !important;
+        
+        &-greeting, &-displayName {
+            color: var(--pale);
+        }
+        
+        &-greeting {
+            opacity: .65 !important;
+            font-size: 2em !important;
+            font-weight: 400 !important;
+        }
+        
+        &-displayName {
+            font-size: 2.25em !important;
+            font-weight: 500 !important;
+        }
+        
+        &-addActivButton {
+            color: var(--pale) !important;
+            background-color: var(--primary-dark) !important;
+            transition: background-color .5s ease-in-out !important;
+            padding: .6em !important;
+            
+            &:hover {
+                background-color: var(--primary-light) !important;
+            }
+        }
+    }
+    
+    &-main {
+        padding: 1.3em !important;
+        transform: translateY(-50px);
+        border-radius: 1em !important;
+    }
+    
+    &-taskList {
+        .MuiListItem-root {
+            border-radius: .3em;
+            padding: 1em;
+            border-right: 0.3em solid var(--orange);
+            
+            .MuiListItemIcon-root {
+                .MuiAvatar-root {
+                    background-color: var(--pink);
+                }
+                
+                svg {
+                    transform: rotateZ(-45deg);
+                    color: var(--orange);
+                }
+            }
+            
+            .MuiListItemText {
+                &-primary, &-secondary .MuiTypography-root {
+                    font-size: 1.2em !important;
+                }
+            }
+        }
+        
+        .MuiAvatar-root {
+            color: var(--pale) !important;
+        }
+        
+        .MuiChip-root {
+            margin-right: .5em;
+            margin-bottom: .5em;
+        }
+        
+        &-taskStatus {
+            --dot-color: var(--blue);
+            text-transform: uppercase;
+            
+            
+            &::before {
+                content: "....";
+                border-radius: 50%;
+                background-color: var(--dot-color);
+                color: var(--dot-color);
+                margin-right: 1em;
+            }
+        }
+    } 
+    
+    &-filters {
+        &-title {
+            position: relative;
+            padding-bottom: .3em !important;
+            
+            &::before {
+                content: "";
+                position: absolute;
+                width: 40%;
+                height: 1px;
+                bottom: 0;
+                left: .7em;
+                border-bottom: .2em solid var(--orange);
+            }
+        }
+        
+        &-button {
+            background-color: var(--pale) !important;
+            color: var(--dark) !important;
+            transition: background-color 1s ease-in-out;
+            
+            &:hover {
+                background-color: var(--pale-light) !important;
+            }
+        }
+        
+        &-puller {
+            width: 30px;
+            height: 6px;
+            background-color: var(--orange);
+            border-radius: 12px;
+            position: absolute;
+            top: 8px;
+            left: calc(50% - 15px);
+        }   
+    }
+}

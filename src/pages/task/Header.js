@@ -1,0 +1,122 @@
+// Libs
+import { 
+    Grid,
+    Divider,
+    Typography,
+    Chip,
+    Box
+} from "@mui/material";
+import {
+    PeopleOutlineRounded as PeopleIcon,
+    CodeRounded as ProductIcon
+} from "@material-ui/icons";
+import PropTypes from "prop-types";
+
+// Constants
+import { PRIORITY_ICONS, STATUS_ICONS } from "@app/constants";
+
+function Header({
+    title, 
+    brief, 
+    tags, 
+    priority, 
+    influencedUsers, 
+    product,
+    environment,
+    status
+}) {
+    const props = {
+        container: {
+			className: "TaskPage-header",
+			component: "header",
+            container: true,
+            direction: "column",
+            alignItems: "flex-start"
+        },
+        title: {
+            className: "TaskPage-header-title",
+            component: "h1"
+        },
+        brief: {
+            className: "TaskPage-header-brief",
+            component: "h2"
+        },
+        tag: (tag, i) => ({
+            key: i,
+            component: "span", 
+            label: tag
+        }),
+        env: {
+            variant: "outlined",
+            component: "span",
+            label: environment
+        },
+        info: {
+            container: true,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            sx: { 
+                mb: ".6em" 
+            }
+        },
+        box: {
+            container: true,
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            sx: { 
+                mb: ".6em",
+                mr: ".8em" 
+            }
+        }
+    };
+    
+    return (
+        <Grid {...props.container}>
+            <Grid item>
+                <Typography {...props.title}>
+                    {title}
+                </Typography>
+                <Typography {...props.brief}>
+                    {brief}
+                </Typography>
+            </Grid>
+            <Grid item>
+                {tags.map((tag, i) => <Chip {...props.tag(tag, i)}/>)}
+                <Chip {...props.env}/>
+            </Grid>
+            <Grid item>
+                <Box {...props.info}>
+                    <Box {...props.box}>
+                        {STATUS_ICONS[status]} {status}
+                    </Box>
+                    <Box {...props.box}>
+                        {PRIORITY_ICONS[priority]} Prioridade {priority}
+                    </Box>
+                    <Box {...props.box}>
+                        <PeopleIcon /> {influencedUsers} usuários impactados
+                    </Box>
+                    <Box {...props.box}>
+                        <ProductIcon /> {product}
+                    </Box>
+                </Box>
+            </Grid>
+        </Grid>
+    );
+}
+
+Header.propTypes = {
+    title: PropTypes.string.isRequired,
+    brief: PropTypes.string.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
+    priority: PropTypes.string.isRequired,
+    influencedUsers: PropTypes.string.isRequired,
+    product: PropTypes.string.isRequired,
+    environment: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired
+};
+
+export default Header;

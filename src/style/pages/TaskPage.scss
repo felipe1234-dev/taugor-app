@@ -1,0 +1,81 @@
+.TaskPage {
+    &-topbar, &-header {
+        background-color: var(--blue) !important;
+    }
+    
+    &-topbar {
+        max-height: 3.5em !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+        
+        .MuiIconButton-root {
+            color: var(--pale);
+        }
+        
+        &-deleteButton, &-editButton {
+            color: var(--pale) !important;
+            background-color: var(--primary-dark) !important;
+            transition: background-color .5s ease-in-out !important;
+            border-radius: .7em !important;
+            padding: .6em 1.1em !important;
+            text-transform: none !important;
+            
+            &:not(:last-child) {
+                margin-right: .8em !important;
+            }
+            
+            &:hover {
+                background-color: var(--primary-light) !important;
+            }
+        }
+    }
+    
+    &-header {
+        padding: 3em 2em 5em 2em !important;
+        
+        &-title, &-brief {
+            color: var(--pale);
+        }
+        
+        &-title {
+            font-size: 2.25em !important;
+            font-weight: 500 !important;
+        }
+        
+        &-brief {
+            opacity: .65 !important;
+            font-size: 2em !important;
+            font-weight: 400 !important;
+            margin-bottom: .6em !important;
+        }
+        
+        .MuiBox-root {
+            color: var(--light);
+        }
+        
+        .MuiChip-root {
+            margin: 0 .5em 1em 0;
+            
+            &.MuiChip {
+                &-filled, &-outlined  {
+                    color: var(--white);
+                }
+                
+                &-outlined {
+                    border-color: var(--light);
+                }
+            }
+        }
+        
+        .MuiSvgIcon-root {
+            color: var(--pale);
+            margin-right: .1em;
+        }
+    }
+    
+    &-body {
+        padding: 1.3em !important;
+        transform: translateY(-50px);
+        border-radius: 1em !important;
+    }
+}

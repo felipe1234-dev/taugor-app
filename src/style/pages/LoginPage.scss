@@ -1,0 +1,81 @@
+@import "../utils/_mixins.scss";
+
+.LoginPage {
+    &-logo {
+		@include user-drag(none);
+		cursor: pointer;
+        width: 180px;
+        height: auto;
+        margin-bottom: 1em; 
+    }
+    
+    &-appName, &-catchline {
+        text-align: center;
+        color: var(--dark) !important;
+    }
+    
+    &-appName {
+        font-size: 1.25em !important;
+        font-weight: bold !important;
+    }
+    
+    &-catchline {
+        font-size: 1em !important;
+        opacity: .5 !important;
+    }
+    
+    .MuiTextField-root {
+        .MuiInputLabel-root {
+            color: var(--gray-light);
+        }
+        
+        .MuiInputBase-root {
+            input {
+                color: var(--gray-dark);
+                caret-color: var(--blue);
+                font-size: .875em;
+                font-weight: 500;
+                font-family: inherit;
+                letter-spacing: .025em;
+                line-height: 1.2em;
+            }
+            
+            &::before {
+                border-bottom-color: var(--gray);
+            }
+            
+            &::after {
+                border-bottom-color: var(--blue);
+            }
+        }
+    }
+    
+    &-loginButton {
+        padding: 0.7em 0 !important;
+        margin: 1.7em 0 0 0 !important;
+        border-radius: .8em !important;
+        font-weight: 500 !important;
+        
+        color: #fff !important;
+        background-color: var(--primary-dark) !important;
+    
+        font-family: inherit !important;
+        text-transform: capitalize !important;
+        
+        transition: color .3s, background-color .3s !important;
+        cursor: pointer !important;
+        
+        -webkit-appearance: none !important;
+        -webkit-tap-highlight-color: transparent !important;
+        
+        &:disabled {
+            color: var(--gray-light) !important;
+            background-color: var(--pale) !important;
+            cursor: not-allowed !important;
+        }
+        
+        &:hover:enabled:not(.is-loading) {
+            background-color: var(--blue) !important;
+        }
+    }
+}

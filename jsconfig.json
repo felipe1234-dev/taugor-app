@@ -1,0 +1,27 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2019",
+        "jsx": "react",
+        "baseUrl": ".",
+        "paths": {
+            "@app/api/*"        : [ "./src/api/*" ],
+            "@app/auth/*"       : [ "./src/api/auth/*" ],
+            "@app/collections/*": [ "src/api/collections/*" ],
+            "@app/pages/*"      : [ "./src/pages/*" ],
+            "@app/components/*" : [ "./src/components/*" ],
+            "@app/functions"    : [ "./src/functions/*" ],
+            "@app/media/*"      : [ "./src/media/*" ],
+            "@app/contexts/*"   : [ "./src/contexts/*" ],
+            "@app/style/*"      : [ "./src/style/*" ],
+            "@app/constants/*"  : [ "./src/constants/*" ]
+        }
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        ".lh"
+    ]
+}

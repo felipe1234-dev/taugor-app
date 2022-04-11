@@ -1,0 +1,28 @@
+.Spinner {
+	--path: var(--blue);
+	--bar: var(--primary-light);
+	
+	display: none;
+	animation: is-spinning 1s infinite;
+	border-radius: 50%;
+	height: 1em;
+	width: 1em;
+	border: 6px solid var(--path);
+	border-top-color: var(--bar);
+
+	@keyframes is-spinning {
+		to {
+			transform: rotate(1turn);
+		}
+	}
+}
+
+.is-loading {
+	span {
+		display: none;
+	}
+
+	.Spinner {
+		display: block;
+	}
+}

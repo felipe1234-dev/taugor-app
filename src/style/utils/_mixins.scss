@@ -1,0 +1,21 @@
+@mixin spread-map($map: ()) {
+    @each $key, $value in $map {
+        #{$key}: $value;
+    }
+}
+
+@mixin user-select($params...) {
+    -webkit-user-select: $params;
+    -khtml-user-select: $params;
+    -moz-user-select: $params;
+    -o-user-select: $params;
+    user-select: $params;
+}
+
+@mixin user-drag($params...) {
+    -webkit-user-drag: $params;
+    -khtml-user-drag: $params;
+    -moz-user-drag: $params;
+    -o-user-drag: $params;
+    user-drag: $params;
+}
