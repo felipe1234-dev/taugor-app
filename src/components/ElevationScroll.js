@@ -1,4 +1,4 @@
-import { cloneElement } from "react";
+import React, { cloneElement } from "react";
 import PropTypes from "prop-types";
 import { useScrollTrigger } from "@mui/material";
 

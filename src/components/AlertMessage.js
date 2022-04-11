@@ -1,4 +1,4 @@
-import { Alert, Snackbar } from "@mui/material";
+import React, { Alert, Snackbar } from "@mui/material";
 import PropTypes from "prop-types";
 
 const AlertMessage = ({ children: message, open, type, duration, onClose }) => (

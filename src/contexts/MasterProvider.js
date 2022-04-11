@@ -1,3 +1,4 @@
+import React from "react";
 import { FirebaseProvider } from "./FirebaseContext";
 import { PageProvider } from "./PageContext";
 import { UserProvider } from "./UserContext";
