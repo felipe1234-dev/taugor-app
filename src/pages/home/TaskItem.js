@@ -13,7 +13,7 @@ import {
 	Typography,
     Chip
 } from "@mui/material";
-import { Label as LabelIcon } from "@material-ui/icons";
+import { Label as LabelIcon } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import moment from "moment";
 import { Link } from "react-router-dom";

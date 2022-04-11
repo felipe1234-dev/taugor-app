@@ -10,7 +10,7 @@ import {
 import {
     PeopleOutlineRounded as PeopleIcon,
     CodeRounded as ProductIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 // Constants

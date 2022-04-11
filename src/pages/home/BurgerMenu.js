@@ -14,7 +14,7 @@ import {
 import { 
     MoreVertTwoTone as MenuIcon,
     CloseRounded as CloseIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 // Contexts

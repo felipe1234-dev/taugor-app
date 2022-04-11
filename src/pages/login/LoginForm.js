@@ -11,7 +11,7 @@ import {
     MailOutline as MailOutlineIcon,
     Visibility as VisibilityOnIcon,
     VisibilityOff as VisibilityOffIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 // Firebase API functions
 import { login } from "@app/auth";

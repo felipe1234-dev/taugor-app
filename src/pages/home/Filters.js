@@ -13,7 +13,7 @@ import {
 import {
 	FilterListRounded as FilterListIcon,
 	CloseRounded as CloseIcon,
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 function Filters({ setFilters }) {

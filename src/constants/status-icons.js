@@ -3,7 +3,7 @@ import {
     CheckCircleOutlineRounded as FinishedIcon,
     Autorenew as InProgressIcon,
     AssessmentRounded as InAnalysisIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 const STATUS_ICONS = {
     "Finalizado": <FinishedIcon />,

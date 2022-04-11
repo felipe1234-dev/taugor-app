@@ -13,7 +13,7 @@ import {
     ArrowBackIos as GoBackIcon,
     DeleteRounded as DeleteIcon,
     EditTwoTone as EditIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 

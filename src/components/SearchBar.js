@@ -1,6 +1,6 @@
 import React from "react";
 import { TextField } from "@mui/material";
-import { Search as SearchIcon } from "@material-ui/icons";
+import { Search as SearchIcon } from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 const SearchBar = ({ hasIcon, ...rest }) => (

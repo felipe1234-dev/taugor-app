@@ -3,7 +3,7 @@ import {
     LowPriority as LowPriorityIcon,
     GradeRounded as MediumPriorityIcon,
     PriorityHigh as HighPriorityIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 const PRIORITY_ICONS = {
     "Baixa": <LowPriorityIcon />,

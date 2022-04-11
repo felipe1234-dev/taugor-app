@@ -20,7 +20,7 @@ import {
 import {
     ListAltTwoTone as ListIcon,
     Face as FaceIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import PropTypes from "prop-types";
 
 // Constants

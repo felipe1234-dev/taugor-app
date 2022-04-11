@@ -14,7 +14,7 @@ import {
 import {
     DescriptionRounded as TextFileIcon,
     PictureAsPdfRounded as PDFFileIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 import FileViewer from "react-file-viewer";
 import PropTypes from "prop-types";
 

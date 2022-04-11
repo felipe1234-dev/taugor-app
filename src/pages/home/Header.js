@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import {
     CreateTwoTone as PencilIcon
-} from "@material-ui/icons";
+} from "@mui/icons-material";
 
 // Contexts
 import { UserContext } from "@app/contexts";
