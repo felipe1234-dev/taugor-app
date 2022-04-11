@@ -1,3 +1,3 @@
-import { getURLByFilename } from "attachments";
+import { getURLByFilename, handleError } from "attachments";
 
-export { getURLByFilename };
+export { getURLByFilename, handleError };
