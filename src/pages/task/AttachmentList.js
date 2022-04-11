@@ -19,38 +19,49 @@ import FileViewer from "react-file-viewer";
 import PropTypes from "prop-types";
 
 // Contexts
-import { FirebaseContext } from "@app/contexts";
+import { FirebaseContext, AlertContext } from "@app/contexts";
 
 // API
-import { getURLByFilename } from "@app/storage/attachments";
+import { getURLByFilename, handleError } from "@app/storage/attachments";
 
 function AttachmentList({ attachments }) {
     const [files, setFiles] = useState([]);
     const [openFile, setOpenFile] = useState(null);
     
     const { storage } = useContext(FirebaseContext);
+    const { setSeverity, setMessage } = useContext(AlertContext);
     
     useEffect(() => {
-        const fetchFiles = async () => {
+        const fetchFiles = () => {
             const fileList = [];
             
-            await attachments.forEach(async (filename) => {
-                const url  = await getURLByFilename(storage, filename);
-                const type = filename.match(/\.\w+$/)[0].replace(".", "");
-                const name = filename.replace(/-id\d+\.\w+$/, "");
-                
-                fileList.push({
-                    name: name,
-                    type: type,
-                    url: url
+            attachments.forEach(async (filename) => {
+                getURLByFilename(storage, filename)
+                .then((url) => {
+                    const type = filename.match(/\.\w+$/)[0].replace(".", "");
+                    const name = filename.replace(/-id\d+\.\w+$/, "");
+                    
+                    fileList.push({
+                        name: name,
+                        type: type,
+                        url: url
+                    });
+                    
+                    if (fileList.length === attachments.length) {
+                        setFiles(fileList);
+                    }
+                })
+                .catch((error) => {
+                    const errData = handleError(error);
+            
+                    setMessage(errData.message);
+                    setSeverity(errData.severity);
                 });
             });
-            
-            setFiles(fileList);
         }
         
         fetchFiles();
-    }, [attachments, storage]);
+    }, []);
     
     const props = {
         fileViewer: (url, type) => ({
@@ -70,20 +81,18 @@ function AttachmentList({ attachments }) {
     return (
         <>
             <List>
-                {files.length > 0 && (
-                    files.map((file, i) => (
-                        <ListItemButton {...props.listItem(i, file)}>
-                            <ListItemIcon>
-                                {file.type === "pdf"? (
-                                    <PDFFileIcon />
-                                ) : file.type === "txt"? (
-                                    <TextFileIcon />
-                                ) : null}
-                            </ListItemIcon>
-                            <ListItemText primary={file.name} />
-                        </ListItemButton>
-                    ))
-                )}
+                {files.length > 0 && files.map((file, i) => (
+                    <ListItemButton {...props.listItem(i, file)}>
+                        <ListItemIcon>
+                            {file.type === "pdf"? (
+                                <PDFFileIcon />
+                            ) : file.type === "txt"? (
+                                <TextFileIcon />
+                            ) : null}
+                        </ListItemIcon>
+                        <ListItemText primary={file.name} />
+                    </ListItemButton>
+                ))}
             </List>
             <Modal {...props.modal}>
                 {(files.length > 0 && !!openFile) && (
