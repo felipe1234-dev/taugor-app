@@ -15,8 +15,10 @@ import {
     DescriptionRounded as TextFileIcon,
     PictureAsPdfRounded as PDFFileIcon
 } from "@mui/icons-material";
-import FileViewer from "react-file-viewer";
 import PropTypes from "prop-types";
+
+// Components
+import { FileViewer } from "@app/components";
 
 // Contexts
 import { FirebaseContext, AlertContext } from "@app/contexts";
@@ -64,9 +66,8 @@ function AttachmentList({ attachments }) {
     }, []);
     
     const props = {
-        fileViewer: (url, type) => ({
-            filePath: url,
-            fileType: type
+        fileViewer: ({ url, type }) => ({
+            filePath: url
         }),
         listItem: (i, file) => ({
             key: i, 
@@ -90,13 +91,13 @@ function AttachmentList({ attachments }) {
                                 <TextFileIcon />
                             ) : null}
                         </ListItemIcon>
-                        <ListItemText primary={file.name} />
+                        <ListItemText primary={file.name + "." + file.type} />
                     </ListItemButton>
                 ))}
             </List>
             <Modal {...props.modal}>
                 {(files.length > 0 && !!openFile) && (
-                    <FileViewer {...props.fileViewer(openFile.url, openFile.type)}/>
+                    <FileViewer {...props.fileViewer(openFile)}/>
                 )}
             </Modal>
         </>
