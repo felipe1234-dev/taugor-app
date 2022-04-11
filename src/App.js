@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import {
     Routes as Switch,
-    Route,
+    Route, 
     useNavigate,
     useLocation
 } from "react-router-dom";
@@ -74,7 +74,7 @@ function App() {
                 setUser(user);
                 
                 if (currPath === "/login") {
-                    navigate("/home");
+                    navigate("/");
                 }
             } else {
                 setUser({});
@@ -109,7 +109,7 @@ function App() {
             onClose: () => setShowAlert(false)
         },
         homeRoute: {
-            path: "/home", 
+            path: "/", 
             element: <HomePage title={`Home - ${appName}`} />,
             exact: true   
         },
