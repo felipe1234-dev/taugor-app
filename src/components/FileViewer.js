@@ -4,8 +4,7 @@ function FileViewer({ open, onClose, onOpen, filePath }) {
     const props = {
         modal: {
             open: open,
-            onClose: () => onClose? onClose() : null,
-            onOpen: () => onOpen? onOpen() : null
+            onClose: () => !!onClose? onClose() : null
         },
         iframe: {
             sandbox: "",
