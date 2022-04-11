@@ -72,7 +72,9 @@ function AttachmentList({ attachments }) {
         fileViewer:  () => ({
             open: !!openFile && files.length > 0,
             onClose: () => setOpenFile(null),
-            filePath: openFile.url? openFile.url : null
+            title: openFile.name? openFile.title : null,
+            filePath: openFile.url? openFile.url : null,
+            keepMounted: true
         })
     };
     
