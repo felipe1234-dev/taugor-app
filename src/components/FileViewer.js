@@ -1,8 +1,8 @@
-function FileViewer({ fileUrl }) {
+function FileViewer({ filePath }) {
     const props = {
         iframe: {
             sandbox: true,
-            src: fileUrl
+            src: filePath
         }
     };
     
