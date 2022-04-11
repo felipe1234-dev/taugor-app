@@ -1,13 +1,13 @@
 import { Modal } from "@mui/material";
 
-function FileViewer({ open, onClose, filePath }) {
+function FileViewer({ open, onClose, title, filePath }) {
     const props = {
         modal: {
             open: open,
             onClose: () => !!onClose? onClose() : null
         },
         iframe: {
-            sandbox: "allow-same-origin allow-scripts allow-popups allow-forms",
+            title: title,
             src: filePath
         }
     };
