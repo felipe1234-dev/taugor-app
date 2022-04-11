@@ -311,6 +311,19 @@ module.exports = function (webpackEnv) {
         // Support React Native Web
         // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
         'react-native': 'react-native-web',
+        
+        "@app/api"        : path.resolve(__dirname, "../src/api/" ),
+        "@app/auth"       : path.resolve(__dirname, "../src/api/auth/" ),
+        "@app/collections": path.resolve(__dirname, "../src/api/collections/" ),
+        "@app/storage"    : path.resolve(__dirname, "../src/api/storage/" ),
+        "@app/pages"      : path.resolve(__dirname, "../src/pages/" ),
+        "@app/components" : path.resolve(__dirname, "../src/components/" ),
+        "@app/media"      : path.resolve(__dirname, "../src/media/" ),
+        "@app/contexts"   : path.resolve(__dirname, "../src/contexts/" ),
+        "@app/style"      : path.resolve(__dirname, "../src/style/" ),
+        "@app/constants"  : path.resolve(__dirname, "../src/constants/" ),
+        "@app/functions"  : path.resolve(__dirname, "../src/functions/" ),
+        
         // Allows for better profiling with ReactDevTools
         ...(isEnvProductionProfile && {
           'react-dom$': 'react-dom/profiling',
