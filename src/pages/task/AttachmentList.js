@@ -37,7 +37,7 @@ function AttachmentList({ attachments }) {
             await attachments.forEach(async (filename) => {
                 const url  = await getURLByFilename(storage, filename);
                 const type = filename.match(/\.\w+$/)[0].replace(".", "");
-                const name = filename.replace(/\-id\d+\.\w+$/, "");
+                const name = filename.replace(/-id\d+\.\w+$/, "");
                 
                 fileList.push({
                     name: name,
