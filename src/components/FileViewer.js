@@ -1,11 +1,24 @@
 // Libs
-import { Modal } from "@mui/material";
+import { 
+    Modal,
+    useMediaQuery,
+    useTheme
+} from "@mui/material";
 import PropTypes from "prop-types";
 
 // Styles
 import "@app/style/components/FileViewer.scss";
 
-function FileViewer({ open, onClose, title, filePath, ...otherProps }) {
+function FileViewer({ 
+    open, 
+    onClose, 
+    title, 
+    filePath, 
+    ...otherProps 
+}) {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    
     const props = {
         modal: {
             className: "FileViewer",
@@ -15,7 +28,11 @@ function FileViewer({ open, onClose, title, filePath, ...otherProps }) {
         },
         iframe: {
             title: title,
-            src: filePath
+            src: filePath,
+            style: {
+                minWidth: isMobile? "90vw" : "60vw",
+                maxWidth: isMobile? "90vw" : "60vw"
+            }
         }
     };
     
