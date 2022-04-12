@@ -28,8 +28,8 @@ function PageLoader() {
              */
             
             fetch(getEnv("CORS_PROXY") + getEnv("JOKES_API"))
-            .then((response) => response.json())
-            .then(({ question, answer }) => setJoke(question+" "+answer))
+            .then((resp) => resp.json())
+            .then((resp) => setJoke(resp.question+" "+resp.answer))
             .catch((error) => console.error("Error: ", error));
         }
         fetchJoke();
