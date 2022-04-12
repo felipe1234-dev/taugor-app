@@ -2,8 +2,9 @@
 import React from "react";
 import { 
     Grid,
-    Divider,
     Typography,
+    useMediaQuery,
+    useTheme,
     Chip,
     Box
 } from "@mui/material";
@@ -26,6 +27,9 @@ function Header({
     environment,
     status
 }) {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    
     const props = {
         container: {
 			className: "TaskPage-header",
@@ -55,11 +59,11 @@ function Header({
         info: {
             container: true,
             display: "flex",
-            flexDirection: "column",
+            flexDirection: isMobile? "column" : "row",
             justifyContent: "center",
             alignItems: "flex-start",
             sx: { 
-                mb: ".6em" 
+                mb: ".6em"
             }
         },
         box: {
@@ -70,7 +74,7 @@ function Header({
             alignItems: "center",
             sx: { 
                 mb: ".6em",
-                mr: ".8em" 
+                mr: "1.2em" 
             }
         }
     };
