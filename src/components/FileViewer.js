@@ -5,13 +5,13 @@ import PropTypes from "prop-types";
 // Styles
 import "@app/style/components/FileViewer.scss";
 
-function FileViewer({ open, onClose, title, filePath, ...props }) {
+function FileViewer({ open, onClose, title, filePath, ...otherProps }) {
     const props = {
         modal: {
             className: "FileViewer",
             open: open,
             onClose: () => !!onClose? onClose() : null,
-            ...props
+            ...otherProps
         },
         iframe: {
             title: title,
