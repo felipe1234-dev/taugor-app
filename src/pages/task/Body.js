@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 // Components
 import AttachmentList from "./AttachmentList";
 
-function Body({ attachments }) {
+function Body({ attachments, description }) {
     const props = {
         container: {
 			display: "flex"
@@ -27,6 +27,12 @@ function Body({ attachments }) {
         },
         attachmentList: {
             attachments: attachments
+        },
+        descrContainer: {
+            className: "TaskPage-body-content",
+            dangerouslySetInnerHTML: {
+                __html: description
+            }
         }
     };
     
@@ -38,18 +44,19 @@ function Body({ attachments }) {
                 </Typography>
                 <AttachmentList {...props.attachmentList}/>
                 
-                
                 <Typography {...props.title}>
                     Descrição
                 </Typography>
-                <Box></Box>
+                <Box {...props.descrContainer}>
+                </Box>
             </Paper>
         </Container>
     );
 }
 
 Body.propTypes = {
-    attachments: PropTypes.arrayOf(PropTypes.string).isRequired
+    attachments: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired
 };
 
 export default Body;
