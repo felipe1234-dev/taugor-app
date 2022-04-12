@@ -1,3 +1,14 @@
 .FileViewer {
-    
+    iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        min-height: 90vh;
+        max-height: 90vh;
+        min-width: 60vw;
+        max-width: 60vw;
+        border: none;
+        border-radius: 8px;
+    }
 }
