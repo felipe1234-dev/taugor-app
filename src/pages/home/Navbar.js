@@ -58,10 +58,12 @@ function Navbar({ setFilters }) {
     
     useEffect(() => {
         setFilters(prevState => {
-            const conditions = prevState.where.filter(where => !["title", "postedBy"].includes(where[0]));
+            const conditions = prevState.where.filter(where => (
+                !["title", "postedBy"].includes(where[0])
+            ));
 			
 			if (searchVal)
-				conditions.push([ "title", "==", searchVal ]);
+				conditions.push([ "title", "array-contains", searchVal.split(" ") ]);
 
             if (selTab === 1) 
                 conditions.push([ "postedBy", "==", userUuid ]);

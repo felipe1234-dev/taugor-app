@@ -9,7 +9,7 @@ import {
     Avatar,
 	ListItem,
     ListItemIcon,
-	ListItemText,
+	ListItemText, 
 	Typography,
     Chip
 } from "@mui/material";
@@ -145,7 +145,7 @@ function TaskItem({
             button: true
         },
         listItemText: {
-            primary: `${title} (${status})`, 
+            primary: `${title.join(" ")} (${status})`, 
             secondary: (Object.entries(senderData).length > 0 && postDate) && (
                 <SecondaryText {...subProps.secondaryText}/>
             )
@@ -166,10 +166,10 @@ function TaskItem({
  
 TaskItem.propTypes = {
     uuid: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired, 
+    title: PropTypes.arrayOf(PropTypes.string).isRequired, 
     brief: PropTypes.string.isRequired, 
     status: PropTypes.string.isRequired,
-    tags: PropTypes.array.isRequired,
+    tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     postedBy: PropTypes.string.isRequired, 
     createdAt: PropTypes.object.isRequired 
 };

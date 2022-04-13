@@ -83,7 +83,7 @@ function Header({
         <Grid {...props.container}>
             <Grid item>
                 <Typography {...props.title}>
-                    {title}
+                    {title.join(" ")}
                 </Typography>
                 <Typography {...props.brief}>
                     {brief}
@@ -114,7 +114,7 @@ function Header({
 }
 
 Header.propTypes = {
-    title: PropTypes.string.isRequired,
+    title: PropTypes.arrayOf(PropTypes.string).isRequired,
     brief: PropTypes.string.isRequired,
     tags: PropTypes.arrayOf(PropTypes.string).isRequired,
     priority: PropTypes.string.isRequired,
