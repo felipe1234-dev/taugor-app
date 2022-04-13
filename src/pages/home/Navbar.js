@@ -63,7 +63,7 @@ function Navbar({ setFilters }) {
             ));
 			
 			if (searchVal)
-				conditions.push([ "title", "array-contains", searchVal.split(" ") ]);
+				conditions.push([ "title", "array-contains-any", searchVal.split(" ") ]);
 
             if (selTab === 1) 
                 conditions.push([ "postedBy", "==", userUuid ]);
