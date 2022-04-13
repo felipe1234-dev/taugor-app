@@ -14,7 +14,7 @@ function FileViewer({
     onClose, 
     title, 
     filePath, 
-    ...otherProps 
+    ...modalProps 
 }) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -24,12 +24,12 @@ function FileViewer({
             className: "FileViewer",
             open: open,
             onClose: () => !!onClose? onClose() : null,
-            ...otherProps
+            ...modalProps
         },
         iframe: {
             title: title,
             src: filePath,
-            style: {
+            style: { 
                 minWidth: isMobile? "90vw" : "60vw",
                 maxWidth: isMobile? "90vw" : "60vw"
             }
