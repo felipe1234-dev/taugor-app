@@ -1,15 +1,15 @@
 // Libs
 import React from "react";
 import {
-    Box,
+    Paper,
     Container,
-    Typography,
-    Paper
+    Typography
 } from "@mui/material";
 import PropTypes from "prop-types";
 
 // Components
 import AttachmentList from "./AttachmentList";
+import { TextEditor } from "@app/components";
 
 function Body({ attachments, description }) {
     const props = {
@@ -29,10 +29,8 @@ function Body({ attachments, description }) {
             attachments: attachments
         },
         descrContainer: {
-            className: "TaskPage-body-content",
-            dangerouslySetInnerHTML: {
-                __html: description
-            }
+            isPreview: true,
+            initialContent: description
         }
     };
     
@@ -47,8 +45,7 @@ function Body({ attachments, description }) {
                 <Typography {...props.title}>
                     Descrição
                 </Typography>
-                <Box {...props.descrContainer}>
-                </Box>
+                <TextEditor {...props.descrContainer}/>
             </Paper>
         </Container>
     );
