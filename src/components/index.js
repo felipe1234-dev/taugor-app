@@ -4,12 +4,14 @@ import PageLoader from "./PageLoader";
 import ProfileImage from "./ProfileImage";
 import SearchBar from "./SearchBar";
 import FileViewer from "./FileViewer";
+import TextEditor from "./TextEditor";
 
 export { 
     AlertMessage, 
-    ElevationScroll, 
+    ElevationScroll,
     PageLoader, 
     ProfileImage, 
     SearchBar,
-    FileViewer
+    FileViewer,
+    TextEditor
 };
