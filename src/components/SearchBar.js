@@ -22,4 +22,8 @@ SearchBar.propTypes = {
 	hasIcon: PropTypes.bool
 };
 
+SearchBar.defaultProps = {
+	hasIcon: false
+};
+
 export default SearchBar;

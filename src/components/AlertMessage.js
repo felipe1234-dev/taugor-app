@@ -16,4 +16,10 @@ AlertMessage.propTypes = {
     onClose: PropTypes.func.isRequired
 };
 
+AlertMessage.defaultProps = {
+    open: true,
+    type: "error",
+    duration: 3000
+};
+
 export default AlertMessage;
