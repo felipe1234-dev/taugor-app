@@ -23,7 +23,7 @@ function TextEditor({ initialContent, isPreview, onChange }) {
         previewContainer: {
             className: "TextEditor-content",
             dangerouslySetInnerHTML: {
-                __html: description
+                __html: content
             }
         }
     };
