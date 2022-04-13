@@ -15,12 +15,10 @@ import "@app/style/components/Loader.scss";
 import "@app/style/themes/themes.scss";
 
 ReactDOM.render(
-  	<React.StrictMode>
-		<MasterProvider>
-			<Router>
-				<App />	
-			</Router>
-		</MasterProvider>
-  	</React.StrictMode>,
+  	<MasterProvider>
+		<Router>
+			<App />	
+		</Router>
+	</MasterProvider>,
   	document.getElementById("root")
 );
