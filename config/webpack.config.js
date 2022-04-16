@@ -1,5 +1,13 @@
 'use strict';
 
+/* Use Ctrl + f e "Editado" para encontrar
+ * as configurações que foram modificadas 
+ * :)
+ */
+
+// Editado
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+
 const fs = require('fs');
 const path = require('path');
 const webpack = require('webpack');
@@ -188,6 +196,11 @@ module.exports = function (webpackEnv) {
 
   return {
     target: ['browserslist'],
+    
+    // Editado
+    stats: 'errors-warnings',
+    // ---
+    
     mode: isEnvProduction ? 'production' : isEnvDevelopment && 'development',
     // Stop compilation early in production
     bail: isEnvProduction,
@@ -307,45 +320,40 @@ module.exports = function (webpackEnv) {
       extensions: paths.moduleFileExtensions
         .map(ext => `.${ext}`)
         .filter(ext => useTypeScript || !ext.includes('ts')),
-      alias: {
-        // Support React Native Web
-        // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-        'react-native': 'react-native-web',
-        
-        "@app/api"        : path.resolve(__dirname, "../src/api/" ),
-        "@app/auth"       : path.resolve(__dirname, "../src/api/auth/" ),
-        "@app/collections": path.resolve(__dirname, "../src/api/collections/" ),
-        "@app/storage"    : path.resolve(__dirname, "../src/api/storage/" ),
-        "@app/pages"      : path.resolve(__dirname, "../src/pages/" ),
-        "@app/components" : path.resolve(__dirname, "../src/components/" ),
-        "@app/media"      : path.resolve(__dirname, "../src/media/" ),
-        "@app/contexts"   : path.resolve(__dirname, "../src/contexts/" ),
-        "@app/style"      : path.resolve(__dirname, "../src/style/" ),
-        "@app/constants"  : path.resolve(__dirname, "../src/constants/" ),
-        "@app/functions"  : path.resolve(__dirname, "../src/functions/" ),
-        
-        // Allows for better profiling with ReactDevTools
-        ...(isEnvProductionProfile && {
-          'react-dom$': 'react-dom/profiling',
-          'scheduler/tracing': 'scheduler/tracing-profiling',
-        }),
-        ...(modules.webpackAliases || {}),
-      },
-      plugins: [
-        // Prevents users from importing files from outside of src/ (or node_modules/).
-        // This often causes confusion because we only process files within src/ with babel.
-        // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
-        // please link the files into your node_modules/ and let module-resolution kick in.
-        // Make sure your source files are compiled, as they will not be processed in any way.
-        new ModuleScopePlugin(paths.appSrc, [
-          paths.appPackageJson,
-          reactRefreshRuntimeEntry,
-          reactRefreshWebpackPluginRuntimeEntry,
-          babelRuntimeEntry,
-          babelRuntimeEntryHelpers,
-          babelRuntimeRegenerator,
-        ]),
-      ],
+        alias: {
+          // Support React Native Web
+          // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
+          'react-native': 'react-native-web',
+          
+          // Editado
+          '@local': path.resolve(__dirname, '../src/'),
+          
+          // Allows for better profiling with ReactDevTools
+          ...(isEnvProductionProfile && {
+            'react-dom$': 'react-dom/profiling',
+            'scheduler/tracing': 'scheduler/tracing-profiling',
+          }),
+          ...(modules.webpackAliases || {}),
+        },
+        plugins: [
+          
+          // Editado
+          new TsconfigPathsPlugin(),
+          
+          // Prevents users from importing files from outside of src/ (or node_modules/).
+          // This often causes confusion because we only process files within src/ with babel.
+          // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
+          // please link the files into your node_modules/ and let module-resolution kick in.
+          // Make sure your source files are compiled, as they will not be processed in any way.
+          new ModuleScopePlugin(paths.appSrc, [
+            paths.appPackageJson,
+            reactRefreshRuntimeEntry,
+            reactRefreshWebpackPluginRuntimeEntry,
+            babelRuntimeEntry,
+            babelRuntimeEntryHelpers,
+            babelRuntimeRegenerator,
+          ]),
+        ],
     },
     module: {
       strictExportPresence: true,
