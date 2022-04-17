@@ -7,10 +7,6 @@ import {
     Priority
 } from "@local/types";
 
-export interface Page {
-    title: string
-}; 
-
 export interface User {
     uuid: string, 
     displayName: string, 
