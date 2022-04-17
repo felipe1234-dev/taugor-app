@@ -36,9 +36,10 @@ const { appName } = APP_INFO;
 export default function App() {
     const { db }      = useContext(FirebaseContext);
     const { setUser } = useContext(UserContext);
-	const { 
+	const {
+        setPath,
         isLoading, 
-        setIsLoading 
+        setIsLoading
     } = useContext(PageContext);
     const {
         message,
