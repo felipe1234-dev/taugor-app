@@ -22,7 +22,7 @@ import { Spinner } from "@local/components";
 import { login, onError } from "@local/api/auth/sign-in";
 
 // Contexts
-import { PageContext, AlertContext } from "@local/contexts";
+import { AlertContext } from "@local/contexts";
 
 export default function LoginForm() {
     const [formIsLoading, setFormIsLoading]       = useState<boolean>(false);
@@ -33,8 +33,7 @@ export default function LoginForm() {
     const location = useLocation();
     const from     = location.state?.from?.pathname as string || "/";
     
-    const { setIsLoading: setPageIsLoading } = useContext(PageContext);
-    const { setSeverity, setMessage }        = useContext(AlertContext);
+    const { setSeverity, setMessage } = useContext(AlertContext);
     
     const onSubmit = (event: any) => {
         event.preventDefault(); 
