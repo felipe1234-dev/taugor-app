@@ -1,32 +1,32 @@
 // Libs
-import { useEffect, useContext } from "react";
+import { 
+    useState,
+    useEffect, 
+    useContext 
+} from "react";
 import {
     Routes as Switch,
     Route,
-    useNavigate,
     useLocation
 } from "react-router-dom";
 
 // Components 
-import { PageLoader, AlertMessage } from "@local/components";
+import {
+    AlertMessage,
+    PageContainer as Page,
+    PageLoader
+} from "@local/components";
 
 // Pages
 import {
-    HomePage,
-    LoginPage,
-    TaskPage
+    HomePage as Home,
+    LoginPage as Login,
+    TaskPage as Task,
+    Error404Page as Error404
 } from "@local/pages";
 
 // Contexts
-import {
-    FirebaseContext,
-    PageContext,
-    UserContext,
-    AlertContext
-} from "@local/contexts";
-
-// API
-import { logout, getCurrentUser } from "@local/api/auth";
+import { AlertContext } from "@local/contexts";
 
 // Constants
 import { APP_INFO } from "@local/constants";
@@ -34,14 +34,7 @@ import { APP_INFO } from "@local/constants";
 const { appName } = APP_INFO;
 
 export default function App() {
-    const { db }      = useContext(FirebaseContext);
-    const { setUser } = useContext(UserContext);
-	const {
-        pathname,
-        setPathname,
-        isLoading, 
-        setIsLoading
-    } = useContext(PageContext);
+    const [pageIsLoading, setPageIsLoading] = useState<boolean>(true);
     const {
         message,
         setMessage, 
@@ -50,83 +43,63 @@ export default function App() {
     } = useContext(AlertContext);
 	
 	const location = useLocation();
-    const currPath = location.pathname;
-    const navigate = useNavigate();
+    const pathNow  = location.pathname;
 	
+    // Aciona sempre que a página atual mudar
 	useEffect(() => {
-        setIsLoading(true);
-
-        const refreshToken = sessionStorage.getItem("Auth Token");
-
-        if (!!refreshToken) {
-            const tokenDate     = Number(sessionStorage.getItem("Assign Date"));
-            const timeNow       = new Date().getTime();
-            const minutesPassed = (timeNow - tokenDate)/(1000 * 60);
-
-            if (minutesPassed > 60) {
-                logout().then(() => {
-                    sessionStorage.removeItem("Auth Token");
-                    sessionStorage.removeItem("Assign Date");
-                });
-            }
-        }
-
-        const fetchUserData = async() => {
-            const user = await getCurrentUser(db);
-
-            if (!!refreshToken && !!user) {
-                setUser(user);
-
-                if (currPath === "/login") {
-                    navigate("/");
-                }
-            } else {
-                setUser(null);
-                navigate("/login");
-            }
-        }
-
-        fetchUserData();
-        
-        if (pathname !== currPath) {
-            setPathname(currPath);
-        }
-    }, [isLoading, db, currPath]);
+        setPageIsLoading(true);
+    }, [pathNow]);
     
 	// Aciona sempre que o componente termina de montar
     useEffect(() => {
         setTimeout(() => {
-			setIsLoading(false);
+			setPageIsLoading(false);
 		}, 8000);
     });
 	
 	const main = {
 		style: {
-			display: isLoading? "none" : "block"
+			display: pageIsLoading? "none" : "block"
 		}
 	}
 	
 	const homeRoute = {
 		path: "/",
-        element: <HomePage title={`Home - ${appName}`} />,
+        element: (
+            <Page title={`Home - ${appName}`} requireAuth>
+                <Home />
+            </Page>
+        ),
         exact: true
 	}
     
     const loginRoute = {
         path: "/login",
-        element: <LoginPage title={`Entrar - ${appName}`} />,
+        element: (
+            <Page title={`Entrar - ${appName}`}>
+                <Login />
+            </Page>
+        ),
         exact: true
     }
     
     const taskRoute = {
         path: "/task/:uuid",
-        element: <TaskPage title={`Atividade - ${appName}`} />,
+        element: (
+            <Page title={`Atividade - ${appName}`} requireAuth>
+                <Task />
+            </Page>
+        ),
         exact: true
     }
     
-    const notFoundRoute = {
-        path: "/",
-        element: 
+    const error404Route = {
+        path: "*",
+        element: (
+            <Page title={`Página não encontrada - ${appName}`}>
+                <Error404 />
+            </Page>
+        )
     }
     
     const alertMessage = {
@@ -143,13 +116,13 @@ export default function App() {
 		<>
 			<main {...main}>
                 <Switch>
-                    <Route {...homeRoute} />
-                    <Route {...loginRoute} />
-                    <Route {...taskRoute} />
-                    <Route {...notFoundRoute} />
+                    <Route {...homeRoute}/>
+                    <Route {...loginRoute}/>
+                    <Route {...taskRoute}/>
+                    <Route {...error404Route}/>
                 </Switch>
             </main>
-            {isLoading && (
+            {pageIsLoading && (
                 <PageLoader />
             )}
             <AlertMessage {...alertMessage}>

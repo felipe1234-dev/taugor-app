@@ -1,5 +1,4 @@
 // Libs
-import { useEffect } from "react";
 import { 
 	Grid, 
 	Container, 
@@ -11,9 +10,6 @@ import Tilt from "react-parallax-tilt";
 // Page components
 import LoginForm from "./LoginForm";
 
-// Interfaces
-import { Page } from "@local/interfaces";
- 
 // Style
 import "@local/style/pages/LoginPage.scss";
 
@@ -28,11 +24,7 @@ const {
 	link 
 } = APP_INFO;
 
-export default function LoginPage({ title }: Page) {
-	useEffect(() => {
-        document.title = title;
-    }, [title]);
-
+export default function LoginPage() {
     const center = {
         justifyContent: "center",
         alignItems: "center"

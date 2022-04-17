@@ -23,7 +23,6 @@ import { groupDocsByTime } from "@local/functions";
 // Interfaces
 import {
     Filter,
-    Page,
     Task,
     Timeline
 } from "@local/interfaces";
@@ -31,7 +30,7 @@ import {
 // Style
 import "@local/style/pages/HomePage.scss";
 
-export default function HomePage({ title }: Page) {
+export default function HomePage() {
     const [timeline, setTimeline]   = useState<Timeline>({});
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [filter, setFilter]       = useState<Filter>({
@@ -42,10 +41,6 @@ export default function HomePage({ title }: Page) {
     });
     
     const { db }   = useContext(FirebaseContext);
-    
-	useEffect(() => {
-        document.title = title;
-    }, [title]);
     
     useEffect(() => {
         setIsLoading(true);

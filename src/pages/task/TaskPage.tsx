@@ -4,7 +4,11 @@ import {
     useEffect,
     useContext
 } from "react";
-import { useParams } from "react-router-dom";
+import { 
+    useLocation, 
+    useNavigate, 
+    useParams 
+} from "react-router-dom";
 
 // Page components 
 import Topbar from "./Topbar";
@@ -18,26 +22,27 @@ import { FirebaseContext } from "@local/contexts";
 import { getActivityByUuid } from "@local/api/collections/Activities";
 
 // Interfaces
-import { Page, Task } from "@local/interfaces";
+import { Task } from "@local/interfaces";
 
 // Style
 import "@local/style/pages/TaskPage.scss";
 
-export default function TaskPage({ title }: Page) {
-    const [task, setTask]    = useState<Task|null>(null);
-    const { uuid: taskUuid } = useParams();
-    
+export default function TaskPage() {
+    const [task, setTask] = useState<Task|null>(null);
     const { db } = useContext(FirebaseContext);
     
-	useEffect(() => {
-        document.title = title;
-    }, [title]);
+    const { uuid: taskUuid } = useParams();
+	const location = useLocation();
+    const currPath = location.pathname;
+    const navigate = useNavigate();
     
     useEffect(() => {
         const fetchTaskData = async() => {
             if (!!taskUuid) {
                 const pageTask = await getActivityByUuid(db, taskUuid);
                 setTask(pageTask);
+            } else {
+                navigate()
             }
         }
         
@@ -45,14 +50,14 @@ export default function TaskPage({ title }: Page) {
     }, [task, taskUuid, db]);
     
     return (
-        !!task && (
+        !!task? (
             <>
                 <Topbar {...task}/>
                 <Header {...task}/>
                 <Body {...task}/>
             </>
         ) : (
-            
+            <span></span>          
         )
     );
 };
