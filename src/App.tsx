@@ -37,7 +37,8 @@ export default function App() {
     const { db }      = useContext(FirebaseContext);
     const { setUser } = useContext(UserContext);
 	const {
-        setPath,
+        pathname,
+        setPathname,
         isLoading, 
         setIsLoading
     } = useContext(PageContext);
@@ -86,6 +87,10 @@ export default function App() {
         }
 
         fetchUserData();
+        
+        if (pathname !== currPath) {
+            setPathname(currPath);
+        }
     }, [isLoading, db, currPath]);
     
 	// Aciona sempre que o componente termina de montar
