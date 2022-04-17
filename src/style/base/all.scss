@@ -54,3 +54,18 @@ body {
 		}
 	}
 }
+
+.hasCustomBar {
+	position: relative;
+    padding-bottom: .3em !important;
+            
+    &::before {
+    	content: "";
+        position: absolute;
+		width: 40%;
+		height: 1px;
+		bottom: 0;
+		left: .7em;
+		border-bottom: .2em solid var(--orange);
+	}
+}
