@@ -1,5 +1,6 @@
 export { default as AlertMessage } from "./AlertMessage";
 export { default as FileViewer } from "./FileViewer";
+export { default as PageContainer } from "./PageContainer";
 export { default as PageLoader } from "./PageLoader";
 export { default as ProfileImage } from "./ProfileImage";
 export { default as RequireAuth } from "./RequireAuth";
