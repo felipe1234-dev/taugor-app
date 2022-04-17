@@ -12,6 +12,7 @@ import {
     Visibility as VisibilityOnIcon,
     VisibilityOff as VisibilityOffIcon
 } from "@mui/icons-material";
+import { useLocation, useNavigate } from "react-router";
 import { FirebaseError } from "firebase/app";
 
 // Local components
@@ -27,6 +28,10 @@ export default function LoginForm() {
     const [formIsLoading, setFormIsLoading]       = useState<boolean>(false);
     const [submitIsDisabled, setSubmitIsDisabled] = useState<boolean>(false);
     const [passIsMasked, setPassIsMasked]         = useState<boolean>(true);
+    
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from     = location.state?.from?.pathname as string || "/";
     
     const { setIsLoading: setPageIsLoading } = useContext(PageContext);
     const { setSeverity, setMessage }        = useContext(AlertContext);
@@ -49,7 +54,7 @@ export default function LoginForm() {
             .then((response: any) => {
                 sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
                 sessionStorage.setItem("Assign Date", (new Date().getTime()).toString());
-                setPageIsLoading(true);
+                navigate(from, { replace: true });
             })
             .catch((error: FirebaseError) => {
                 const errData = onError(error);
@@ -93,6 +98,7 @@ export default function LoginForm() {
             )
         }
     }
+    
     const paswordTextField = {
         name: "password",
         label: "Senha",
@@ -109,6 +115,7 @@ export default function LoginForm() {
             )
         }
     }
+    
     const loginButton = {
         className: `LoginPage-loginButton${formIsLoading ? " is-loading" : ""}`,
         variant: "contained" as "contained",
