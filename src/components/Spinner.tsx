@@ -20,6 +20,7 @@ interface SpinnerProps {
 export default function Spinner({ wrapper, spinner }: SpinnerProps) {
     return (
         <Box
+            className="Spinner-wrapper"
             display="flex"
 			alignItems="center"
 			justifyContent="center"
@@ -33,8 +34,8 @@ export default function Spinner({ wrapper, spinner }: SpinnerProps) {
                 style={{
                     width: spinner.width,
                     height: spinner.height,
-                    ["--bar" as string]: spinner.barColor,
-                    ["--path" as string]: spinner.pathColor
+                    ["--bar-color" as string]: spinner.barColor,
+                    ["--path-color" as string]: spinner.pathColor
                 }}
             ></div>
         </Box>

@@ -1,15 +1,18 @@
 .Spinner {
-	--path: var(--blue);
-	--bar: var(--primary-light);
+	--path-color: var(--blue);
+	--bar-color: var(--primary-light);
 	
-	display: none;
 	animation: is-spinning 1s infinite;
 	border-radius: 50%;
 	height: 1em;
 	width: 1em;
-	border: 6px solid var(--path);
-	border-top-color: var(--bar);
+	border: 6px solid var(--path-color);
+	border-top-color: var(--bar-color);
 
+	&-wrapper {
+		display: none !important;
+	}
+	
 	@keyframes is-spinning {
 		to {
 			transform: rotate(1turn);
@@ -19,10 +22,10 @@
 
 .isLoading {
 	span {
-		display: none;
+		display: none !important;
 	}
 
-	.Spinner {
-		display: block;
+	.Spinner-wrapper {
+		display: flex !important;
 	}
 }
