@@ -83,7 +83,9 @@ export default function LoginForm() {
                 setMessage(errData.message);
                 setSeverity(errData.severity);
             })
-            .then(() => setTimeout(() => setFormIsLoading(false), 5000));
+            .then(() => {
+                setTimeout(() => setFormIsLoading(false), 5000);
+            });
     } 
     
     const onChange = (event: any) => {
