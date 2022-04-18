@@ -105,7 +105,7 @@ export default function App() {
     const alertMessage = {
         open: !!message && !!severity,
         type: !!severity? severity : undefined,
-        duration: 4000,
+        duration: 6000,
         onClose: () => {
             setMessage(null);
             setSeverity(null);
