@@ -83,13 +83,13 @@ export default function LoginForm() {
                 setMessage(errData.message);
                 setSeverity(errData.severity);
             })
-            .then(() => setTimeout(() => setFormIsLoading(false), 2000));
+            .then(() => setTimeout(() => setFormIsLoading(false), 5000));
     } 
     
     const onChange = (event: any) => {
         const data = new FormData(event.currentTarget);
         setSubmitIsDisabled(
-            !!data.get("email") && !!data.get("password")
+            !data.get("email") || !data.get("password")
         );
     }
     
@@ -139,7 +139,7 @@ export default function LoginForm() {
     }
     
     const loginButton = {
-        className: `LoginPage-loginButton${formIsLoading ? " is-loading" : ""}`,
+        className: `LoginPage-loginButton${formIsLoading ? " isLoading" : ""}`,
         variant: "contained" as "contained",
         component: "button" as "button",
         type: "submit" as "submit",
