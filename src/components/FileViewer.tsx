@@ -1,5 +1,4 @@
 // Libs
-import React from "react";
 import { 
     Modal,
     ModalProps,

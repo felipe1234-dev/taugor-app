@@ -1,5 +1,5 @@
 // Libs
-import React, { useContext } from "react";
+import { useContext } from "react";
 import {
     Box,
     AppBar,

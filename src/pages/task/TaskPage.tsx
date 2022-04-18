@@ -4,11 +4,7 @@ import {
     useEffect,
     useContext
 } from "react";
-import { 
-    useLocation, 
-    useNavigate, 
-    useParams 
-} from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 // Page components 
 import Topbar from "./Topbar";
@@ -32,17 +28,12 @@ export default function TaskPage() {
     const { db } = useContext(FirebaseContext);
     
     const { uuid: taskUuid } = useParams();
-	const location = useLocation();
-    const currPath = location.pathname;
-    const navigate = useNavigate();
     
     useEffect(() => {
         const fetchTaskData = async() => {
             if (!!taskUuid) {
                 const pageTask = await getActivityByUuid(db, taskUuid);
                 setTask(pageTask);
-            } else {
-                navigate()
             }
         }
         
