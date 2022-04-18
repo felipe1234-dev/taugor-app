@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Media
-import PageNotFoundImg from "@local/media/page-not-found.svg";
+import PageNotFoundImg from "@local/media/page-not-found.png";
 
 export default function Error404Page() {
     return (
