@@ -1,4 +1,4 @@
-$blue: #4263ec;
+$blue: #3b8ad9;
 $white: #f6f7fe;
 $light: #bbc1e1;
 $dark: #2b3044;
@@ -9,7 +9,7 @@ $themes: (
         primary: (
             light: lighten($blue, 7.5%),
             normal: $blue,
-            dark: darken($blue, 7.5%),
+            dark: darken($blue, 3%)
         ),
         secondary: (
             light: lighten($white, 7.5%),
