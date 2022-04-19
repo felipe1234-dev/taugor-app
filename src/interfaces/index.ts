@@ -8,10 +8,9 @@ import {
 } from "@local/types";
 
 export interface User {
-    uuid: string, 
+    uuid: string,
     displayName: string, 
-    photoURL?: string,
-    email: string
+    photoURL?: string
 };
 
 export interface Task {
@@ -38,7 +37,7 @@ export interface Filter {
     where?: Array<WhereClasule>,
     orderBy?: Array<OrderByClasule>,
     limit?: number,
-    startAt?: number
+    startAfter?: string
 };
 
 export interface File {
