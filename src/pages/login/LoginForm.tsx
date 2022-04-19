@@ -88,7 +88,7 @@ export default function LoginForm() {
                 setSeverity(errData.severity);
             })
             .then(() => {
-                setTimeout(() => setFormIsLoading(false), 5000);
+                setTimeout(() => setFormIsLoading(false), 3000);
             });
     } 
     
@@ -161,7 +161,7 @@ export default function LoginForm() {
             height: "100%"
         },
         spinner: {
-            width: "1.8em",
+            width: "1em",
             height: "1em"
         }
     }
