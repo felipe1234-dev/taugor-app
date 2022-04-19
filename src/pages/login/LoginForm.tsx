@@ -127,7 +127,7 @@ export default function LoginForm() {
         }
     }
     
-    const paswordTextFiSSeld = {
+    const passwordTextField = {
         name: "password",
         label: "Senha",
         type: passIsMasked ? "password" : "text",
@@ -174,7 +174,7 @@ export default function LoginForm() {
             />
             <TextField
                 {...baseTextField} 
-                {...paswordTextField} 
+                {...passwordTextField} 
             />
             <Button {...loginButton}>
                 <span>Entrar</span>
