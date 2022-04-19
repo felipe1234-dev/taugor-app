@@ -4,10 +4,10 @@
 @each $theme-name, $theme in $themes {
     body[theme="#{$theme-name}"] {
 		color: map-deep-get($theme, "text", "dark");
-        background-color: map-deep-get($theme, "primary", "normal");
+        background-color: map-deep-get($theme, "secondary", "normal");
 		
 		.MuiInputBase-input {
-			--autofill-color: map-deep-get($theme, "primary", "normal");
+			--autofill-color: #{map-deep-get($theme, "secondary", "normal")};
 		}
 	}
 }
