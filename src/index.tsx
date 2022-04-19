@@ -10,7 +10,6 @@ import { MasterProvider } from "@local/contexts/index";
 
 // Styles
 import "@local/style/base/all.scss";
-import "@local/style/themes/themes.scss";
 
 const root = ReactDOM.createRoot(
 	document.getElementById("root") as HTMLElement
