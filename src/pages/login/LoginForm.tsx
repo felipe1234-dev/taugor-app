@@ -40,7 +40,11 @@ const isLocation = (object: any): object is Location => {
 };
 
 const isRouteState = (object: any): object is RouteState => {
-    return (object as RouteState).from !== undefined && isLocation((object as RouteState).from);
+    return (
+        !!object && 
+        (object as RouteState).from !== undefined 
+        && isLocation((object as RouteState).from)
+    );
 };
 
 export default function LoginForm() {
@@ -123,7 +127,7 @@ export default function LoginForm() {
         }
     }
     
-    const paswordTextField = {
+    const paswordTextFiSSeld = {
         name: "password",
         label: "Senha",
         type: passIsMasked ? "password" : "text",
@@ -157,10 +161,8 @@ export default function LoginForm() {
             height: "100%"
         },
         spinner: {
-            width: "1em",
-            height: "1em",
-            barColor: "var(--light)",
-            pathColor: "var(--pale)"
+            width: "1.8em",
+            height: "1em"
         }
     }
      
