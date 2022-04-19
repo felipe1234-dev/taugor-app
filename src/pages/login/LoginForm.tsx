@@ -73,7 +73,7 @@ export default function LoginForm() {
         setFormIsLoading(true);
         
         const data     = new FormData(event.currentTarget);
-        const email    = data.get("password")?.toString() || "";
+        const email    = data.get("email")?.toString() || "";
         const password = data.get("password")?.toString() || "";
         
         login(email, password)
