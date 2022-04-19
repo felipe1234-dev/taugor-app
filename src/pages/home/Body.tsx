@@ -37,6 +37,14 @@ export default function Body({
         elevation: 0
     }
     
+    const container = {
+        sx: {
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center"
+        }
+    }
+    
     const grid = {
         container: true,
         sx: {
@@ -72,7 +80,7 @@ export default function Body({
     const filterSelector = { setFilter, filter }
     
     return (
-        <Container sx={{ display: "flex" }}>
+        <Container {...container}>
             <Paper {...paper}>
                 <Grid {...grid}>
                     <Grid item>
