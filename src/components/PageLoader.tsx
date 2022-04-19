@@ -1,9 +1,16 @@
 // Libs
-import { useState, useEffect } from "react";
+import { 
+	useState, 
+	useEffect,
+	useContext
+} from "react";
 import { default as LoadingAnimation } from "react-fullpage-custom-loader";
 
 // Functions
 import { getEnv } from "@local/functions";
+
+// Contexts
+import { AlertContext } from "@local/contexts";
 
 // Configs
 const loaders = [
@@ -13,17 +20,20 @@ const loaders = [
 	"square-jelly-box",
 	"ball-climbing-dot",
 	"ball-atom",
-] as const;
-
-type Loader = typeof loaders[number];
+];
 
 export default function PageLoader() {
 	const [joke, setJoke]     = useState<string>("");
-	const [loader, setLoader] = useState<Loader|null>(null);
+	const [loader, setLoader] = useState<string|null>(null);
 
+    const { setSeverity, setMessage } = useContext(AlertContext);
+	
 	useEffect(() => {
-		const randIndex: number = Math.round(Math.random() * (loaders.length - 1));
-		const loader: Loader    = loaders[randIndex];
+		const randIndex = Math.round(Math.random() * (loaders.length - 1));
+		const loader    = loaders[randIndex];
+		
+		console.log(randIndex)
+		console.log(loader)
 		setLoader(loader);
 	}, []);
 
@@ -34,16 +44,19 @@ export default function PageLoader() {
 			 * no header dele. :/
 			 */
             
-            const corsProxy: string|undefined = getEnv("CORS_PROXY");
-            const jokesApi: string|undefined  = getEnv("JOKES_API");
+            const corsProxy = getEnv("CORS_PROXY");
+            const jokesApi  = getEnv("JOKES_API");
             
             if (!!corsProxy && !!jokesApi) {
-                const apiUrl: string = corsProxy + jokesApi; 
+                const apiUrl = corsProxy + jokesApi; 
                 
                 fetch(apiUrl)
                     .then((resp) => resp.json())
                     .then((resp) => setJoke(resp.question + " " + resp.answer))
-                    .catch((error) => console.error("Error: ", error));
+                    .catch((error: Error) => {
+						setSeverity("error" as "error");
+						setMessage("Erro desconhecido: " + error.message);
+					});
             }
 		}
 
