@@ -53,11 +53,11 @@ export default function LoginForm() {
     const [passIsMasked, setPassIsMasked]         = useState<boolean>(true);
     
     const navigate  = useNavigate();
-    const { state } = useLocation();
+    const { state, pathname: pathNow } = useLocation();
     let from = "/";
 
-    if (isRouteState(state)) {
-        from = state.from.pathname;
+    if (isRouteState(state)) { 
+        from = state.from.pathname === pathNow? "/" : state.from.pathname;
     }
     
     const { setSeverity, setMessage } = useContext(AlertContext);
@@ -157,12 +157,12 @@ export default function LoginForm() {
     
     const spinner = {
         wrapper: {
-            width: "100%",
-            height: "100%"
+            minWidth: "100%",
+            minHeight: "100%"
         },
         spinner: {
-            width: "1em",
-            height: "1em"
+            minWidth: "1em",
+            minHeight: "1em"
         }
     }
      
