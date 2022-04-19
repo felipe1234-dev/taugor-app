@@ -1,10 +1,10 @@
 @import "../utils/_variables.scss";
 @import "../utils/_functions.scss";
 
-@each $key, $val in $themes {
-	body[theme="#{$key}"] .Spinner {
-		--path-color: map-deep-get($val, "background", "primary-dark");
-		--bar-color: map-deep-get($val, "background", "primary-light");
+@each $theme-name, $theme in $themes {
+	body[theme="#{$theme-name}"] .Spinner {
+		--path-color: #{map-deep-get($theme, "primary", "light")};
+		--bar-color: #{map-deep-get($theme, "primary", "dark")};
 	}	
 }
 
