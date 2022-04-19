@@ -18,6 +18,7 @@ interface RequireAuthProps {
 };
 
 export default function RequireAuth({ children }: RequireAuthProps) {
+    const [ready, setReady]     = useState<boolean>(false);
     const [allowed, setAllowed] = useState<boolean>(false);
     const location = useLocation();
     
@@ -25,36 +26,42 @@ export default function RequireAuth({ children }: RequireAuthProps) {
     const { setUser } = useContext(UserContext);
     
     useEffect(() => {
-        const refreshToken = sessionStorage.getItem("Auth Token");
+        (async() => {
+            setReady(false); 
+            
+            const refreshToken = sessionStorage.getItem("Auth Token");
 
-        if (!!refreshToken) {
-            const tokenDate     = Number(sessionStorage.getItem("Assign Date"));
-            const timeNow       = new Date().getTime();
-            const minutesPassed = (timeNow - tokenDate)/(1000 * 60);
+            if (!!refreshToken) {
+                const tokenDate     = Number(sessionStorage.getItem("Assign Date"));
+                const timeNow       = new Date().getTime();
+                const minutesPassed = (timeNow - tokenDate)/(1000 * 60);
 
-            if (minutesPassed > 60) {
-                logout().then(() => {
-                    sessionStorage.removeItem("Auth Token");
-                    sessionStorage.removeItem("Assign Date");
-                });
-            }
-        }
-
-        const fetchUserData = async() => {
+                if (minutesPassed > 60) {
+                    logout().then(() => {
+                        sessionStorage.removeItem("Auth Token");
+                        sessionStorage.removeItem("Assign Date");
+                    });
+                }
+            } 
+            
             const user = await getCurrentUser(db);
-
-            if (!!refreshToken && !!user) {
+            
+            if (!!refreshToken || !!user) {
                 setUser(user);
                 setAllowed(true);
             } else {
                 setUser(null);
                 setAllowed(false);
             }
-        }
+            
+            setReady(true);
+        })();
+    }, [db]); 
 
-        fetchUserData();
-    }, [db]);
-
+    if (!ready) {
+        return <span></span>;
+    }
+    
     if (!allowed) {
         return <Navigate to="/login" state={{ from: location }} replace />;
     }
