@@ -1,27 +1,108 @@
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
+
+@each $theme-name, $theme in $themes {
+    body[theme="#{$theme-name}"] .HomePage {
+        &-navbar, &-header {
+            background-color: map-deep-get($theme, "primary", "normal");
+        }
+		
+        &-navbar {
+            &-burgerMenu {
+                .MuiDrawer-paper, &-header, &-list {
+                    background-color: map-deep-get($theme, "primary", "normal");
+                }
+                
+                .MuiDrawer-paper {
+                    color: map-deep-get($theme, "text", "light");
+                }
+            }
+            
+            &-profileImage {
+                margin: 1px solid map-deep-get($theme, "shadow", "normal");
+            }
+            
+            &-appName {
+                color: map-deep-get($theme, "text", "light");
+            }
+            
+            .MuiTab-root {
+                color: map-deep-get($theme, "text", "light");
+                
+                &:hover {
+                    background-color: map-deep-get($theme, "primary", "dark");
+                }
+            }
+            
+            .MuiIconButton-root {
+                color: map-deep-get($theme, "text", "light");
+            }
+        }
+         
+        &-header {
+            &-greeting, &-displayName {
+                color: map-deep-get($theme, "text", "light");
+            }
+            
+            &-addActivButton {
+                color: map-deep-get($theme, "text", "light") !important;
+                background-color: map-deep-get($theme, "primary", "dark") !important;
+                
+                &:hover { 
+                    background-color: map-deep-get($theme, "primary", "light") !important;
+                }
+            }
+        }
+
+        &-taskList {
+            .MuiListItem-root {
+                border-right: 0.3em solid map-deep-get($theme, "extra", "orange");
+                
+                .MuiListItemIcon-root {
+                    .MuiAvatar-root {
+                        background-color: map-deep-get($theme, "extra", "pink");
+                    }
+                    
+                    svg {
+                        color: map-deep-get($theme, "extra", "orange");
+                    }
+                }
+            }
+            
+            .MuiAvatar-root {
+                color: map-deep-get($theme, "text", "light") !important;
+            }
+            
+            &-taskStatus {
+                --dot-color: map-deep-get($theme, "primary", "normal");
+            }
+        } 
+        
+        &-filters {
+            &-button {
+                background-color: map-deep-get($theme, "shadow", "light") !important;
+                color: map-deep-get($theme, "text", "dark") !important;
+                
+                &:hover {
+                    background-color: map-deep-get($theme, "shadow", "normal") !important;
+                }
+            }
+            
+            &-puller {
+                background-color: map-deep-get($theme, "extra", "orange");
+            }   
+        }
+	}
+}
+
 .HomePage {
-    &-navbar, &-header {
-        background-color: var(--blue) !important;
-    }
-    
     &-navbar {
         max-height: 3.5em !important;
         padding-top: 5px !important;
         padding-bottom: 5px !important;
         
-        &-burgerMenu {
-            .MuiDrawer-paper {
-                background-color: var(--blue);
-                color: var(--pale);
-            }
-            
-            &-header {
-                padding: 2em 0;
-                background-color: var(--blue);
-            }
-            
-            &-list {
-                background-color: var(--blue);
-            }
+        &-burgerMenu-header {
+            padding: 2em 0;
         }
         
         &-logo {
@@ -31,7 +112,6 @@
         }
         
         &-profileImage {
-            margin: 1px solid var(--pale);
             transition: opacity .5s ease-in-out;
             transform: scale(.9);
             
@@ -41,7 +121,6 @@
         }
         
         &-appName {
-            color: var(--pale);
             cursor: pointer;
             width: fit-content;
         }
@@ -58,25 +137,12 @@
             text-transform: none !important;
             transition: background-color .5s ease-out;
             padding: 12px 16px !important;
-            color: var(--pale) !important;
             min-height: 0 !important;
-            
-            &:hover {
-                background-color: var(--primary-dark);
-            }
-        }
-        
-        .MuiIconButton-root {
-            color: var(--pale);
         }
     }
      
     &-header {
         padding: 5em 2em !important;
-        
-        &-greeting, &-displayName {
-            color: var(--pale);
-        }
         
         &-greeting {
             opacity: .65 !important;
@@ -90,14 +156,8 @@
         }
         
         &-addActivButton {
-            color: var(--pale) !important;
-            background-color: var(--primary-dark) !important;
             transition: background-color .5s ease-in-out !important;
             padding: .6em !important;
-            
-            &:hover {
-                background-color: var(--primary-light) !important;
-            }
         }
     }
     
@@ -111,17 +171,9 @@
         .MuiListItem-root {
             border-radius: .3em;
             padding: 1em;
-            border-right: 0.3em solid var(--orange);
             
-            .MuiListItemIcon-root {
-                .MuiAvatar-root {
-                    background-color: var(--pink);
-                }
-                
-                svg {
-                    transform: rotateZ(-45deg);
-                    color: var(--orange);
-                }
+            .MuiListItemIcon-root svg {
+                transform: rotateZ(-45deg);
             }
             
             .MuiListItemText {
@@ -131,19 +183,13 @@
             }
         }
         
-        .MuiAvatar-root {
-            color: var(--pale) !important;
-        }
-        
         .MuiChip-root {
             margin-right: .5em;
             margin-bottom: .5em;
         }
         
         &-taskStatus {
-            --dot-color: var(--blue);
             text-transform: uppercase;
-            
             
             &::before {
                 content: "....";
@@ -157,19 +203,12 @@
     
     &-filters {
         &-button {
-            background-color: var(--pale) !important;
-            color: var(--dark) !important;
             transition: background-color 1s ease-in-out;
-            
-            &:hover {
-                background-color: var(--pale-light) !important;
-            }
         }
         
         &-puller {
             width: 30px;
             height: 6px;
-            background-color: var(--orange);
             border-radius: 12px;
             position: absolute;
             top: 8px;

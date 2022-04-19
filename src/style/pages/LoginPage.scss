@@ -1,4 +1,48 @@
 @import "../utils/_mixins.scss";
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
+
+@each $theme-name, $theme in $themes {
+	body[theme="#{$theme-name}"] .LoginPage {
+        &-appName, &-catchline {
+            color: map-deep-get($theme, "text", "dark") !important;
+        }
+        
+        .MuiTextField-root {
+            .MuiInputLabel-root {
+                color: map-deep-get($theme, "shadow", "light");
+            }
+            
+            .MuiInputBase-root {
+                input {
+                    color: map-deep-get($theme, "shadow", "dark");
+                    caret-color: map-deep-get($theme, "primary", "normal");
+                }
+                
+                &::before {
+                    border-bottom-color: map-deep-get($theme, "shadow", "normal");
+                }
+                
+                &::after {
+                    border-bottom-color: map-deep-get($theme, "primary", "normal");
+                }
+            }
+        }
+        
+        &-loginButton {
+            color: map-deep-get($theme, "text", "light") !important;
+            background-color: map-deep-get($theme, "primary", "normal") !important;
+            
+            &:disabled {
+                color: map-deep-get($theme, "shadow", "light") !important;
+            }
+            
+            &:hover:enabled:not(.isLoading) {
+                background-color: map-deep-get($theme, "primary", "dark") !important;
+            }
+        }
+	}	
+}
 
 .LoginPage {
     &-logo {
@@ -11,7 +55,6 @@
     
     &-appName, &-catchline {
         text-align: center;
-        color: var(--dark) !important;
     }
     
     &-appName {
@@ -24,30 +67,12 @@
         opacity: .5 !important;
     }
     
-    .MuiTextField-root {
-        .MuiInputLabel-root {
-            color: var(--gray-light);
-        }
-        
-        .MuiInputBase-root {
-            input {
-                color: var(--gray-dark);
-                caret-color: var(--blue);
-                font-size: .875em;
-                font-weight: 500;
-                font-family: inherit;
-                letter-spacing: .025em;
-                line-height: 1.2em;
-            }
-            
-            &::before {
-                border-bottom-color: var(--gray);
-            }
-            
-            &::after {
-                border-bottom-color: var(--blue);
-            }
-        }
+    .MuiTextField-root .MuiInputBase-root input {
+        font-size: .875em;
+        font-weight: 500;
+        font-family: inherit;
+        letter-spacing: .025em;
+        line-height: 1.2em;
     }
     
     &-loginButton {
@@ -55,9 +80,6 @@
         margin: 1.7em 0 0 0 !important;
         border-radius: .8em !important;
         font-weight: 500 !important;
-        
-        color: #fff !important;
-        background-color: var(--primary-dark) !important;
     
         font-family: inherit !important;
         text-transform: capitalize !important;
@@ -69,13 +91,7 @@
         -webkit-tap-highlight-color: transparent !important;
         
         &:disabled {
-            color: var(--gray-light) !important;
-            background-color: var(--pale) !important;
             cursor: not-allowed !important;
-        }
-        
-        &:hover:enabled:not(.is-loading) {
-            background-color: var(--blue) !important;
         }
     }
 }

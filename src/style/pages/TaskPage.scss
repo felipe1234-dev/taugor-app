@@ -1,9 +1,56 @@
-.TaskPage {
-	&-topbar,
-	&-header {
-		background-color: var(--blue) !important;
-	}
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
 
+@each $theme-name, $theme in $themes {
+    body[theme="#{$theme-name}"] .TaskPage {
+		&-topbar, &-header {
+			background-color: map-deep-get($theme, "primary", "normal") !important;
+		}
+		
+		&-topbar {
+			.MuiIconButton-root {
+				color: map-deep-get($theme, "text", "light");
+			}
+			
+			&-deleteButton, &-editButton {
+				color: map-deep-get($theme, "text", "light") !important;
+				background-color: map-deep-get($theme, "primary", "dark") !important;
+
+				&:hover {
+					background-color: map-deep-get($theme, "primary", "light") !important;
+				}
+			}
+		}
+		
+		&-header {
+			&-title, &-brief {
+				color: map-deep-get($theme, "text", "light");
+			}
+			
+			.MuiBox-root {
+				color: map-deep-get($theme, "text", "normal");
+			}
+	
+			.MuiChip-root {
+				&.MuiChip {
+					&-filled, &-outlined {
+						color: map-deep-get($theme, "text", "light");
+					}
+	
+					&-outlined {
+						border-color: map-deep-get($theme, "text", "normal");
+					}
+				}
+			}
+	
+			.MuiSvgIcon-root {
+				color: map-deep-get($theme, "text", "light");
+			}
+		}
+	}
+}
+
+.TaskPage {
 	&-topbar {
 		max-height: 3.5em !important;
 		padding-top: 5px !important;
@@ -12,15 +59,8 @@
         .MuiToolbar-root {
             min-height: 0 !important;
         }
-        
-		.MuiIconButton-root {
-			color: var(--pale);
-		}
 
-		&-deleteButton,
-		&-editButton {
-			color: var(--pale) !important;
-			background-color: var(--primary-dark) !important;
+		&-deleteButton, &-editButton {
 			transition: background-color 0.5s ease-in-out !important;
 			border-radius: 0.7em !important;
 			padding: 0.6em 1.1em !important;
@@ -29,20 +69,11 @@
 			&:not(:last-child) {
 				margin-right: 0.8em !important;
 			}
-
-			&:hover {
-				background-color: var(--primary-light) !important;
-			}
 		}
 	}
 
 	&-header {
 		padding: 3em 2em 5em 2em !important;
-
-		&-title,
-		&-brief {
-			color: var(--pale);
-		}
 
 		&-title {
 			font-size: 2.25em !important;
@@ -56,27 +87,11 @@
 			margin-bottom: 0.6em !important;
 		}
 
-		.MuiBox-root {
-			color: var(--light);
-		}
-
 		.MuiChip-root {
 			margin: 0 0.5em 1em 0;
-
-			&.MuiChip {
-				&-filled,
-				&-outlined {
-					color: var(--white);
-				}
-
-				&-outlined {
-					border-color: var(--light);
-				}
-			}
 		}
 
 		.MuiSvgIcon-root {
-			color: var(--pale);
 			margin-right: 0.1em;
 		}
 	}

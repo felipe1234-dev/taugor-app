@@ -1,13 +1,28 @@
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
+
+@each $theme-name, $theme in $themes {
+	body[theme="#{$theme-name}"] .SearchBar {
+		background-color: map-deep-get($theme, "primary", "dark");
+		
+		&:hover {
+			background-color: map-deep-get($theme, "primary", "light");
+		}
+		
+		.MuiInputBase-root .MuiInputBase-input {
+			color: map-deep-get($theme, "text", "light") !important;
+		}
+	}	
+}
+
 .SearchBar {
 	position: relative;
 	border-radius: 5px;
-	background-color: var(--primary-dark);
 	margin-left: 0;
 	width: 20%;
 	transition: width 1s ease;
 	
 	&:hover {
-		background-color: var(--primary-light);
 		width: 25%;
 	}
 
@@ -23,7 +38,6 @@
 	
 	.MuiInputBase-root {
 		.MuiInputBase-input {
-			color: var(--white) !important;
 			padding: .5em .8em;
 			width: 100%;
 		}

@@ -1,7 +1,14 @@
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
+
+@each $key, $val in $themes {
+	body[theme="#{$key}"] .Spinner {
+		--path-color: map-deep-get($val, "background", "primary-dark");
+		--bar-color: map-deep-get($val, "background", "primary-light");
+	}	
+}
+
 .Spinner {
-	--path-color: var(--blue);
-	--bar-color: var(--primary-light);
-	
 	animation: is-spinning 1s infinite;
 	border-radius: 50%;
 	height: 1em;
