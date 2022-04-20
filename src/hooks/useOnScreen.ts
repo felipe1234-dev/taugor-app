@@ -5,7 +5,7 @@ import {
 	RefObject 
 } from "react";
 
-export default function useOnScreen(ref: RefObject<HTMLElement>) {
+export default function useOnScreen(ref: RefObject<HTMLElement>, triggers: Array<any> = []) {
 	const [isOnScreen, setIsOnScreen] = useState(false);
 	const observerRef = useRef<IntersectionObserver>();
 
@@ -23,7 +23,7 @@ export default function useOnScreen(ref: RefObject<HTMLElement>) {
 				observerRef.current!.disconnect();
 			};
 		}
-	}, [ref]);
+	}, [ref, ...triggers]);
 
 	return isOnScreen;
 };
