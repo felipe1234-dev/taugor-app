@@ -37,7 +37,7 @@ import "@local/style/pages/HomePage.scss";
 export default function HomePage() {
     const [timeline, setTimeline]       = useState<Timeline>({});
     const [lastVisible, setLastVisible] = useState<string|null>(null);
-    const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+    const [hasNextPage, setHasNextPage] = useState<boolean>(false);
     const [isLoading, setIsLoading]     = useState<boolean>(false);
     const [filter, setFilter]           = useState<Filter>({
         orderBy: [
@@ -51,14 +51,12 @@ export default function HomePage() {
     const loaderRef        = useRef<HTMLDivElement>(null);
     const loaderIsOnScreen = useOnScreen(loaderRef, [timeline, isLoading]);
     
-    const fetchActivities = () => {
-        if (!lastVisible) {
+    const fetchActivities = (accum: boolean) => {
+        if (!accum) {
             setIsLoading(true);
         }
         
-        console.log(lastVisible)
-        
-        getActivities(db, !!lastVisible? { ...filter, startAfter: lastVisible } : filter)
+        getActivities(db, !!lastVisible && accum? { ...filter, startAfter: lastVisible } : filter)
             .then((resp: any) => {
                 const docs: Array<Task> = resp.docs.map((doc: any) => {
                     return ({
@@ -70,11 +68,11 @@ export default function HomePage() {
                 setHasNextPage(docs.length > 0);
                 
                 const grouped = groupDocsByTime(docs);
-                setTimeline(!!lastVisible? { ...timeline, ...grouped } : grouped);
+                setTimeline(accum? { ...timeline, ...grouped } : grouped);
             })
-            .catch((error: FirebaseError) => console.log(error))
+            .catch((error: FirebaseError) => console.error(error))
             .then(() => {
-                if (!lastVisible) {
+                if (!accum) {
                     setTimeout(() => setIsLoading(false), 5000);
                 }
             });
@@ -82,7 +80,7 @@ export default function HomePage() {
     
     useEffect(() => {
         setLastVisible(null);
-        fetchActivities();
+        fetchActivities(false);
     }, [db, filter]);
     
     useEffect(() => {
@@ -92,7 +90,7 @@ export default function HomePage() {
             const lastTask   = timeline[oldest!].at(-1);
             
             setLastVisible(lastTask!.uuid);
-            fetchActivities();
+            fetchActivities(true);
         }
     }, [db, loaderIsOnScreen]);
     
