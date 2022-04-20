@@ -12,6 +12,9 @@ import { getEnv } from "@local/functions";
 // Contexts
 import { AlertContext } from "@local/contexts";
 
+// Style
+import "@local/style/components/PageLoader.scss";
+
 // Configs
 const loaders = [
 	"square-spin",
@@ -30,55 +33,53 @@ export default function PageLoader() {
 	
 	useEffect(() => {
 		const randIndex = Math.round(Math.random() * (loaders.length - 1));
-		const loader    = loaders[randIndex];
+		const selLoader = loaders[randIndex];
 		
-		console.log(randIndex)
-		console.log(loader)
-		setLoader(loader);
+		setLoader(selLoader); 
 	}, []);
 
 	useEffect(() => {
-		const fetchJoke = async() => {
-			/* Fiz rapidamente um CORS proxy clonando um repositório,
-			 * porque, o dono da API não colocou "Access-Control-Allow-Origin: *"
-			 * no header dele. :/
-			 */
+		/* Fiz rapidamente um CORS proxy clonando um repositório,
+		 * porque, o dono da API não colocou "Access-Control-Allow-Origin: *"
+		 * no header dele. :/
+		 */
             
-            const corsProxy = getEnv("CORS_PROXY");
-            const jokesApi  = getEnv("JOKES_API");
-            
-            if (!!corsProxy && !!jokesApi) {
-                const apiUrl = corsProxy + jokesApi; 
-                
-                fetch(apiUrl)
-                    .then((resp) => resp.json())
-                    .then((resp) => setJoke(resp.question + " " + resp.answer))
-                    .catch((error: Error) => {
-						setSeverity("error" as "error");
-						setMessage("Erro desconhecido: " + error.message);
-					});
-            }
-		}
+		const corsProxy = getEnv("CORS_PROXY");
+		const jokesApi = getEnv("JOKES_API");
 
-		fetchJoke();
+		if (!!corsProxy && !!jokesApi) {
+			const apiUrl = corsProxy + jokesApi;
+
+			fetch(apiUrl)
+				.then((resp) => resp.json())
+				.then((resp) => setJoke(resp.question + " " + resp.answer))
+				.catch((error: Error) => {
+					setSeverity("error" as "error");
+					setMessage("Erro desconhecido: " + error.message);
+				});
+		}
 	}, []);
 
 	const loadingAnimation = {
-		loader: loader,
+		loader: "ball-newton-cradle",
 		sentences: [joke],
 		height: "100vh",
 		width: "100%",
 		fadeIn: true,
-		wrapperBackgroundColor: `var(--background)`,
-		color: "var(--blue)",
+		wrapperBackgroundColor: `var(--wrapper-color)`,
+		color: "var(--loader-color)",
 		textStyles: {
-			color: "var(--gray-dark)",
+			color: "var(--text-color)",
 		}
 	};
-
-	return (!!loader && !!joke)? (
-        <LoadingAnimation {...loadingAnimation} />
-    ) : (
-		<span></span>
+	
+	return (
+		<div className="PageLoader">
+			{(!!loader && !!joke)? (
+				<LoadingAnimation {...loadingAnimation} />
+			) : (
+				<span></span>
+			)}
+		</div>
 	);
 };
