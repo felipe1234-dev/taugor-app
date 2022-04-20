@@ -7,15 +7,17 @@ import {
     getDocs,
     doc,
     getDoc,
-    startAt,
-    Firestore
+    startAfter,
+    Firestore,
+    QueryConstraint
 } from "firebase/firestore";
 import { Filter, Task } from "@local/interfaces";
 import { OrderByClasule, WhereClasule } from "@local/types";
 
 export const getActivities = async(db: Firestore, filter: Filter) => {
-    let conditions: Array<any> = [];
-    let orders: Array<any>     = [];
+    let conditions: Array<QueryConstraint>  = [];
+    let orders: Array<QueryConstraint>      = [];
+    let lastVisible: Array<QueryConstraint> = [];
     
     if (filter.where) {
         conditions = filter.where.map((params: WhereClasule) => {
@@ -29,12 +31,21 @@ export const getActivities = async(db: Firestore, filter: Filter) => {
         });
     }
     
+    if (filter.startAfter) {
+        const docRef  = doc(db, "Activities", filter.startAfter);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+            lastVisible = [ startAfter(docSnap) ];
+        }
+    }
+    
     const q = query(
         collection(db, "Activities"), 
         ...conditions,
         ...orders,
-        limit(filter.limit? filter.limit : 10),
-        startAt(filter.startAt? filter.startAt : 0)
+        ...lastVisible,
+        limit(filter.limit? filter.limit : 10)
     );
         
     const queryPromise = await getDocs(q);
