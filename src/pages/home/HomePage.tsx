@@ -2,7 +2,8 @@
 import { 
     useState,
     useEffect,
-    useContext
+    useContext,
+    useRef
 } from "react";
 import { FirebaseError } from "firebase/app";
 
@@ -10,6 +11,9 @@ import { FirebaseError } from "firebase/app";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Body from "./Body";
+
+// Hooks
+import { useOnScreen } from "@local/hooks";
 
 // Contexts
 import { FirebaseContext } from "@local/contexts";
@@ -31,9 +35,11 @@ import {
 import "@local/style/pages/HomePage.scss";
 
 export default function HomePage() {
-    const [timeline, setTimeline]   = useState<Timeline>({});
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [filter, setFilter]       = useState<Filter>({
+    const [timeline, setTimeline]       = useState<Timeline>({});
+    const [lastVisible, setLastVisible] = useState<string|null>(null);
+    const [hasNextPage, setHasNextPage] = useState<boolean>(true);
+    const [isLoading, setIsLoading]     = useState<boolean>(false);
+    const [filter, setFilter]           = useState<Filter>({
         orderBy: [
             ["createdAt", "desc"]
         ],
@@ -41,11 +47,18 @@ export default function HomePage() {
     });
     
     const { db }   = useContext(FirebaseContext);
+
+    const loaderRef        = useRef<HTMLDivElement>(null);
+    const loaderIsOnScreen = useOnScreen(loaderRef, [timeline, isLoading]);
     
-    useEffect(() => {
-        setIsLoading(true);
+    const fetchActivities = () => {
+        if (!lastVisible) {
+            setIsLoading(true);
+        }
         
-        getActivities(db, filter)
+        console.log(lastVisible)
+        
+        getActivities(db, !!lastVisible? { ...filter, startAfter: lastVisible } : filter)
             .then((resp: any) => {
                 const docs: Array<Task> = resp.docs.map((doc: any) => {
                     return ({
@@ -53,18 +66,48 @@ export default function HomePage() {
                         ...doc.data()
                     });
                 });
+            
+                setHasNextPage(docs.length > 0);
                 
                 const grouped = groupDocsByTime(docs);
-                
-                setTimeline(grouped);
+                setTimeline(!!lastVisible? { ...timeline, ...grouped } : grouped);
             })
             .catch((error: FirebaseError) => console.log(error))
-            .then(() => setTimeout(() => setIsLoading(false), 5000));
+            .then(() => {
+                if (!lastVisible) {
+                    setTimeout(() => setIsLoading(false), 5000);
+                }
+            });
+    }
+    
+    useEffect(() => {
+        setLastVisible(null);
+        fetchActivities();
     }, [db, filter]);
     
-    const navbar = { filter, setFilter }
+    useEffect(() => {
+        if (hasNextPage && loaderIsOnScreen) {
+            const timestamps = Object.keys(timeline);
+            const oldest     = timestamps.at(-1);
+            const lastTask   = timeline[oldest!].at(-1);
+            
+            setLastVisible(lastTask!.uuid);
+            fetchActivities();
+        }
+    }, [db, loaderIsOnScreen]);
     
-    const body = { isLoading, timeline, filter, setFilter }
+    const navbar = { 
+        filter, 
+        setFilter 
+    }
+    
+    const body = {
+        loaderRef, 
+        isLoading, 
+        timeline, 
+        filter, 
+        setFilter 
+    }
     
     return (
         <>

@@ -6,7 +6,7 @@ import {
     Typography 
 } from "@mui/material";
 
-// Page components
+// Page components 
 import FilterSelector from "./FilterSelector";
 import NoResults from "./NoResults";
 import TaskList from "./TaskList";
@@ -19,6 +19,7 @@ import { Filter, Timeline } from "@local/interfaces";
 
 // Props interface
 interface BodyProps {
+    loaderRef: any,
     isLoading: boolean,
     timeline: Timeline,
     filter: Filter,
@@ -26,6 +27,7 @@ interface BodyProps {
 };
 
 export default function Body({
+    loaderRef,
     isLoading,
     timeline,
     filter,
@@ -85,15 +87,25 @@ export default function Body({
                 <Grid {...grid}>
                     <Grid item>
                         <Typography {...typography}>
-                            Atividades
+                            Atividades 
                         </Typography>
                     </Grid>
                     <Grid item> 
                         <FilterSelector {...filterSelector}/>
                     </Grid>
                 </Grid>
-                {isLoading? <Spinner {...spinner}/> : (
-                    Object.entries(timeline).length > 0? <TaskList {...taskList} /> : <NoResults />
+                {!isLoading? (
+                    Object.entries(timeline).length > 0? (
+                        <> 
+                            <TaskList {...taskList} />
+                            {/* Quando visível, carrega mais documentos da base de dados*/}
+                            <div id="loader" ref={loaderRef} /> 
+                        </>
+                    ) : (
+                        <NoResults />
+                    )
+                ) : (
+                    <Spinner {...spinner}/>
                 )}
             </Paper>
         </Container>
