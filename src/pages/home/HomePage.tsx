@@ -16,7 +16,7 @@ import Body from "./Body";
 import { useOnScreen } from "@local/hooks";
 
 // Contexts
-import { FirebaseContext } from "@local/contexts";
+import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
 import { getActivities } from "@local/api/collections/Activities";
@@ -25,11 +25,7 @@ import { getActivities } from "@local/api/collections/Activities";
 import { groupDocsByTime } from "@local/functions";
 
 // Interfaces
-import {
-    Filter,
-    Task,
-    Timeline
-} from "@local/interfaces";
+import { Filter, Timeline } from "@local/interfaces";
 
 // Style
 import "@local/style/pages/HomePage.scss";
@@ -46,8 +42,9 @@ export default function HomePage() {
         limit: 30
     });
     
-    const { db }   = useContext(FirebaseContext);
-
+    const { db } = useContext(FirebaseContext);
+    const { setSeverity, setMessage } = useContext(AlertContext);
+    
     const loaderRef        = useRef<HTMLDivElement>(null);
     const loaderIsOnScreen = useOnScreen(loaderRef, [timeline, isLoading]);
     
@@ -57,20 +54,16 @@ export default function HomePage() {
         }
         
         getActivities(db, !!lastVisible && accum? { ...filter, startAfter: lastVisible } : filter)
-            .then((resp: any) => {
-                const docs: Array<Task> = resp.docs.map((doc: any) => {
-                    return ({
-                        uuid: doc.id,
-                        ...doc.data()
-                    });
-                });
-            
+            .then((docs) => {
                 setHasNextPage(docs.length > 0);
                 
                 const grouped = groupDocsByTime(docs);
                 setTimeline(accum? { ...timeline, ...grouped } : grouped);
             })
-            .catch((error: FirebaseError) => console.error(error))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);   
+            })
             .then(() => {
                 if (!accum) {
                     setTimeout(() => setIsLoading(false), 5000);
