@@ -12,7 +12,7 @@ import Header from "./Header";
 import Body from "./Body";
 
 // Contexts
-import { FirebaseContext } from "@local/contexts";
+import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
 import { getActivityByUuid } from "@local/api/collections/Activities";
@@ -25,20 +25,26 @@ import "@local/style/pages/TaskPage.scss";
 
 export default function TaskPage() {
     const [task, setTask] = useState<Task|null>(null);
+    
     const { db } = useContext(FirebaseContext);
+    const { setSeverity, setMessage } = useContext(AlertContext);
     
     const { uuid: taskUuid } = useParams();
     
     useEffect(() => {
-        const fetchTaskData = async() => {
-            if (!!taskUuid) {
-                const pageTask = await getActivityByUuid(db, taskUuid);
-                setTask(pageTask);
-            }
+        if (!taskUuid) {
+            return;
         }
         
-        fetchTaskData();
-    }, [task, taskUuid, db]);
+        getActivityByUuid(db, taskUuid)
+            .then((task) => (
+                setTask(task)
+            ))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message); 
+            });
+    }, [task, taskUuid, db]); 
     
     return (
         !!task? (
