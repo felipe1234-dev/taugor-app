@@ -77,8 +77,16 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 		}
 	}
 	
+	const box = {
+		sx: { minHeight: "50px" }
+	}
+	
     const puller = {
 		className: "HomePage-filters-puller",
+	}
+	
+	const tooltip = {
+		title: "Lista de filtros"
 	}
     
 	const filterButton = {
@@ -115,7 +123,7 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 	return (
 		<>
 			<SwipeableDrawer {...swipeableDrawer}>
-				<Box sx={{ minHeight: "50px" }}>
+				<Box {...box}>
 					<Box {...puller} />
 				</Box>
 				<Box {...form}>
@@ -126,7 +134,7 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 					</FormControl>
 					<FormControl>
 						<Select {...statusSelector}>
-							{STATUS_TYPES.map((status: Status, i: number) => (
+							{[ "Todos", ...STATUS_TYPES ].map((status: string, i: number) => (
 								<MenuItem key={i} value={status}>
 									{status}
 								</MenuItem>
@@ -141,7 +149,7 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 					</FormControl>
 					<FormControl>
 						<Select {...prioritySelector}>
-							{PRIORITY_TYPES.map((priority: Priority, i: number) => (
+							{[ "Todas", ...PRIORITY_TYPES ].map((priority: string, i: number) => (
 								<MenuItem key={i} value={priority}>
 									{priority}
 								</MenuItem>
@@ -150,7 +158,7 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 					</FormControl>
 				</Box>
 			</SwipeableDrawer>
-			<Tooltip title="Lista de filtros">
+			<Tooltip {...tooltip}>
 				<IconButton {...filterButton}>
 					{!isOpen ? <FilterListIcon /> : <CloseIcon />}
 				</IconButton>
