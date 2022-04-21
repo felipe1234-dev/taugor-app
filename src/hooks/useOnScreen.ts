@@ -1,8 +1,8 @@
-import { 
-	useEffect, 
-	useState, 
+import {
+	useEffect,
+	useState,
 	useRef,
-	RefObject 
+	RefObject
 } from "react";
 
 export default function useOnScreen(ref: RefObject<HTMLElement>, triggers: Array<any> = []) {
