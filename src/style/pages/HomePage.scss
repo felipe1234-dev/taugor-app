@@ -80,11 +80,11 @@
         
         &-filters {
             &-button {
-                background-color: map-deep-get($theme, "shadow", "light") !important;
-                color: map-deep-get($theme, "text", "dark") !important;
+                color: map-deep-get($theme, "text", "light") !important;
+                background-color: map-deep-get($theme, "primary", "dark") !important;
                 
-                &:hover {
-                    background-color: map-deep-get($theme, "shadow", "normal") !important;
+                &:hover { 
+                    background-color: map-deep-get($theme, "primary", "light") !important;
                 }
             }
             
