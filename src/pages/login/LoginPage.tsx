@@ -19,7 +19,7 @@ import { APP_INFO } from "@local/constants";
 const {
 	appName, 
 	catchline, 
-	blueLogo, 
+	whiteLogo, 
 	alt, 
 	link 
 } = APP_INFO;
@@ -47,7 +47,7 @@ export default function LoginPage() {
 
     const logo = {
         className: "LoginPage-logo",
-        src: blueLogo,
+        src: whiteLogo,
         alt: alt,
         onClick: () => window.open(link, "_blank")?.focus()
     }
