@@ -11,15 +11,12 @@ import {
     Firestore,
     QueryConstraint
 } from "firebase/firestore";
+import { FirebaseError } from "@firebase/util";
 import { Filter, Task } from "@local/interfaces";
-import { 
-    Alert, 
-    OrderByClasule, 
-    WhereClasule 
-} from "@local/types";
+import { OrderByClasule, WhereClasule } from "@local/types";
 import toAlert from "@local/api/toAlert";
 
-export default function getActivities(db: Firestore, filter: Filter): Promise<Array<Task>|Alert> {
+export default function getActivities(db: Firestore, filter: Filter): Promise<Array<Task>> {
     return new Promise(async (resolve, reject) => {
         let conditions: Array<QueryConstraint>  = [];
         let orders: Array<QueryConstraint>      = [];
@@ -65,7 +62,7 @@ export default function getActivities(db: Firestore, filter: Filter): Promise<Ar
                 
                 resolve(docs);
             })
-            .catch((error) => (
+            .catch((error: FirebaseError) => (
                 reject(toAlert(error))
             ));
     });
