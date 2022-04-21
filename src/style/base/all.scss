@@ -39,6 +39,21 @@ body {
 	font-family: inherit !important;
 	word-break: break-word !important;
 	white-space: pre-line !important;
+	
+	&-hasCoolUnderline {
+		position: relative;
+		padding-bottom: .3em !important;
+				
+		&::before {
+			content: "";
+			position: absolute;
+			width: 40%;
+			height: 1px;
+			bottom: 0;
+			left: .7em;
+			border-bottom: .2em solid $orange;
+		}
+	}
 }
 
 .MuiButtonBase-root {
@@ -61,20 +76,5 @@ body {
 			-webkit-box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
 			box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
 		}
-	}
-}
-
-.hasCustomBar {
-	position: relative;
-    padding-bottom: .3em !important;
-            
-    &::before {
-    	content: "";
-        position: absolute;
-		width: 40%;
-		height: 1px;
-		bottom: 0;
-		left: .7em;
-		border-bottom: .2em solid var(--orange);
 	}
 }

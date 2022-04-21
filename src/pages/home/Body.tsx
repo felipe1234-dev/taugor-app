@@ -57,7 +57,7 @@ export default function Body({
     }
     
     const typography = {
-        className: "hasCustomBar",
+        className: "MuiTypography-root-hasCoolUnderline",
         component: "h5" as "h5",
         variant: "h5" as "h5",
         gutterBottom: true,
