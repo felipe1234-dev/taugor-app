@@ -2,49 +2,73 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-    body[theme="#{$theme-name}"] .TaskPage {
-		&-topbar, &-header {
-			background-color: map-deep-get($theme, "primary", "normal") !important;
-		}
-		
-		&-topbar {
-			.MuiIconButton-root {
-				color: map-deep-get($theme, "text", "light");
+	body[theme="#{$theme-name}"][page^="/task"] {
+		background-color: map-deep-get($theme, "secondary", "normal") !important;
+        
+		.TaskPage {
+			&-topbar,
+			&-header {
+				background-color: map-deep-get(
+					$theme,
+					"primary",
+					"normal"
+				) !important;
 			}
-			
-			&-deleteButton, &-editButton {
-				color: map-deep-get($theme, "text", "light") !important;
-				background-color: map-deep-get($theme, "primary", "dark") !important;
 
-				&:hover {
-					background-color: map-deep-get($theme, "primary", "light") !important;
+			&-topbar {
+				.MuiIconButton-root {
+					color: map-deep-get($theme, "text", "light");
 				}
-			}
-		}
-		
-		&-header {
-			&-title, &-brief {
-				color: map-deep-get($theme, "text", "light");
-			}
-			
-			.MuiBox-root {
-				color: map-deep-get($theme, "text", "normal");
-			}
-	
-			.MuiChip-root {
-				&.MuiChip {
-					&-filled, &-outlined {
-						color: map-deep-get($theme, "text", "light");
-					}
-	
-					&-outlined {
-						border-color: map-deep-get($theme, "text", "normal");
+
+				&-deleteButton,
+				&-editButton {
+					color: map-deep-get($theme, "text", "light") !important;
+					background-color: map-deep-get(
+						$theme,
+						"primary",
+						"dark"
+					) !important;
+
+					&:hover {
+						background-color: map-deep-get(
+							$theme,
+							"primary",
+							"light"
+						) !important;
 					}
 				}
 			}
-	
-			.MuiSvgIcon-root {
-				color: map-deep-get($theme, "text", "light");
+
+			&-header {
+				&-title,
+				&-brief {
+					color: map-deep-get($theme, "text", "light");
+				}
+
+				.MuiBox-root {
+					color: map-deep-get($theme, "text", "normal");
+				}
+
+				.MuiChip-root {
+					&.MuiChip {
+						&-filled,
+						&-outlined {
+							color: map-deep-get($theme, "text", "light");
+						}
+
+						&-outlined {
+							border-color: map-deep-get(
+								$theme,
+								"text",
+								"normal"
+							);
+						}
+					}
+				}
+
+				.MuiSvgIcon-root {
+					color: map-deep-get($theme, "text", "light");
+				}
 			}
 		}
 	}
@@ -56,11 +80,12 @@
 		padding-top: 5px !important;
 		padding-bottom: 5px !important;
 
-        .MuiToolbar-root {
-            min-height: 0 !important;
-        }
+		.MuiToolbar-root {
+			min-height: 0 !important;
+		}
 
-		&-deleteButton, &-editButton {
+		&-deleteButton,
+		&-editButton {
 			transition: background-color 0.5s ease-in-out !important;
 			border-radius: 0.7em !important;
 			padding: 0.6em 1.1em !important;
