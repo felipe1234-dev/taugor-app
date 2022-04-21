@@ -17,13 +17,12 @@ import {
     useLocation, 
     useNavigate 
 } from "react-router";
-import { FirebaseError } from "firebase/app";
 
 // Local components
 import { Spinner } from "@local/components";
 
 // API functions
-import { login, onError } from "@local/api/auth/sign-in";
+import { logIn } from "@local/api/auth";
 
 // Contexts
 import { AlertContext } from "@local/contexts";
@@ -76,16 +75,13 @@ export default function LoginForm() {
         const email    = data.get("email")?.toString() || "";
         const password = data.get("password")?.toString() || "";
         
-        login(email, password)
-            .then((response: any) => {
-                sessionStorage.setItem("Auth Token", response._tokenResponse.refreshToken);
-                sessionStorage.setItem("Assign Date", (new Date().getTime()).toString());
-                navigate(from, { replace: true });
-            })
-            .catch((error: FirebaseError) => {
-                const errData = onError(error);
-                setMessage(errData.message);
-                setSeverity(errData.severity);
+        logIn(email, password)
+            .then(() => (
+                navigate(from, { replace: true })
+            ))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);
             })
             .then(() => {
                 setTimeout(() => setFormIsLoading(false), 3000);
@@ -182,4 +178,4 @@ export default function LoginForm() {
             </Button>
         </Box>
     );
-}
+};
