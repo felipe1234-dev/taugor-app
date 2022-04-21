@@ -24,7 +24,11 @@ import { ProfileImage } from "@local/components";
 import { translateDate } from "@local/functions";
 
 // Contexts
-import { FirebaseContext, UserContext } from "@local/contexts";
+import { 
+    AlertContext,
+    FirebaseContext, 
+    UserContext 
+} from "@local/contexts";
 
 // API
 import { getUserByUuid } from "@local/api/collections/Users";
@@ -36,17 +40,19 @@ export default function TaskItem(task: Task) {
     const [poster, setPoster] = useState<User|null>(null);
     const [date, setDate]     = useState<string|null>(null);
     
+    const { setSeverity, setMessage } = useContext(AlertContext);
     const { db }   = useContext(FirebaseContext);
 	const { user } = useContext(UserContext);
     
     useEffect(() => {
-        const fetchsenderData = async() => {
-            const posterData = await getUserByUuid(db, task.postedBy);
-            
-            setPoster(posterData);
-        }
-        
-        fetchsenderData();
+        getUserByUuid(db, task.postedBy)
+            .then((user) => (
+                setPoster(user)
+            ))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);
+            });
     }, [task, db])
     
     useEffect(() => {
