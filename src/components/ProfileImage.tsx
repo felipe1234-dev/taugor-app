@@ -8,11 +8,11 @@ interface ProfileImageProps {
 
 export default function ProfileImage({ src, alt, ...rest }: ProfileImageProps & AvatarProps) {
     const colorAvatar = stringToAvatar(alt);
-    
+
     const avatar = !src? ({
         alt: alt,
         sx: {
-            bgColor: colorAvatar.color
+            backgroundColor: colorAvatar.color
         },
         children: colorAvatar.shortName
     }) : ({
