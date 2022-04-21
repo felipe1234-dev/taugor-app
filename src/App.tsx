@@ -1,8 +1,8 @@
 // Libs
-import { 
+import {
     useState,
-    useEffect, 
-    useContext 
+    useEffect,
+    useContext
 } from "react";
 import {
     Routes as Switch,
@@ -37,42 +37,42 @@ export default function App() {
     const [pageIsLoading, setPageIsLoading] = useState<boolean>(true);
     const {
         message,
-        setMessage, 
+        setMessage,
         severity,
-        setSeverity 
+        setSeverity
     } = useContext(AlertContext);
-	
-	const location = useLocation();
-    const pathNow  = location.pathname;
-	
+
+    const location = useLocation();
+    const pathNow = location.pathname;
+
     // Aciona sempre que a página atual mudar
-	useEffect(() => {
+    useEffect(() => {
         setPageIsLoading(true);
     }, [pathNow]);
-    
-	// Aciona sempre que o componente termina de montar
+
+    // Aciona sempre que o componente termina de montar
     useEffect(() => {
         setTimeout(() => {
-			setPageIsLoading(false);
-		}, 8000);
+            setPageIsLoading(false);
+        }, 8000);
     });
-	
-	const main = {
-		style: {
-			display: pageIsLoading? "none" : "block"
-		}
-	}
-	
-	const homeRoute = {
-		path: "/",
+
+    const main = {
+        style: {
+            display: pageIsLoading ? "none" : "block"
+        }
+    }
+
+    const homeRoute = {
+        path: "/",
         element: (
             <Page title={`Home - ${appName}`} requireAuth>
                 <Home />
             </Page>
         ),
         exact: true
-	}
-    
+    }
+
     const loginRoute = {
         path: "/login",
         element: (
@@ -82,7 +82,7 @@ export default function App() {
         ),
         exact: true
     }
-    
+
     const taskRoute = {
         path: "/task/:uuid",
         element: (
@@ -92,7 +92,7 @@ export default function App() {
         ),
         exact: true
     }
-    
+
     const error404Route = {
         path: "*",
         element: (
@@ -101,25 +101,25 @@ export default function App() {
             </Page>
         )
     }
-    
+
     const alertMessage = {
         open: !!message && !!severity,
-        type: !!severity? severity : undefined,
+        type: !!severity ? severity : undefined,
         duration: 6000,
         onClose: () => {
             setMessage(null);
             setSeverity(null);
         }
     }
-	
-	return (
-		<>
-			<main {...main}>
+
+    return (
+        <>
+            <main {...main}>
                 <Switch>
-                    <Route {...homeRoute}/>
-                    <Route {...loginRoute}/>
-                    <Route {...taskRoute}/>
-                    <Route {...error404Route}/>
+                    <Route {...homeRoute} />
+                    <Route {...loginRoute} />
+                    <Route {...taskRoute} />
+                    <Route {...error404Route} />
                 </Switch>
             </main>
             {pageIsLoading && (
@@ -128,6 +128,6 @@ export default function App() {
             <AlertMessage {...alertMessage}>
                 {message}
             </AlertMessage>
-		</>
-	);
+        </>
+    );
 };
