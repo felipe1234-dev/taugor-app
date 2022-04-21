@@ -91,18 +91,21 @@ export default function HomePage() {
         setFilter 
     }
     
+    const header = {
+        filter, 
+        setFilter 
+    }
+    
     const body = {
         loaderRef, 
         isLoading, 
-        timeline, 
-        filter, 
-        setFilter 
+        timeline
     }
     
     return (
         <>
             <Navbar {...navbar}/>
-            <Header />
+            <Header {...header}/>
             <Body {...body}/>
         </> 
     );

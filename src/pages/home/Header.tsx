@@ -17,7 +17,19 @@ import {
 // Contexts
 import { UserContext } from "@local/contexts";
 
-export default function Header() {
+// Page components 
+import FilterSelector from "./FilterSelector";
+
+// Interfaces
+import { Filter } from "@local/interfaces";
+
+// Props interface
+interface HeaderProps {
+    filter: Filter,
+    setFilter(params: Filter): void
+}
+
+export default function Header({ filter, setFilter }: HeaderProps) {
     const [helloMsg, setHelloMsg] = useState<string>("Olá");
     
     const { user } = useContext(UserContext);
@@ -75,6 +87,8 @@ export default function Header() {
         variant: "contained" as "contained"
     }
     
+    const filterSelector = { setFilter, filter }
+    
     return (
         <Grid {...container}>
             {!!user && (
@@ -86,6 +100,9 @@ export default function Header() {
                         <Typography {...displayName}>
                             {user.displayName}<span style={{ opacity: ".5" }}>!</span>
                         </Typography> 
+                    </Grid>
+                    <Grid item>
+                        <FilterSelector {...filterSelector}/>
                     </Grid>
                     <Grid item>
                         <Tooltip {...tooltip}>

@@ -6,8 +6,7 @@ import {
     Typography 
 } from "@mui/material";
 
-// Page components 
-import FilterSelector from "./FilterSelector";
+// Page components
 import NoResults from "./NoResults";
 import TaskList from "./TaskList";
 
@@ -15,23 +14,19 @@ import TaskList from "./TaskList";
 import { Spinner } from "@local/components";
 
 // Interfaces
-import { Filter, Timeline } from "@local/interfaces";
+import { Timeline } from "@local/interfaces";
 
 // Props interface
 interface BodyProps {
     loaderRef: any,
     isLoading: boolean,
-    timeline: Timeline,
-    filter: Filter,
-    setFilter(params: Filter): void
+    timeline: Timeline
 };
 
 export default function Body({
     loaderRef,
     isLoading,
-    timeline,
-    filter,
-    setFilter
+    timeline
 }: BodyProps) {
     const paper = {
         className: `HomePage-main${isLoading? " isLoading" : ""}`,
@@ -51,7 +46,7 @@ export default function Body({
         container: true,
         sx: {
             flexDirection: "row",
-            justifyContent: "space-between",
+            justifyContent: "flex-start",
             alignItems: "center"
         }
     }
@@ -79,8 +74,6 @@ export default function Body({
     
     const taskList = { timeline }
     
-    const filterSelector = { setFilter, filter }
-    
     return (
         <Container {...container}>
             <Paper {...paper}>
@@ -89,9 +82,6 @@ export default function Body({
                         <Typography {...typography}>
                             Atividades 
                         </Typography>
-                    </Grid>
-                    <Grid item> 
-                        <FilterSelector {...filterSelector}/>
                     </Grid>
                 </Grid>
                 {!isLoading? (
