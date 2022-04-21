@@ -2,61 +2,55 @@ $blue: #3b8ad9;
 $white: #f6f7fe;
 $light: #bbc1e1;
 $dark: #2b3044;
-$gray: #8a91B4;
+$gray: #8a91b4;
+
+$pink: #fff0e5;
+$orange: #ff7f52;
+$green: #41b5a7;
 
 $themes: (
-    light: (
-        primary: (
-            light: lighten($blue, 7.5%),
-            normal: $blue,
-            dark: darken($blue, 3%)
-        ),
-        secondary: (
-            light: lighten($white, 7.5%),
-            normal: $white,
-            dark: darken($white, 7.5%)
-        ),
-        shadow: (
-            light: lighten($gray, 7.5%),
-            normal: $gray,
-            dark: darken($gray, 7.5%)
-        ),
-        text: (
-            light: $white,
-            normal: $light,
-            dark: $dark 
-        ),
-        extra: (
-            pink: #fff0e5,
-            orange: #ff7f52,
-            green: #41b5a7
-        )
-    ),
-    dark: (
-        primary: (
-            light: lighten($blue, 7.5%),
-            normal: $blue,
-            dark: darken($blue, 7.5%),
-        ),
-        secondary: (
-            light: lighten($white, 7.5%),
-            normal: $white,
-            dark: darken($white, 7.5%)
-        ),
-        shadow: (
-            light: lighten($gray, 7.5%),
-            normal: $gray,
-            dark: darken($gray, 7.5%)
-        ),
-        text: (
-            light: $white,
-            normal: $light,
-            dark: $dark 
-        ),
-        extra: (
-            pink: #fff0e5,
-            orange: #ff7f52,
-            green: #41b5a7
-        )
-    )
+	light: (
+		primary: (
+			light: lighten($blue, 7.5%),
+			normal: $blue,
+			dark: darken($blue, 3%),
+		),
+		secondary: (
+			light: lighten($white, 7.5%),
+			normal: $white,
+			dark: darken($white, 7.5%),
+		),
+		shadow: (
+			light: lighten($gray, 7.5%),
+			normal: $gray,
+			dark: darken($gray, 7.5%),
+		),
+		text: (
+			light: $white,
+			normal: $light,
+			dark: $dark,
+		),
+	),
+	dark: (
+		primary: (
+			light: lighten($blue, 7.5%),
+			normal: $blue,
+			dark: darken($blue, 7.5%),
+		),
+		secondary: (
+			light: lighten($white, 7.5%),
+			normal: $white,
+			dark: darken($white, 7.5%),
+		),
+		shadow: (
+			light: lighten($gray, 7.5%),
+			normal: $gray,
+			dark: darken($gray, 7.5%),
+		),
+		text: (
+			light: $white,
+			normal: $light,
+			dark: $dark,
+		),
+	),
 );
