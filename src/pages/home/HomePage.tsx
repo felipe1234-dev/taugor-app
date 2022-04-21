@@ -5,7 +5,6 @@ import {
     useContext,
     useRef
 } from "react";
-import { FirebaseError } from "firebase/app";
 
 // Page components
 import Navbar from "./Navbar";
