@@ -12,6 +12,8 @@ import {
     ListItemIcon,
 	ListItemText, 
 	Typography,
+    useMediaQuery,
+    useTheme,
     Chip
 } from "@mui/material";
 import { Label as LabelIcon } from "@mui/icons-material";
@@ -44,6 +46,9 @@ export default function TaskItem(task: Task) {
     const { db }   = useContext(FirebaseContext);
 	const { user } = useContext(UserContext);
     
+    const theme    = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    
     useEffect(() => {
         getUserByUuid(db, task.postedBy)
             .then((user) => (
@@ -58,7 +63,7 @@ export default function TaskItem(task: Task) {
     useEffect(() => {
         const date = 
             moment( new Date(task.createdAt.seconds*1000) )
-            .format("D [de] MMM, YYYY");
+                .format("D [de] MMM, YYYY");
         
         setDate( translateDate(date) );
     }, [task]);
@@ -81,9 +86,9 @@ export default function TaskItem(task: Task) {
         container: true,
         sx: {
             display: "flex",
-            flexDirection: "row",
+            flexDirection: !isMobile? "row" : "column",
             justifyContent: "flex-start",
-            alignItems: "center"
+            alignItems: !isMobile? "center" : "flex-start"
         }
     }
         
