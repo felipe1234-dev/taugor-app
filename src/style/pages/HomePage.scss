@@ -54,17 +54,17 @@
             }
         }
 
-        &-taskList {
+        &-taskList { 
             .MuiListItem-root {
-                border-right: 0.3em solid map-deep-get($theme, "extra", "orange");
+                border-right-color: $orange;
                 
                 .MuiListItemIcon-root {
                     .MuiAvatar-root {
-                        background-color: map-deep-get($theme, "extra", "pink");
+                        background-color: $pink;
                     }
                     
                     svg {
-                        color: map-deep-get($theme, "extra", "orange");
+                        color: $orange;
                     }
                 }
             }
@@ -89,7 +89,7 @@
             }
             
             &-puller {
-                background-color: map-deep-get($theme, "extra", "orange");
+                background-color: $orange;
             }   
         }
 	}
@@ -170,6 +170,8 @@
     
     &-taskList {
         .MuiListItem-root {
+            border-right-width: 0.3em;
+            border-right-style: solid;
             border-radius: .3em;
             padding: 1em;
             
