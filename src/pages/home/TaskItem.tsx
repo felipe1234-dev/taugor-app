@@ -12,11 +12,11 @@ import {
     ListItemIcon,
 	ListItemText, 
 	Typography,
+    Tooltip,
     useMediaQuery,
     useTheme,
     Chip
 } from "@mui/material";
-import { Label as LabelIcon } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
 // Components 
@@ -31,6 +31,9 @@ import {
     FirebaseContext, 
     UserContext 
 } from "@local/contexts";
+
+// Constants
+import { STATUS_ICONS } from "@local/constants";
 
 // API
 import { getUserByUuid } from "@local/api/collections/Users";
@@ -73,6 +76,10 @@ export default function TaskItem(task: Task) {
         to: `/task/${task.uuid}`
     }
     
+    const tooltip = {
+        title: task.status
+    }
+    
     const brief = {
         component: "span" as "span",
         variant: "body2" as "body2",
@@ -112,7 +119,7 @@ export default function TaskItem(task: Task) {
     });
     
     const listItemText = {
-        primary: `${task.title.join(" ")} (${task.status})`, 
+        primary: task.title.join(" "), 
         secondary: (!!poster && !!date) && (
             <>
                 <Typography {...brief}>
@@ -130,9 +137,11 @@ export default function TaskItem(task: Task) {
 	return (
         <ListItem {...listItem} button>
             <ListItemIcon>
-                <Avatar>
-                    <LabelIcon />
-                </Avatar>
+                <Tooltip {...tooltip}>
+                    <Avatar data-status={task.status}>
+                        {STATUS_ICONS[task.status]}
+                    </Avatar>
+                </Tooltip>
             </ListItemIcon>
             <ListItemText {...listItemText}/>
         </ListItem>
