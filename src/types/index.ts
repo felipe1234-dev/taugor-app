@@ -6,10 +6,12 @@ import {
 import { 
     ENV_TYPES,
     PRIORITY_TYPES, 
-    STATUS_TYPES 
+    STATUS_TYPES
 } from "@local/constants/index";
 
 export type Severity = "error" | "warning" | "info" | "success";
+
+export type Alert = { message: string, severity: Severity }
 
 export type WhereClasule = readonly [FieldPath|string, WhereFilterOp, unknown];
 
