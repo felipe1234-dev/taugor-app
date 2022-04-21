@@ -5,6 +5,6 @@
 	body[theme="#{$theme-name}"] .PageLoader {
         --wrapper-color: #{map-deep-get($theme, "secondary", "normal")};
         --loader-color: #{map-deep-get($theme, "primary", "normal")};
-        --text-color: #{map-deep-get($theme, "shadow", "normal")};
+        --text-color: #{map-deep-get($theme, "shadow", "dark")};
     }	
 }
