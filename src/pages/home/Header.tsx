@@ -103,8 +103,6 @@ export default function Header({ filter, setFilter }: HeaderProps) {
                     </Grid>
                     <Grid item>
                         <FilterSelector {...filterSelector}/>
-                    </Grid>
-                    <Grid item>
                         <Tooltip {...tooltip}>
                             <IconButton {...addActivity}>
                                 <PencilIcon />
