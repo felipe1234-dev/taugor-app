@@ -4,9 +4,8 @@ import {
     getDoc 
 } from "firebase/firestore";
 import { User } from "@local/interfaces";
-import { Alert } from "@local/types";
 
-export default function getUserByUuid(db: Firestore, uuid: string): Promise<User|Alert> {
+export default function getUserByUuid(db: Firestore, uuid: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
         const docRef  = doc(db, "Users", uuid);
         const docSnap = await getDoc(docRef);
@@ -15,7 +14,7 @@ export default function getUserByUuid(db: Firestore, uuid: string): Promise<User
             resolve({ 
                 uuid, 
                 ...docSnap.data() 
-            } as User);
+            } as User); 
         }
         
         reject({
