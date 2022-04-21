@@ -41,6 +41,28 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 	const [isOpen, setIsOpen]           = useState<boolean>(false);
 	const [selStatus, setSelStatus]     = useState<"Todos"|Status>("Todos");
 	const [selPriority, setSelPriority] = useState<"Todas"|Priority>("Todas");
+		
+	useEffect(() => {
+		const conditions = filter.where? filter.where.filter((where: WhereClasule) => {
+			return !["status", "priority"].includes(where[0] as string)
+		}) : [];
+		
+		if (selStatus !== "Todos")
+			conditions.push([ "status", "==", selStatus ]);
+			
+		if (selPriority !== "Todas")
+			conditions.push([ "priority", "==", selPriority ]);
+			
+		/* Quando temos um objeto com propriedades duplicadas, o valor que 
+		 * vier por último tem prioridade, portanto, "where: conditions" 
+		 * ssobrescreverá "filter.where".
+		 */
+		setFilter({
+			...filter,
+			where: conditions
+		});
+	}, [selPriority, selStatus]);
+	
 	const drawerBleeding = 52;
 
 	const swipeableDrawer = {
@@ -89,27 +111,6 @@ export default function FilterSelector({ filter, setFilter }: Props) {
 		value: selPriority,
 		onChange: (event: any) => setSelPriority(event.target.value)
 	}
-	
-	useEffect(() => {
-		const conditions = filter.where? filter.where.filter((where: WhereClasule) => {
-			return !["status", "priority"].includes(where[0] as string)
-		}) : [];
-		
-		if (selStatus !== "Todos")
-			conditions.push([ "status", "==", selStatus ]);
-			
-		if (selPriority !== "Todas")
-			conditions.push([ "priority", "==", selPriority ]);
-			
-		/* Quando temos um objeto com propriedades duplicadas, o valor que 
-		 * vier por último tem prioridade, portanto, "where: conditions" 
-		 * ssobrescreverá "filter.where".
-		 */
-		setFilter({
-			...filter,
-			where: conditions
-		});
-	}, [selPriority, selStatus]);
 
 	return (
 		<>
