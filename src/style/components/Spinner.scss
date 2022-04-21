@@ -3,9 +3,9 @@
 
 @each $theme-name, $theme in $themes {
 	body[theme="#{$theme-name}"] .Spinner {
-		--path-color: #{map-deep-get($theme, "primary", "light")};
-		--bar-color: #{map-deep-get($theme, "primary", "dark")};
-	}	
+		--path-color: rgba(0, 0, 0, .075);
+		--bar-color: rgba(0, 0, 0, .1);
+	}
 }
 
 .Spinner {
