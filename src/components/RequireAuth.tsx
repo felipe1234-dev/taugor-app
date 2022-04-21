@@ -2,15 +2,19 @@
 import { 
     useState, 
     useEffect, 
-    useContext 
+    useContext
 } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 
 // API Firebase
-import { getCurrentUser, logout } from "@local/api/auth/sign-in";
+import { getCurrentUser } from "@local/api/auth";
 
 // Contexts
-import { FirebaseContext, UserContext } from "@local/contexts";
+import { 
+    AlertContext, 
+    FirebaseContext, 
+    UserContext 
+} from "@local/contexts";
 
 // Props interface
 interface RequireAuthProps {
@@ -22,40 +26,27 @@ export default function RequireAuth({ children }: RequireAuthProps) {
     const [allowed, setAllowed] = useState<boolean>(false);
     const location = useLocation();
     
+    const { setSeverity, setMessage } = useContext(AlertContext);
     const { db } = useContext(FirebaseContext);
     const { setUser } = useContext(UserContext);
     
     useEffect(() => {
-        (async() => {
-            setReady(false); 
-            
-            const refreshToken = sessionStorage.getItem("Auth Token");
-
-            if (!!refreshToken) {
-                const tokenDate     = Number(sessionStorage.getItem("Assign Date"));
-                const timeNow       = new Date().getTime();
-                const minutesPassed = (timeNow - tokenDate)/(1000 * 60);
-
-                if (minutesPassed > 60) {
-                    logout().then(() => {
-                        sessionStorage.removeItem("Auth Token");
-                        sessionStorage.removeItem("Assign Date");
-                    });
-                }
-            } 
-            
-            const user = await getCurrentUser(db);
-            
-            if (!!refreshToken || !!user) {
+        setReady(false);
+        
+        getCurrentUser(db)
+            .then((user) => {
                 setUser(user);
-                setAllowed(true);
-            } else {
-                setUser(null);
-                setAllowed(false);
-            }
-            
-            setReady(true);
-        })();
+                setAllowed(!!user); 
+                /* Se user for nulo, significa que não está logado,
+                 * vai ser convertido em false e vice-versa.
+                 */
+                    
+                setReady(true);
+            })
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);   
+            });
     }, [db]); 
 
     if (!ready) {
