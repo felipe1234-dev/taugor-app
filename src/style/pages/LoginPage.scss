@@ -3,45 +3,59 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-	body[theme="#{$theme-name}"] .LoginPage {
-        &-appName, &-catchline {
-            color: map-deep-get($theme, "text", "dark") !important;
-        }
+	body[theme="#{$theme-name}"][page="/login"] {
+        background-color: map-deep-get($theme, "primary", "normal") !important;
         
-        .MuiTextField-root {
-            .MuiInputLabel-root {
-                color: map-deep-get($theme, "shadow", "light");
+        .LoginPage {
+            &-appName, &-catchline {
+                color: map-deep-get($theme, "text", "light") !important;
             }
             
-            .MuiInputBase-root {
-                input {
-                    color: map-deep-get($theme, "shadow", "dark");
-                    caret-color: map-deep-get($theme, "primary", "normal");
+            .MuiTextField-root {
+                .MuiInputLabel-root {
+                    color: map-deep-get($theme, "secondary", "light");
                 }
                 
-                &::before {
-                    border-bottom-color: map-deep-get($theme, "shadow", "normal");
+                .MuiInputBase-input {
+                    --autofill-color: #{map-deep-get($theme, "primary", "normal")};
                 }
                 
-                &::after {
-                    border-bottom-color: map-deep-get($theme, "primary", "normal");
+                .MuiInputBase-root {
+                    input {
+                        color: map-deep-get($theme, "secondary", "normal") !important;
+                        caret-color: map-deep-get($theme, "secondary", "normal");
+                    }
+                    
+                    &::before {
+                        border-bottom-color: map-deep-get($theme, "secondary", "light");
+                    }
+                    
+                    &::after {
+                        border-bottom-color: $orange;
+                    }
+                    
+                    .MuiInputAdornment-root svg {
+                        color: map-deep-get($theme, "secondary", "normal");
+                    }
+                }
+            }
+            
+            &-loginButton {
+                color: map-deep-get($theme, "text", "light") !important;
+                background-color: $orange !important;
+                
+                &:disabled {
+                    pointer-events: auto !important;
+                    color: map-deep-get($theme, "primary", "normal") !important;
+                    background-color: map-deep-get($theme, "secondary", "normal") !important;
+                }
+                
+                &:hover:enabled:not(.isLoading) {
+                    background-color: lighten($orange, 3%) !important;
                 }
             }
         }
-        
-        &-loginButton {
-            color: map-deep-get($theme, "text", "light") !important;
-            background-color: map-deep-get($theme, "primary", "normal") !important;
-            
-            &:disabled {
-                color: map-deep-get($theme, "shadow", "light") !important;
-            }
-            
-            &:hover:enabled:not(.isLoading) {
-                background-color: map-deep-get($theme, "primary", "dark") !important;
-            }
-        }
-	}	
+    }
 }
 
 .LoginPage {
@@ -58,12 +72,12 @@
     }
     
     &-appName {
-        font-size: 1.25em !important;
+        font-size: 1.5em !important;
         font-weight: bold !important;
     }
     
     &-catchline {
-        font-size: 1em !important;
+        font-size: 1.1em !important;
         opacity: .5 !important;
     }
     
