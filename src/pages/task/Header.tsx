@@ -22,12 +22,15 @@ import { Task } from "@local/interfaces";
 const Heading = (task: Task) => {
     const title = {
         className: "TaskPage-header-title",
-        component: "h1"
+        component: "h1" as "h1"
     }
     
     const brief = {
-        className: "TaskPage-header-brief",
-        component: "h2"
+        className: "TaskPage-header-brief MuiTypography-root-hasCoolUnderline",
+        component: "h2" as "h2",
+        style: {
+            ["--width"]: "10%"
+        }
     }
     
     return (
