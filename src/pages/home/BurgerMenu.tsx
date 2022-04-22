@@ -23,13 +23,13 @@ import { UserContext } from "@local/contexts";
 import { ProfileImage } from "@local/components";
 
 // Props interface
-interface Props {
+interface BurgerMenuProps {
     navItems: Array<{ label: string, icon: JSX.Element }>,
     selTab: 0 | 1,
     setSelTab(tab: 0 | 1): void
 };
 
-export default function BurgerMenu({ navItems, selTab, setSelTab }: Props) {
+export default function BurgerMenu({ navItems, selTab, setSelTab }: BurgerMenuProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const { user } = useContext(UserContext);

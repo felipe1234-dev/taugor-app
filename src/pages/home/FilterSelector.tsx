@@ -32,12 +32,12 @@ import {
 } from "@local/types/index";
 
 // Props interface
-interface Props {
+interface FilterSelectorProps {
     filter: Filter,
     setFilter(params: Filter): void
 };
 
-export default function FilterSelector({ filter, setFilter }: Props) {
+export default function FilterSelector({ filter, setFilter }: FilterSelectorProps) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [selStatus, setSelStatus] = useState<"Todos" | Status>("Todos");
     const [selPriority, setSelPriority] = useState<"Todas" | Priority>("Todas");
