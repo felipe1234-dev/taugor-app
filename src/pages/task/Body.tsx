@@ -23,8 +23,12 @@ export default function Body(task: Task) {
     }
 
     const title = {
+        className: "MuiTypography-root-hasCoolUnderline",
         component: "h3" as "h3",
-        variant: "h5" as "h5"
+        variant: "h5" as "h5",
+        style: {
+            ["--width"]: "5%"
+        }
     }
     
     const attachList = {
@@ -32,7 +36,7 @@ export default function Body(task: Task) {
     }
 
     const textEditor = {
-        preview: true,
+        isPreview: true,
         initialContent: task.description
     }
     
