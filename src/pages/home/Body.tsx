@@ -51,12 +51,16 @@ export default function Body({
         }
     }
     
+    const gridItem = {
+        item: true, 
+        sx: { p: 2 }
+    }
+    
     const typography = {
         className: "MuiTypography-root-hasCoolUnderline",
         component: "h5" as "h5",
         variant: "h5" as "h5",
-        gutterBottom: true,
-        sx: { p: 2 }
+        gutterBottom: true
     }
     
     const spinner = {
@@ -78,7 +82,7 @@ export default function Body({
         <Container {...container}>
             <Paper {...paper}>
                 <Grid {...grid}>
-                    <Grid item>
+                    <Grid {...gridItem}>
                         <Typography {...typography}>
                             Atividades 
                         </Typography>
