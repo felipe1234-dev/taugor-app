@@ -1,13 +1,13 @@
 // Libs
-import { 
-    useState, 
-    useEffect, 
-    useContext 
+import {
+    useState,
+    useEffect,
+    useContext
 } from "react";
-import { 
+import {
     Tab,
     Tabs,
-    AppBar, 
+    AppBar,
     Toolbar,
     Typography,
     useMediaQuery,
@@ -43,44 +43,44 @@ import { WhereClasule } from "@local/types";
 // Constants
 import { APP_INFO } from "@local/constants";
 
-const { 
-    appName, 
-    whiteIcon, 
-    alt 
-} = APP_INFO; 
+const {
+    appName,
+    whiteIcon,
+    alt
+} = APP_INFO;
 
 // NavbarProps interface
 interface NavbarProps {
-	filter: Filter,
+    filter: Filter,
     setFilter(params: Filter): void
 };
 
 export default function Navbar({ filter, setFilter }: NavbarProps) {
     const [searchVal, setSearchVal] = useState<string>("");
-    const [selTab, setSelTab]       = useState<0|1>(0);
-    
-    const theme    = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    
-    const { user } = useContext(UserContext);
-    
-    useEffect(() => {
-        const conditions = filter.where? filter.where.filter((where: WhereClasule) => {
-			return !["title", "postedBy"].includes(where[0] as string)
-		}) : [];
-		
-		if (!!searchVal)
-			conditions.push([ "title", "array-contains-any", searchVal.split(" ") ]);
+    const [selTab, setSelTab] = useState<0 | 1>(0);
 
-        if (selTab === 1 && !!user) 
-            conditions.push([ "postedBy", "==", user.uuid ]);
-		
-		setFilter({
-			...filter,
-			where: conditions
-		});
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
+    const { user } = useContext(UserContext);
+
+    useEffect(() => {
+        const conditions = filter.where ? filter.where.filter((where: WhereClasule) => {
+            return !["title", "postedBy"].includes(where[0] as string)
+        }) : [];
+
+        if (!!searchVal)
+            conditions.push(["title", "array-contains-any", searchVal.split(" ")]);
+
+        if (selTab === 1 && !!user)
+            conditions.push(["postedBy", "==", user.uuid]);
+
+        setFilter({
+            ...filter,
+            where: conditions
+        });
     }, [user, searchVal, selTab]);
-    
+
     const menuItems = [
         {
             label: "Todas as atividades",
@@ -91,36 +91,36 @@ export default function Navbar({ filter, setFilter }: NavbarProps) {
             icon: <FaceIcon />
         }
     ]
-    
+
     const appBar = {
         className: "HomePage-navbar",
         component: "nav",
         position: "sticky" as "sticky",
         elevation: 0
     }
-    
+
     const logo = {
         className: "HomePage-navbar-logo",
         src: whiteIcon,
         alt: alt
     }
-    
+
     const brand = {
         className: "HomePage-navbar-appName",
         component: "h1"
     }
-    
-    const box = { 
-        flexGrow: 1 
+
+    const box = {
+        flexGrow: 1
     }
-    
+
     const searchBar = {
         onChange: (event: any) => setSearchVal(event.target.value),
         placeholder: "Buscar por título"
     }
-    
+
     const tabs = {
-        onChange: (event: any, newIndex: 0|1) => setSelTab(newIndex),
+        onChange: (event: any, newIndex: 0 | 1) => setSelTab(newIndex),
         textColor: "inherit" as "inherit",
         value: selTab
     }
@@ -132,61 +132,61 @@ export default function Navbar({ filter, setFilter }: NavbarProps) {
         label: tab.label,
         iconPosition: "start" as "start"
     });
-    
+
     const tooltip = {
         title: "Abrir configurações"
     }
-    
+
     const iconButton = {
         component: Paper,
         elevation: 1,
         sx: {
-            border: `.05em solid ${!!user? stringToColor(user.displayName) : "#fff"} !important`,
+            border: `.05em solid ${!!user ? stringToColor(user.displayName) : "#fff"} !important`,
             padding: "0 !important",
             marginLeft: ".5em !important",
             backgroundColor: "transparent !important"
         }
     }
-    
+
     const profileImage = {
         className: "HomePage-navbar-profileImage",
-        src: !!user? user.photoURL : undefined,
-        alt: !!user? user.displayName : "Nada"
+        src: !!user ? user.photoURL : undefined,
+        alt: !!user ? user.displayName : "Nada"
     }
-        
+
     const burgerMenu = {
         selTab: selTab,
-        setSelTab: (newIndex: 0|1) => setSelTab(newIndex),
+        setSelTab: (newIndex: 0 | 1) => setSelTab(newIndex),
         navItems: menuItems
     }
-    
+
     return (
         <AppBar {...appBar}>
             <Toolbar>
-                <img {...logo}/>
-                
+                <img {...logo} />
+
                 <Typography {...brand}>
                     {appName}
                 </Typography>
-                
-                <Box {...box}/>
-                
-                {!isMobile? (
+
+                <Box {...box} />
+
+                {!isMobile ? (
                     <>
-                        <SearchBar {...searchBar}/>
+                        <SearchBar {...searchBar} />
                         <Tabs {...tabs}>
                             {menuItems.map((item, i) => (
-                                <Tab {...tab(item, i)}/>
+                                <Tab {...tab(item, i)} />
                             ))}
                         </Tabs>
                         <Tooltip {...tooltip}>
                             <IconButton {...iconButton}>
-                                <ProfileImage {...profileImage}/>
+                                <ProfileImage {...profileImage} />
                             </IconButton>
                         </Tooltip>
                     </>
-                ) : <BurgerMenu {...burgerMenu}/>}
-                
+                ) : <BurgerMenu {...burgerMenu} />}
+
             </Toolbar>
         </AppBar>
     );

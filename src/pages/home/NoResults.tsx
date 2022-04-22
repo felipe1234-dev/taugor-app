@@ -6,24 +6,24 @@ import NoResultsFoundImg from "@local/media/no-results-found.webp";
 
 export default function NoResults() {
     return (
-		<Box 
+        <Box
             display="flex"
             flexDirection="column"
-			alignItems="center"
-			justifyContent="center"
-			sx={{ width: "100%" }}
+            alignItems="center"
+            justifyContent="center"
+            sx={{ width: "100%" }}
         >
-			<img
+            <img
                 style={{ height: "300px" }}
                 src={NoResultsFoundImg}
                 alt="Nenhum resultado"
             />
-			<Typography variant="h5">
+            <Typography variant="h5">
                 Não achamos o que você procurava
             </Typography>
             <Typography variant="body1">
                 Nós colocamos o nosso melhor detetive para o caso
             </Typography>
-		</Box>
-	);
+        </Box>
+    );
 };
