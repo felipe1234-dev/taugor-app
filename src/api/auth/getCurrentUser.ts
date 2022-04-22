@@ -9,8 +9,8 @@ import logOut from "./logOut";
 
 export default function getCurrentUser(db: Firestore): Promise<User|null> {
     return new Promise((resolve, reject) => {
-        const auth = getAuth();
         const refreshToken = sessionStorage.getItem("Auth Token");
+        const auth = getAuth();
 
         if (!!refreshToken) {
             const tokenDate = Number(sessionStorage.getItem("Assign Date"));
@@ -23,10 +23,15 @@ export default function getCurrentUser(db: Firestore): Promise<User|null> {
                         reject(error)
                     ));
             }
+        } else {
+            logOut()
+                .catch((error) => (
+                    reject(error)
+                )); 
         }
         
-        onAuthStateChanged(auth, (user) => {
-            if (!!user && !!sessionStorage.getItem("Auth Token")) {
+        onAuthStateChanged(auth, (user) => {            
+            if (!!user) {
                 const { uid } = user; 
                 
                 getUserByUuid(db, uid)
@@ -37,7 +42,7 @@ export default function getCurrentUser(db: Firestore): Promise<User|null> {
                         reject(error)
                     ));
             } else {
-                resolve(user as User|null);
+                resolve(null);
             }
         });        
     });
