@@ -19,17 +19,29 @@ import {
     DeleteRounded as DeleteIcon,
     EditTwoTone as EditIcon
 } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+// API 
+import { deleteActivityByUuid } from "@local/api/collections/Activities";
 
 // Contexts
-import { UserContext } from "@local/contexts";
+import { 
+    AlertContext,
+    FirebaseContext,
+    UserContext
+} from "@local/contexts";
 
 // Interfaces
 import { Task } from "@local/interfaces";
 
 export default function Topbar(task: Task) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    
+    const { setSeverity, setMessage } = useContext(AlertContext);
+    const { db } = useContext(FirebaseContext);
     const { user } = useContext(UserContext);
+    
+    const navigate  = useNavigate();
     
     const appBar = {
         className: "TaskPage-topbar",
@@ -72,6 +84,17 @@ export default function Topbar(task: Task) {
         onClose: () => setIsOpen(false)
     }
     
+    const deleteTask = () => {
+        deleteActivityByUuid(db, task.uuid)
+            .then(() => (
+                navigate("/", { replace: true })
+            ))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);
+            });
+    }
+    
     return (
         <AppBar {...appBar}>
             <Toolbar>
@@ -103,7 +126,7 @@ export default function Topbar(task: Task) {
                                 <Button onClick={() => setIsOpen(false)}>
                                     Cancelar
                                 </Button>
-                                <Button onClick={() => {}}>
+                                <Button onClick={() => deleteTask()}>
                                     Confirmar
                                 </Button>
                             </DialogActions>
