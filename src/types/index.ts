@@ -3,11 +3,16 @@ import {
     OrderByDirection,
     WhereFilterOp
 } from "firebase/firestore";
+import { Location } from "react-router-dom";
 import { 
     ENV_TYPES,
     PRIORITY_TYPES, 
     STATUS_TYPES
 } from "@local/constants/index";
+
+export type RouteState = { from: Location };
+
+export type DialogState = { dialogLocation: Location };
 
 export type Severity = "error" | "warning" | "info" | "success";
 
