@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 
 // Providers
-import { MasterProvider } from "@local/contexts/index";
+import { MasterProvider } from "@local/contexts";
 
 // Styles
 import "@local/style/base/all.scss";
