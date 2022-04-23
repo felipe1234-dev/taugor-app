@@ -6,6 +6,9 @@ import {
 } from "react";
 import { useParams } from "react-router-dom";
 
+// Fallback page
+import { Error404Page } from "@local/pages";
+
 // Page components 
 import Topbar from "./Topbar";
 import Header from "./Header";
@@ -44,7 +47,7 @@ export default function TaskPage() {
                 setSeverity(error.severity);
                 setMessage(error.message); 
             });
-    }, [task, taskUuid, db]); 
+    }, [task, taskUuid, db]);
     
     return (
         !!task? (
@@ -54,7 +57,7 @@ export default function TaskPage() {
                 <Body {...task}/>
             </>
         ) : (
-            <span></span>          
+            <Error404Page /> 
         )
     );
 };
