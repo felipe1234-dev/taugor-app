@@ -12,39 +12,19 @@ import {
     Visibility as VisibilityOnIcon,
     VisibilityOff as VisibilityOffIcon
 } from "@mui/icons-material";
-import {
-    Location, 
-    useLocation, 
-    useNavigate 
-} from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 // Local components
 import { Spinner } from "@local/components";
+
+// Local functions
+import { isRouteState } from "@local/functions";
 
 // API functions
 import { logIn } from "@local/api/auth";
 
 // Contexts
 import { AlertContext } from "@local/contexts";
-
-interface RouteState { from: Location };
-
-const isLocation = (object: any): object is Location => {
-    return (
-        ("pathname" in object && typeof object.pathname === "string") &&
-        ("search" in object && typeof object.search === "string") &&
-        ("hash" in object && typeof object.hash === "string") &&
-        ("key" in object && typeof object.key === "string")
-    );
-};
-
-const isRouteState = (object: any): object is RouteState => {
-    return (
-        !!object && 
-        (object as RouteState).from !== undefined 
-        && isLocation((object as RouteState).from)
-    );
-};
 
 export default function LoginForm() {
     const [formIsLoading, setFormIsLoading]       = useState<boolean>(false);
