@@ -5,7 +5,7 @@ import { Severity } from "@local/types";
 interface AlertMessageProps {
     open?: boolean,
     type?: Severity,
-    children: React.ReactNode,
+    children?: React.ReactNode,
     message?: string, 
     duration?: number,
     onClose?: Function
@@ -19,7 +19,7 @@ export default function AlertMessage({
     duration = 3000,
     onClose
 }: AlertMessageProps) {
-    const handleOnClose = (...params: any[]) => {
+    const handleOnClose = (...params: Array<any>) => {
         if (onClose) {
             onClose(params);
         }
@@ -41,7 +41,7 @@ export default function AlertMessage({
         <Snackbar {...snackBar}>
             <Alert {...alert}>
                 {message && message}
-                {children}
+                {children && children}
             </Alert>
         </Snackbar>
     );
