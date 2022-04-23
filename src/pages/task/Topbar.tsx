@@ -1,12 +1,18 @@
 // Libs
-import { useContext } from "react";
+import { useState, useContext } from "react";
 import {
     Box,
     AppBar,
     Toolbar,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
     IconButton,
     Tooltip,
-    Button
+    Button,
+    Modal
 } from "@mui/material";
 import { 
     ArrowBackIos as GoBackIcon,
@@ -22,6 +28,7 @@ import { UserContext } from "@local/contexts";
 import { Task } from "@local/interfaces";
 
 export default function Topbar(task: Task) {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const { user } = useContext(UserContext);
     
     const appBar = {
@@ -37,7 +44,8 @@ export default function Topbar(task: Task) {
 
     const backButton = {
         component: Link,
-        to: "/"
+        to: "/",
+        replace: true
     }
     
     const box = {
@@ -47,7 +55,8 @@ export default function Topbar(task: Task) {
     const deleteButton = {
         className: "TaskPage-topbar-deleteButton",
         variant: "outlined" as "outlined",
-        startIcon: <DeleteIcon />
+        startIcon: <DeleteIcon />,
+        onClick: () => setIsOpen(true)
     }
 
     const editButton = {
@@ -56,6 +65,11 @@ export default function Topbar(task: Task) {
         startIcon: <EditIcon />,
         component: Link,
         to: `/edit/${task.uuid}`
+    }
+    
+    const dialog = {
+        open: isOpen,
+        onClose: () => setIsOpen(false)
     }
     
     return (
@@ -75,6 +89,25 @@ export default function Topbar(task: Task) {
                         <Button {...editButton}>
                             Editar
                         </Button>
+                        
+                        <Dialog {...dialog}>
+                            <DialogTitle>
+                                Tem certeza que quer excluir?
+                            </DialogTitle>
+                            <DialogContent>
+                                <DialogContentText>
+                                    Esta ação não pode ser revertida
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setIsOpen(false)}>
+                                    Cancelar
+                                </Button>
+                                <Button onClick={() => {}}>
+                                    Confirmar
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </>
                 )}
             </Toolbar>
