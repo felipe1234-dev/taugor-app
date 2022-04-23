@@ -3,7 +3,7 @@
 
 @each $theme-name, $theme in $themes {
 	body[theme="#{$theme-name}"][page="/"] {
-        background-color: map-deep-get($theme, "secondary", "normal") !important;
+        background-color: map-deep-get($theme, "secondary", "light") !important;
         
 		.HomePage {
 			&-navbar,
