@@ -8,11 +8,9 @@ import {
     ENV_TYPES,
     PRIORITY_TYPES, 
     STATUS_TYPES
-} from "@local/constants/index";
+} from "@local/constants";
 
-export type RouteState = { from: Location };
-
-export type DialogState = { dialogLocation: Location };
+export type RouteState = { from?: Location, openDialog?: boolean };
 
 export type Severity = "error" | "warning" | "info" | "success";
 
