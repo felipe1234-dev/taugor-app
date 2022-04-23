@@ -1,5 +1,5 @@
 export default function translateDate(dateStr: string): string {
-	return (
+    return (
         dateStr
             .replace("day", "dia")
             .replace("months", "meses")

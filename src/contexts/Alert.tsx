@@ -16,7 +16,7 @@ export const AlertContext = React.createContext<AlertValue>({
 });
 
 export function AlertProvider(props: { children: React.ReactNode }) {
-	const [message, setMessage]   = useState<string|null>(null);
+    const [message, setMessage]   = useState<string|null>(null);
     const [severity, setSeverity] = useState<Severity|null>("error");
     
     return (

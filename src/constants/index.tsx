@@ -15,18 +15,18 @@ import WhiteTaugorIcon from "@local/media/white-taugor-icon.png";
 
 export const APP_INFO = { 
     appName: "Gestor de Atividades Taugor",
-	catchline: "Gerencie as suas atividades dentro da empresa",
-	whiteLogo: WhiteTaugorLogo,
-	blueLogo: BlueTaugorLogo,  
-	whiteIcon: WhiteTaugorIcon,
-	alt: "Taugor Corporation",
-	link: "http://www.taugor.com.br/"
+    catchline: "Gerencie as suas atividades dentro da empresa",
+    whiteLogo: WhiteTaugorLogo,
+    blueLogo: BlueTaugorLogo,  
+    whiteIcon: WhiteTaugorIcon,
+    alt: "Taugor Corporation",
+    link: "http://www.taugor.com.br/"
 };
 
 export const STATUS_TYPES = [
-	"Em análise",
-	"Em andamento",
-	"Finalizado"
+    "Em análise",
+    "Em andamento",
+    "Finalizado"
 ] as const;
 
 export const STATUS_ICONS = {
@@ -37,8 +37,8 @@ export const STATUS_ICONS = {
 
 export const PRIORITY_TYPES = [
     "Baixa",
-	"Média",
-	"Alta"
+    "Média",
+    "Alta"
 ] as const;
 
 export const PRIORITY_ICONS = {

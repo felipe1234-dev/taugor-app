@@ -14,9 +14,9 @@ export interface ThemeValue {
 export const ThemeContext = createContext<Partial<ThemeValue>>({});
 
 export function ThemeProvider(props: { children: React.ReactNode }) {
-	const [theme, setTheme] = useState<ThemeType>("light");
+    const [theme, setTheme] = useState<ThemeType>("light");
     
-	useEffect(() => {
+    useEffect(() => {
         document.body.setAttribute("theme", theme);
     }, [theme]);
     

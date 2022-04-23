@@ -12,13 +12,13 @@ import { MasterProvider } from "@local/contexts/index";
 import "@local/style/base/all.scss";
 
 const root = ReactDOM.createRoot(
-	document.getElementById("root") as HTMLElement
+    document.getElementById("root") as HTMLElement
 );
 
 root.render(
-	<MasterProvider>
-		<Router>
-			<App />	
-		</Router>
-	</MasterProvider>
+    <MasterProvider>
+        <Router>
+            <App />
+        </Router>
+    </MasterProvider>
 );
