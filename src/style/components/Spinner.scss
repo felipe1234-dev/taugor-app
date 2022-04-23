@@ -2,37 +2,37 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-	body[theme="#{$theme-name}"] .Spinner {
-		--path-color: rgba(0, 0, 0, .075);
-		--bar-color: rgba(0, 0, 0, .1);
-	}
+    body[theme="#{$theme-name}"] .Spinner {
+        --path-color: rgba(0, 0, 0, .075);
+        --bar-color: rgba(0, 0, 0, .1);
+    }
 }
 
 .Spinner {
-	animation: is-spinning 1s infinite;
-	border-radius: 50%;
-	height: 1em;
-	width: 1em;
-	border: 6px solid var(--path-color);
-	border-top-color: var(--bar-color);
+    animation: is-spinning 1s infinite;
+    border-radius: 50%;
+    height: 1em;
+    width: 1em;
+    border: 6px solid var(--path-color);
+    border-top-color: var(--bar-color);
 
-	&-wrapper {
-		display: none !important;
-	}
-	
-	@keyframes is-spinning {
-		to {
-			transform: rotate(1turn);
-		}
-	}
+    &-wrapper {
+        display: none !important;
+    }
+    
+    @keyframes is-spinning {
+        to {
+            transform: rotate(1turn);
+        }
+    }
 }
 
 .isLoading {
-	span {
-		display: none !important;
-	}
+    span {
+        display: none !important;
+    }
 
-	.Spinner-wrapper {
-		display: flex !important;
-	}
+    .Spinner-wrapper {
+        display: flex !important;
+    }
 }

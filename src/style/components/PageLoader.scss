@@ -2,9 +2,9 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-	body[theme="#{$theme-name}"] .PageLoader {
+    body[theme="#{$theme-name}"] .PageLoader {
         --wrapper-color: #{map-deep-get($theme, "secondary", "normal")};
         --loader-color: #{map-deep-get($theme, "primary", "normal")};
         --text-color: #{map-deep-get($theme, "shadow", "dark")};
-    }	
+    }
 }

@@ -2,48 +2,48 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-	body[theme="#{$theme-name}"] .SearchBar {
-		background-color: map-deep-get($theme, "primary", "dark");
-		
-		&:hover {
-			background-color: map-deep-get($theme, "primary", "light");
-		}
-		
-		.MuiInputBase-root .MuiInputBase-input {
-			color: map-deep-get($theme, "text", "light") !important;
-		}
-	}	
+    body[theme="#{$theme-name}"] .SearchBar {
+        background-color: map-deep-get($theme, "primary", "dark");
+        
+        &:hover {
+            background-color: map-deep-get($theme, "primary", "light");
+        }
+        
+        .MuiInputBase-root .MuiInputBase-input {
+            color: map-deep-get($theme, "text", "light") !important;
+        }
+    }    
 }
 
 .SearchBar {
-	position: relative;
-	border-radius: 5px;
-	margin-left: 0;
-	width: 20%;
-	transition: width 1s ease;
-	
-	&:hover {
-		width: 25%;
-	}
+    position: relative;
+    border-radius: 5px;
+    margin-left: 0;
+    width: 20%;
+    transition: width 1s ease;
+    
+    &:hover {
+        width: 25%;
+    }
 
-	&-iconWrapper {
-		padding: .5em;
-		height: 100%; 
-		position: absolute;
-		pointer-events: none;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-	
-	.MuiInputBase-root {
-		.MuiInputBase-input {
-			padding: .5em .8em;
-			width: 100%;
-		}
-		
-		fieldset {
-			border-style: none !important;
-		}
-	}
+    &-iconWrapper {
+        padding: .5em;
+        height: 100%; 
+        position: absolute;
+        pointer-events: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .MuiInputBase-root {
+        .MuiInputBase-input {
+            padding: .5em .8em;
+            width: 100%;
+        }
+        
+        fieldset {
+            border-style: none !important;
+        }
+    }
 }

@@ -3,7 +3,7 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-	body[theme="#{$theme-name}"][page="/login"] {
+    body[theme="#{$theme-name}"][page="/login"] {
         background-color: map-deep-get($theme, "primary", "normal") !important;
         
         .LoginPage {
@@ -60,8 +60,8 @@
 
 .LoginPage {
     &-logo {
-		@include user-drag(none);
-		cursor: pointer;
+        @include user-drag(none);
+        cursor: pointer;
         width: 180px;
         height: auto;
         margin-bottom: 1em; 
