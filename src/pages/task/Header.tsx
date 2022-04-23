@@ -69,13 +69,10 @@ const ChipList = (task: Task) => {
 };
 
 const Info = (task: Task) => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    
     const box = {
         component: "div" as "div",
         display: "flex",
-        flexDirection: isMobile? "column" as "column" : "row" as "row",
+        flexDirection: "column" as "column",
         justifyContent: "center",
         alignItems: "flex-start",
         sx: {
