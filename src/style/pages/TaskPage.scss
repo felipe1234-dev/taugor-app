@@ -3,8 +3,8 @@
 
 @each $theme-name, $theme in $themes {
 	body[theme="#{$theme-name}"][page^="/task"] {
-		background-color: map-deep-get($theme, "secondary", "normal") !important;
-        
+		background-color: map-deep-get($theme, "secondary", "light") !important;
+
 		.TaskPage {
 			&-topbar,
 			&-header {
@@ -22,52 +22,48 @@
 
 				&-deleteButton,
 				&-editButton {
-					color: map-deep-get($theme, "text", "light") !important;
-					background-color: map-deep-get(
-						$theme,
-						"primary",
-						"dark"
-					) !important;
-
+					border: none;
+					background-color: transparent !important;
+					
 					&:hover {
-						background-color: map-deep-get(
-							$theme,
-							"primary",
-							"light"
-						) !important;
+						background-color: rgba(0, 0, 0, .075) !important;
 					}
 				}
 			}
 
 			&-header {
 				&-title,
-				&-brief {
+				&-brief,
+				.MuiBox-root {
 					color: map-deep-get($theme, "text", "light");
 				}
 
-				.MuiBox-root {
-					color: map-deep-get($theme, "text", "normal");
-				}
-
-				.MuiChip-root {
-					&.MuiChip {
-						&-filled,
-						&-outlined {
-							color: map-deep-get($theme, "text", "light");
-						}
-
-						&-outlined {
-							border-color: map-deep-get(
-								$theme,
-								"text",
-								"normal"
-							);
-						}
+				.MuiChip-root.MuiChip {
+					&-filled {
+						color: map-deep-get($theme, "primary", "normal");
+						background-color: map-deep-get(
+							$theme,
+							"secondary",
+							"light"
+						);
+					}
+					
+					&-outlined {
+						color: map-deep-get(
+			                $theme,
+							"secondary",
+							"light"
+						);
+						border-color: map-deep-get(
+							$theme,
+							"secondary",
+							"light"
+						);
 					}
 				}
 
 				.MuiSvgIcon-root {
-					color: map-deep-get($theme, "text", "light");
+					color: $orange;
 				}
 			}
 		}
@@ -113,6 +109,7 @@
 		}
 
 		.MuiChip-root {
+			font-weight: 600;
 			margin: 0 0.5em 1em 0;
 		}
 
