@@ -10,7 +10,7 @@ import {
     STATUS_TYPES
 } from "@local/constants";
 
-export type RouteState = { from?: Location, openDialog?: boolean };
+export type RouteState = { from?: Location, background?: Location };
 
 export type Severity = "error" | "warning" | "info" | "success";
 
