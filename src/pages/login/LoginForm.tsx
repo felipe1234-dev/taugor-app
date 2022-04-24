@@ -34,9 +34,11 @@ export default function LoginForm() {
     const navigate  = useNavigate();
     const { state, pathname: pathNow } = useLocation();
     let from = "/";
-
-    if (isRouteState(state)) { 
-        from = state.from.pathname === pathNow? "/" : state.from.pathname;
+    
+    if (isRouteState(state) && "from" in state) {
+        if (state.from!.pathname !== pathNow) {
+            from = state.from!.pathname;
+        }
     }
     
     const { setSeverity, setMessage } = useContext(AlertContext);
