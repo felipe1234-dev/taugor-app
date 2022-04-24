@@ -6,245 +6,174 @@
         background-color: map-deep-get($theme, "secondary", "light") !important;
 
         .HomePage {
-            &-navbar,
-            &-header {
-                background-color: map-deep-get($theme, "primary", "normal");
+            $light-bg-color: map-deep-get($theme, "primary", "light");
+            $bg-color: map-deep-get($theme, "primary", "normal");
+            $dark-bg-color: map-deep-get($theme, "primary", "dark");
+            $text-color: map-deep-get($theme, "text", "light");
+            
+            &-navbar, &-header {
+                background-color: $bg-color;
             }
 
             &-navbar {
+                position: fixed;
+                top: 0;
+                transition: top 0.3s;
+                max-height: 3.5em !important;
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+
                 &-burgerMenu {
-                    .MuiDrawer-paper,
-                    &-header,
-                    &-list {
-                        background-color: map-deep-get(
-                            $theme,
-                            "primary",
-                            "normal"
-                        );
+                    .MuiDrawer-paper, &-header, &-list {
+                        background-color: $bg-color;
+                    }
+
+                    &-header {
+                        padding: 2em 0;
                     }
 
                     .MuiDrawer-paper {
-                        color: map-deep-get($theme, "text", "light");
+                        color: $text-color;
                     }
+                }
+
+                &-logo {
+                    width: 1.8em;
+                    height: 1.5em;
+                    margin-right: 1em;
                 }
 
                 &-profileImage {
                     margin: 1px solid map-deep-get($theme, "shadow", "normal");
+                    transition: opacity 0.5s ease-in-out;
+                    transform: scale(0.9);
+
+                    &:hover {
+                        opacity: 0.5;
+                    }
                 }
 
                 &-appName {
-                    color: map-deep-get($theme, "text", "light");
+                    color: $text-color;
+                    cursor: pointer;
+                    width: fit-content;
+                }
+
+                .MuiToolbar-root {
+                    min-height: 0 !important;
+                }
+
+                .MuiTabs-root {
+                    margin: 0 0 0 1em;
                 }
 
                 .MuiTab-root {
-                    color: map-deep-get($theme, "text", "light");
+                    text-transform: none !important;
+                    transition: background-color 0.5s ease-out;
+                    padding: 12px 16px !important;
+                    min-height: 0 !important;
+                    color: $text-color;
 
                     &:hover {
-                        background-color: map-deep-get(
-                            $theme,
-                            "primary",
-                            "dark"
-                        );
+                        background-color: $dark-bg-color;
                     }
                 }
 
                 .MuiIconButton-root {
-                    color: map-deep-get($theme, "text", "light");
+                    color: $text-color;
                 }
             }
 
             &-header {
-                &-greeting,
+                padding: 5em 2em !important;
+
+                &-greeting, &-displayName {
+                    color: $text-color;
+                }
+
+                &-greeting {
+                    opacity: 0.65 !important;
+                    font-size: 2em !important;
+                    font-weight: 400 !important;
+                }
+
                 &-displayName {
-                    color: map-deep-get($theme, "text", "light");
+                    font-size: 2.25em !important;
+                    font-weight: 500 !important;
                 }
 
                 &-addActivButton {
-                    color: map-deep-get($theme, "text", "light") !important;
-                    background-color: map-deep-get(
-                        $theme,
-                        "primary",
-                        "dark"
-                    ) !important;
+                    transition: background-color 0.5s ease-in-out !important;
+                    padding: 0.6em !important;
+                    color: $text-color !important;
+                    background-color: $dark-bg-color !important;
 
                     &:hover {
-                        background-color: map-deep-get(
-                            $theme,
-                            "primary",
-                            "light"
-                        ) !important;
+                        background-color: $light-bg-color !important;
                     }
                 }
+            }
+            
+            &-main {
+                padding: 1.3em 1.3em 2em 1.3em !important;
+                transform: translateY(-50px);
+                border-radius: 1em !important;
+                min-width: 80vw;
             }
 
             &-taskList {
                 .MuiListItem-root {
                     border-right-color: $orange;
-
+                    border-right-width: 0.3em;
+                    border-right-style: solid;
+                    border-radius: 0.3em;
+                    padding: 1em;
+                    
                     .MuiListItemIcon-root .MuiAvatar-root {
+                        color: $text-color !important;
                         background-color: $pink;
 
                         svg {
                             color: $orange;
                         }
                     }
+                    
+                    .MuiListItemText {
+                        &-primary, &-secondary .MuiTypography-root {
+                            font-size: 1.2em !important;
+                        }
+                    }
                 }
-
-                .MuiAvatar-root {
-                    color: map-deep-get($theme, "text", "light") !important;
-                }
-
-                &-taskStatus {
-                    --dot-color: map-deep-get($theme, "primary", "normal");
+        
+                .MuiChip-root {
+                    margin-right: 0.5em;
+                    margin-bottom: 0.5em;
                 }
             }
 
             &-filters {
                 &-button {
-                    color: map-deep-get($theme, "text", "light") !important;
-                    background-color: map-deep-get(
-                        $theme,
-                        "primary",
-                        "dark"
-                    ) !important;
+                    padding: 0.6em !important;
+                    margin-bottom: 0.4em !important;
+                    transition: background-color 1s ease-in-out !important;
+                    color: $text-color !important;
+                    background-color: $dark-bg-color !important;
 
                     &:hover {
-                        background-color: map-deep-get(
-                            $theme,
-                            "primary",
-                            "light"
-                        ) !important;
+                        background-color: $light-bg-color !important;
                     }
                 }
-
+        
                 &-puller {
+                    width: 30px;
+                    height: 6px;
+                    border-radius: 12px;
+                    position: absolute;
+                    top: 8px;
+                    left: calc(50% - 15px);
                     background-color: $orange;
                 }
             }
-        }
-    }
-}
-
-.HomePage {
-    &-navbar {
-        max-height: 3.5em !important;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
-
-        &-burgerMenu-header {
-            padding: 2em 0;
-        }
-
-        &-logo {
-            width: 1.8em;
-            height: 1.5em;
-            margin-right: 1em;
-        }
-
-        &-profileImage {
-            transition: opacity 0.5s ease-in-out;
-            transform: scale(0.9);
-
-            &:hover {
-                opacity: 0.5;
-            }
-        }
-
-        &-appName {
-            cursor: pointer;
-            width: fit-content;
-        }
-
-        .MuiToolbar-root {
-            min-height: 0 !important;
-        }
-
-        .MuiTabs-root {
-            margin: 0 0 0 1em;
-        }
-
-        .MuiTab-root {
-            text-transform: none !important;
-            transition: background-color 0.5s ease-out;
-            padding: 12px 16px !important;
-            min-height: 0 !important;
-        }
-    }
-
-    &-header {
-        padding: 5em 2em !important;
-
-        &-greeting {
-            opacity: 0.65 !important;
-            font-size: 2em !important;
-            font-weight: 400 !important;
-        }
-
-        &-displayName {
-            font-size: 2.25em !important;
-            font-weight: 500 !important;
-        }
-
-        &-addActivButton {
-            transition: background-color 0.5s ease-in-out !important;
-            padding: 0.6em !important;
-        }
-    }
-
-    &-main {
-        padding: 1.3em 1.3em 2em 1.3em !important;
-        transform: translateY(-50px);
-        border-radius: 1em !important;
-        min-width: 80vw;
-    }
-
-    &-taskList {
-        .MuiListItem-root {
-            border-right-width: 0.3em;
-            border-right-style: solid;
-            border-radius: 0.3em;
-            padding: 1em;
-
-            .MuiListItemText {
-                &-primary,
-                &-secondary .MuiTypography-root {
-                    font-size: 1.2em !important;
-                }
-            }
-        }
-
-        .MuiChip-root {
-            margin-right: 0.5em;
-            margin-bottom: 0.5em;
-        }
-
-        &-taskStatus {
-            text-transform: uppercase;
-
-            &::before {
-                content: "....";
-                border-radius: 50%;
-                background-color: var(--dot-color);
-                color: var(--dot-color);
-                margin-right: 1em;
-            }
-        }
-    }
-
-    &-filters {
-        &-button {
-            padding: 0.6em !important;
-            margin-bottom: 0.4em !important;
-            transition: background-color 1s ease-in-out !important;
-        }
-
-        &-puller {
-            width: 30px;
-            height: 6px;
-            border-radius: 12px;
-            position: absolute;
-            top: 8px;
-            left: calc(50% - 15px);
         }
     }
 }

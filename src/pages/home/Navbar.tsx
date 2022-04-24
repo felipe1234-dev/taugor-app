@@ -31,6 +31,9 @@ import BurgerMenu from "./BurgerMenu";
 // Local components
 import { ProfileImage, SearchBar } from "@local/components";
 
+// Hooks
+import { useOnScroll } from "@local/hooks";
+
 // Functions
 import { stringToColor } from "@local/functions";
 
@@ -63,7 +66,9 @@ export default function Navbar({ filter, setFilter }: NavbarProps) {
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
     const { user } = useContext(UserContext);
-
+    
+    const hideAppBar = useOnScroll(300);
+    
     useEffect(() => {
         const conditions = filter.where ? filter.where.filter((where: WhereClasule) => {
             return !["title", "postedBy"].includes(where[0] as string)
@@ -96,7 +101,10 @@ export default function Navbar({ filter, setFilter }: NavbarProps) {
         className: "HomePage-navbar",
         component: "nav",
         position: "sticky" as "sticky",
-        elevation: 0
+        elevation: 0,
+        style: {
+            top: hideAppBar? "-60px" : "0"
+        }
     }
 
     const logo = {
