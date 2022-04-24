@@ -58,17 +58,17 @@ export default function App() {
     const locationNow = useLocation();
     const { pathname: pathNow, state } = locationNow;
     
-    let routeState: RouteState|null = null;
     let bgLocation: Location|null = null;
+    let enableLoader: boolean = true;
     
     if (isRouteState(state)) {
-        routeState = state;
         bgLocation = state.background || null;
+        enableLoader = state.enableLoader || false;
     }
 
     // Aciona sempre que a página atual mudar
     useEffect(() => {
-        setPageIsLoading(true);
+        setPageIsLoading(enableLoader);
     }, [pathNow]);
 
     // Aciona sempre que o componente termina de montar
