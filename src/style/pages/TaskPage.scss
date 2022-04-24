@@ -3,28 +3,44 @@
 
 @each $theme-name, $theme in $themes {
     body[theme="#{$theme-name}"][page^="/task"] {
+        $icon-color: $orange;
+        $text-color: map-deep-get($theme, "text", "light");
+        $dark-bg-color: map-deep-get($theme, "primary", "normal");
+        $light-bg-color: map-deep-get($theme, "secondary", "light");
+        
         background-color: map-deep-get($theme, "secondary", "light") !important;
-
+        
         .TaskPage {
-            &-topbar,
-            &-header {
-                background-color: map-deep-get(
-                    $theme,
-                    "primary",
-                    "normal"
-                ) !important;
+            &-topbar, &-header {
+                background-color: $dark-bg-color !important;
             }
 
             &-topbar {
+                max-height: 3.5em !important;
+                padding-top: 5px !important;
+                padding-bottom: 5px !important;
+                
+                .MuiToolbar-root {
+                    min-height: 0 !important;
+                }
+                
                 .MuiIconButton-root {
-                    color: map-deep-get($theme, "text", "light");
+                    color: $text-color;
                 }
 
-                &-deleteButton,
-                &-editButton {
+                &-deleteButton, &-editButton {
+                    transition: background-color 0.5s ease-in-out !important;
+                    border-radius: 0.7em !important;
+                    padding: 0.6em 1.1em !important;
+                    text-transform: none !important;
                     border: none;
                     background-color: transparent !important;
-
+                    color: $text-color !important;
+                    
+                    &:not(:last-child) {
+                        margin-right: 0.8em !important;
+                    }
+                    
                     &:hover {
                         background-color: rgba(0, 0, 0, 0.075) !important;
                     }
@@ -32,91 +48,50 @@
             }
 
             &-header {
-                &-title,
-                &-brief,
-                .MuiBox-root {
-                    color: map-deep-get($theme, "text", "light");
+                padding: 3em 2em 5em 2em !important;
+
+                &-title {
+                    font-size: 2.25em !important;
+                    font-weight: 500 !important;
                 }
 
-                .MuiChip-root.MuiChip {
+                &-brief {
+                    opacity: 0.65 !important;
+                    font-size: 2em !important;
+                    font-weight: 400 !important;
+                    margin-bottom: 0.6em !important;
+                }
+                
+                &-title, &-brief, .MuiBox-root {
+                    color: $text-color;
+                }
+
+                .MuiChip {
+                    font-weight: 600;
+                    margin: 0 0.5em 1em 0;
+                    
                     &-filled {
-                        color: map-deep-get($theme, "primary", "normal");
-                        background-color: map-deep-get(
-                            $theme,
-                            "secondary",
-                            "light"
-                        );
+                        color: $dark-bg-color;
+                        background-color: $light-bg-color;
                     }
 
                     &-outlined {
-                        color: map-deep-get($theme, "secondary", "light");
-                        border-color: map-deep-get(
-                            $theme,
-                            "secondary",
-                            "light"
-                        );
+                        color: $light-bg-color;
+                        border-color: $light-bg-color;
                     }
                 }
 
                 .MuiSvgIcon-root {
-                    color: $orange;
+                    color: $icon-color;
+                    margin-right: 0.1em;
                 }
             }
-        }
-    }
-}
-
-.TaskPage {
-    &-topbar {
-        max-height: 3.5em !important;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
-
-        .MuiToolbar-root {
-            min-height: 0 !important;
-        }
-
-        &-deleteButton,
-        &-editButton {
-            transition: background-color 0.5s ease-in-out !important;
-            border-radius: 0.7em !important;
-            padding: 0.6em 1.1em !important;
-            text-transform: none !important;
-
-            &:not(:last-child) {
-                margin-right: 0.8em !important;
+            
+            &-body {
+                padding: 1.3em !important;
+                transform: translateY(-50px);
+                border-radius: 1em !important;
             }
         }
-    }
-
-    &-header {
-        padding: 3em 2em 5em 2em !important;
-
-        &-title {
-            font-size: 2.25em !important;
-            font-weight: 500 !important;
-        }
-
-        &-brief {
-            opacity: 0.65 !important;
-            font-size: 2em !important;
-            font-weight: 400 !important;
-            margin-bottom: 0.6em !important;
-        }
-
-        .MuiChip-root {
-            font-weight: 600;
-            margin: 0 0.5em 1em 0;
-        }
-
-        .MuiSvgIcon-root {
-            margin-right: 0.1em;
-        }
-    }
-
-    &-body {
-        padding: 1.3em !important;
-        transform: translateY(-50px);
-        border-radius: 1em !important;
     }
 }
