@@ -58,8 +58,7 @@ export default function DeleteDialog() {
     
     const cancelButton = {
         component: Link,
-        to: "/",
-        state: {} // Reinicia o estado para não ter nenhum dialog aberto
+        to: -1
     }
     
     const deleteButton = {
