@@ -1,9 +1,15 @@
 // Libs
 import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useLocation, Location } from "react-router";
 
 // Local components
 import RequireAuth from "./RequireAuth";
+
+// Local functions
+import { isRouteState } from "@local/functions";
+
+// Local types
+import { RouteState } from "@local/types";
 
 // Props interface
 interface PageContainerProps {
@@ -13,11 +19,20 @@ interface PageContainerProps {
 };
 
 export default function PageContainer({ title, requireAuth = false, children }: PageContainerProps) {
-    const { pathname: pathNow } = useLocation();
+    const locationNow = useLocation();
+    const { state } = locationNow;
     
+    let routeState: RouteState|null = null;
+    let bgLocation: Location|null = null;
+    
+    if (isRouteState(state)) {
+        routeState = state;
+        bgLocation = state.background || null;
+    }
+
     useEffect(() => {
         document.title = title;
-        document.body.setAttribute("page", pathNow);
+        document.body.setAttribute("page", bgLocation?.pathname || locationNow.pathname);
     }, [title]);
     
     if (requireAuth) {
