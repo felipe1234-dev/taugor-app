@@ -1,47 +1,34 @@
 // Libs
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import {
     Box,
     AppBar,
     Toolbar,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
     IconButton,
     Tooltip,
-    Button,
-    Modal
+    Button
 } from "@mui/material";
 import { 
     ArrowBackIos as GoBackIcon,
     DeleteRounded as DeleteIcon,
     EditTwoTone as EditIcon
 } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router-dom";
-
-// API 
-import { deleteActivityByUuid } from "@local/api/collections/Activities";
+import { 
+    Link, 
+    useNavigate,
+    useLocation
+} from "react-router-dom";
 
 // Contexts
-import { 
-    AlertContext,
-    FirebaseContext,
-    UserContext
-} from "@local/contexts";
+import { UserContext } from "@local/contexts";
 
 // Interfaces
 import { Task } from "@local/interfaces";
 
 export default function Topbar(task: Task) {
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-    
-    const { setSeverity, setMessage } = useContext(AlertContext);
-    const { db } = useContext(FirebaseContext);
     const { user } = useContext(UserContext);
-    
-    const navigate  = useNavigate();
+    const navigate = useNavigate();
+    const location = useLocation();
     
     const appBar = {
         className: "TaskPage-topbar",
@@ -56,7 +43,7 @@ export default function Topbar(task: Task) {
 
     const backButton = {
         component: Link,
-        to: "/",
+        to: -1,
         replace: true
     }
     
@@ -68,7 +55,9 @@ export default function Topbar(task: Task) {
         className: "TaskPage-topbar-deleteButton",
         variant: "outlined" as "outlined",
         startIcon: <DeleteIcon />,
-        onClick: () => setIsOpen(true)
+        component: Link,
+        to: `/delete/${task.uuid}`,
+        state: { background: location }
     }
 
     const editButton = {
@@ -77,22 +66,6 @@ export default function Topbar(task: Task) {
         startIcon: <EditIcon />,
         component: Link,
         to: `/edit/${task.uuid}`
-    }
-    
-    const dialog = {
-        open: isOpen,
-        onClose: () => setIsOpen(false)
-    }
-    
-    const deleteTask = () => {
-        deleteActivityByUuid(db, task.uuid)
-            .then(() => (
-                navigate("/", { replace: true })
-            ))
-            .catch((error) => {
-                setSeverity(error.severity);
-                setMessage(error.message);
-            });
     }
     
     return (
@@ -112,25 +85,6 @@ export default function Topbar(task: Task) {
                         <Button {...editButton}>
                             Editar
                         </Button>
-                        
-                        <Dialog {...dialog}>
-                            <DialogTitle>
-                                Tem certeza que quer excluir?
-                            </DialogTitle>
-                            <DialogContent>
-                                <DialogContentText>
-                                    Esta ação não pode ser revertida
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => setIsOpen(false)}>
-                                    Cancelar
-                                </Button>
-                                <Button onClick={() => deleteTask()}>
-                                    Confirmar
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
                     </>
                 )}
             </Toolbar>
