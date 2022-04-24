@@ -138,7 +138,7 @@ export default function TaskItem(task: Task) {
         <ListItem {...listItem} button>
             <ListItemIcon>
                 <Tooltip {...tooltip}>
-                    <Avatar data-status={task.status}>
+                    <Avatar>
                         {STATUS_ICONS[task.status]}
                     </Avatar>
                 </Tooltip>
