@@ -6,7 +6,8 @@ export default function isRouteState(object: any): object is RouteState {
         case !object || typeof object !== "object":
         case "from" in object && !isLocation((object as RouteState).from):
         case "background" in object && !isLocation((object as RouteState).background):
-        case !("from" in object || "background" in object):
+        case "enableLoader" in object && typeof object.enableLoader !== "boolean":
+        case !("from" in object || "background" in object || "enableLoader" in object):
             return false;
         default: 
             return true;
