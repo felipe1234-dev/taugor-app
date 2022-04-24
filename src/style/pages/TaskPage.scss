@@ -67,9 +67,11 @@
                 }
 
                 .MuiChip {
-                    font-weight: 600;
-                    margin: 0 0.5em 1em 0;
-                    
+                    &-root {
+                        font-weight: 600;
+                        margin: 0 0.5em 1em 0;
+                    }
+                        
                     &-filled {
                         color: $dark-bg-color;
                         background-color: $light-bg-color;
