@@ -13,11 +13,7 @@ import {
     DeleteRounded as DeleteIcon,
     EditTwoTone as EditIcon
 } from "@mui/icons-material";
-import { 
-    Link, 
-    useNavigate,
-    useLocation
-} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Contexts
 import { UserContext } from "@local/contexts";
@@ -27,7 +23,6 @@ import { Task } from "@local/interfaces";
 
 export default function Topbar(task: Task) {
     const { user } = useContext(UserContext);
-    const navigate = useNavigate();
     const location = useLocation();
     
     const appBar = {
@@ -43,7 +38,7 @@ export default function Topbar(task: Task) {
 
     const backButton = {
         component: Link,
-        to: -1,
+        to: "/",
         replace: true
     }
     
@@ -57,7 +52,7 @@ export default function Topbar(task: Task) {
         startIcon: <DeleteIcon />,
         component: Link,
         to: `/delete/${task.uuid}`,
-        state: { background: location }
+        state: { background: location, enableLoader: false }
     }
 
     const editButton = {
@@ -65,7 +60,8 @@ export default function Topbar(task: Task) {
         variant: "outlined" as "outlined",
         startIcon: <EditIcon />,
         component: Link,
-        to: `/edit/${task.uuid}`
+        to: `/edit/${task.uuid}`,
+        state: { background: location, enableLoader: false }
     }
     
     return (
