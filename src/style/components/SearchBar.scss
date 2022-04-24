@@ -3,47 +3,38 @@
 
 @each $theme-name, $theme in $themes {
     body[theme="#{$theme-name}"] .SearchBar {
-        background-color: map-deep-get($theme, "primary", "dark");
+        background-color: map-deep-get($theme, "primary", "dark");    
+        position: relative;
+        border-radius: .8em;
+        margin-left: 0;
+        width: 20%;
+        transition: width 1s ease;
         
         &:hover {
+            width: 25%;
             background-color: map-deep-get($theme, "primary", "light");
         }
+
+        &-iconWrapper {
+            padding: .5em;
+            height: 100%; 
+            position: absolute;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         
-        .MuiInputBase-root .MuiInputBase-input {
-            color: map-deep-get($theme, "text", "light") !important;
+        .MuiInputBase-root {
+            .MuiInputBase-input {
+                padding: .5em .8em;
+                width: 100%;
+                color: map-deep-get($theme, "text", "light") !important;
+            }
+            
+            fieldset {
+                border-style: none !important;
+            }
         }
     }    
-}
-
-.SearchBar {
-    position: relative;
-    border-radius: 5px;
-    margin-left: 0;
-    width: 20%;
-    transition: width 1s ease;
-    
-    &:hover {
-        width: 25%;
-    }
-
-    &-iconWrapper {
-        padding: .5em;
-        height: 100%; 
-        position: absolute;
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .MuiInputBase-root {
-        .MuiInputBase-input {
-            padding: .5em .8em;
-            width: 100%;
-        }
-        
-        fieldset {
-            border-style: none !important;
-        }
-    }
 }
