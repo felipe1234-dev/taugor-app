@@ -58,7 +58,9 @@ export default function DeleteDialog() {
     
     const cancelButton = {
         component: Link,
-        to: -1
+        to: `/task/${taskUuid}`,
+        replace: true,
+        state: { enableLoader: false }
     }
     
     const deleteButton = {
