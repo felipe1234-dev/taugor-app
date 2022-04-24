@@ -2,19 +2,23 @@ import { RouteState } from "@local/types";
 import isLocation from "./isLocation";
 
 export default function isRouteState(object: any): object is RouteState {
-    let isRoute: boolean = true;
+    let isRouteState: boolean = true;
     
     if (!object) {
-        isRoute = false;
+        isRouteState = false;
     }
     
     if ("from" in object && !isLocation((object as RouteState).from)) {
-        isRoute = false;
+        isRouteState = false;
     }
     
-    if ("openDialog" in object && typeof object.openDialog !== "boolean") {
-        isRoute = false;
+    if ("background" in object && !isLocation((object as RouteState).background)) {
+        isRouteState = false;
     }
     
-    return isRoute;
+    if (!("from" in object && "background" in object)) {
+        isRouteState = false;
+    }
+    
+    return isRouteState;
 };
