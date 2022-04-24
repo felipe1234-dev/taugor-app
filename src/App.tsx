@@ -7,14 +7,16 @@ import {
 import {
     Routes as Switch,
     Route,
-    useLocation
+    useLocation,
+    Location
 } from "react-router-dom";
 
 // Components 
 import {
     AlertMessage,
     PageContainer as Page,
-    PageLoader
+    PageLoader,
+    RequireAuth
 } from "@local/components";
 
 // Pages
@@ -25,12 +27,23 @@ import {
     Error404Page as Error404
 } from "@local/pages";
 
+// Dialogs
+import {
+    EditDialog as Edit,
+    DeleteDialog as Delete
+} from "@local/dialogs";
+
+// Functions
+import { isRouteState } from "@local/functions";
+
+// Types
+import { RouteState } from "@local/types";
+
 // Contexts
 import { AlertContext } from "@local/contexts";
 
 // Constants
 import { APP_INFO } from "@local/constants";
-
 const { appName } = APP_INFO;
 
 export default function App() {
@@ -42,8 +55,16 @@ export default function App() {
         setSeverity
     } = useContext(AlertContext);
 
-    const location = useLocation();
-    const pathNow = location.pathname;
+    const locationNow = useLocation();
+    const { pathname: pathNow, state } = locationNow;
+    
+    let routeState: RouteState|null = null;
+    let bgLocation: Location|null = null;
+    
+    if (isRouteState(state)) {
+        routeState = state;
+        bgLocation = state.background || null;
+    }
 
     // Aciona sempre que a página atual mudar
     useEffect(() => {
@@ -62,50 +83,75 @@ export default function App() {
             display: pageIsLoading ? "none" : "block"
         }
     }
-
-    const homeRoute = {
-        path: "/",
-        element: (
-            <Page title={`Home - ${appName}`} requireAuth>
-                <Home />
-            </Page>
-        ),
-        exact: true
+    
+    const pageSwitch = {
+        location: bgLocation || locationNow
     }
 
-    const loginRoute = {
-        path: "/login",
-        element: (
-            <Page title={`Entrar - ${appName}`}>
-                <Login />
-            </Page>
-        ),
-        exact: true
+    const pages = {
+        home: {
+            path: "/",
+            element: (
+                <Page title={`Home - ${appName}`} requireAuth>
+                    <Home />
+                </Page>
+            ),
+            exact: true
+        },
+        login: {
+            path: "/login",
+            element: (
+                <Page title={`Entrar - ${appName}`}>
+                    <Login />
+                </Page>
+            ),
+            exact: true
+        },
+        task: {
+            path: "/task/:uuid",
+            element: (
+                <Page title={`Atividade - ${appName}`} requireAuth>
+                    <Task />
+                </Page>
+            ),
+            exact: true
+        },
+        error404: {
+            path: "*",
+            element: (
+                <Page title={`Página não encontrada - ${appName}`}>
+                    <Error404 />
+                </Page>
+            )
+        }
     }
-
-    const taskRoute = {
-        path: "/task/:uuid",
-        element: (
-            <Page title={`Atividade - ${appName}`} requireAuth>
-                <Task />
-            </Page>
-        ),
-        exact: true
-    }
-
-    const error404Route = {
-        path: "*",
-        element: (
-            <Page title={`Página não encontrada - ${appName}`}>
-                <Error404 />
-            </Page>
-        )
+    
+    const dialogs = {
+        edit: {
+            path: "/edit/:uuid",
+            element: (
+                <RequireAuth>
+                    <Edit />
+                </RequireAuth>
+            ),
+            exact: true
+        },
+        delete: {
+            path: "/delete/:uuid",
+            element: (
+                <RequireAuth>
+                    <Delete />
+                </RequireAuth>
+            ),
+            exact: true
+        }
     }
 
     const alertMessage = {
         open: !!message && !!severity,
         type: !!severity ? severity : undefined,
         duration: 6000,
+        message: message as string|undefined,
         onClose: () => {
             setMessage(null);
             setSeverity(null);
@@ -115,19 +161,25 @@ export default function App() {
     return (
         <>
             <main {...main}>
-                <Switch>
-                    <Route {...homeRoute} />
-                    <Route {...loginRoute} />
-                    <Route {...taskRoute} />
-                    <Route {...error404Route} />
+                <Switch {...pageSwitch}>
+                    <Route {...pages.home}/>
+                    <Route {...pages.login}/>
+                    <Route {...pages.task}/>
+                    <Route {...pages.error404}/>
                 </Switch>
+                
+                {bgLocation && (
+                    <Switch>
+                        <Route {...dialogs.delete}/>
+                        <Route {...dialogs.edit}/>
+                    </Switch>
+                )}
+                
+                <AlertMessage {...alertMessage}/>
             </main>
             {pageIsLoading && (
                 <PageLoader />
             )}
-            <AlertMessage {...alertMessage}>
-                {message}
-            </AlertMessage>
         </>
     );
 };
