@@ -52,7 +52,10 @@ export default function Topbar(task: Task) {
         startIcon: <DeleteIcon />,
         component: Link,
         to: `/delete/${task.uuid}`,
-        state: { background: location, enableLoader: false }
+        state: { 
+            background: location, 
+            enableLoader: false
+        }
     }
 
     const editButton = {
@@ -61,7 +64,11 @@ export default function Topbar(task: Task) {
         startIcon: <EditIcon />,
         component: Link,
         to: `/edit/${task.uuid}`,
-        state: { background: location, enableLoader: false }
+        state: { 
+            background: location, 
+            enableLoader: false,
+            args: task
+        }
     }
     
     return (
