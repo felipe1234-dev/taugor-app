@@ -7,6 +7,8 @@
 
 // Editado
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+// Editado
+const typescriptIsTransformer = require("typescript-is/lib/transform-inline/transformer").default;
 
 const fs = require('fs');
 const path = require('path');
@@ -579,6 +581,18 @@ module.exports = function (webpackEnv) {
             // Make sure to add the new loader(s) before the "file" loader.
           ],
         },
+        // Editado
+        {
+          test: /\.(ts|tsx)$/,
+          exclude: /node_modules/,
+          loader: "ts-loader",
+          options: {
+              getCustomTransformers: program => ({
+                  before: [typescriptIsTransformer(program)]
+              })
+          }
+        },
+        // /Editado
       ].filter(Boolean),
     },
     plugins: [
