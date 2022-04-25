@@ -13,7 +13,8 @@ import {
 export type RouteState = { 
     from?: Location, 
     background?: Location, 
-    enableLoader?: boolean 
+    enableLoader?: boolean,
+    args?: unknown
 };
 
 export type Severity = "error" | "warning" | "info" | "success";
