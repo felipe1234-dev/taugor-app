@@ -18,7 +18,11 @@ interface PageContainerProps {
     children: JSX.Element
 };
 
-export default function PageContainer({ title, requireAuth = false, children }: PageContainerProps) {
+export default function PageContainer({ 
+    title, 
+    requireAuth = false, 
+    children 
+}: PageContainerProps) {
     const locationNow = useLocation();
     const { state } = locationNow;
     
