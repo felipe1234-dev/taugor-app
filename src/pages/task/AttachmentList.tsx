@@ -18,7 +18,7 @@ import {
 import { FileViewer } from "@local/components";
 
 // Contexts
-import { FirebaseContext } from "@local/contexts";
+import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
 import { getFileByFilename } from "@local/api/storage/attachments";
@@ -36,23 +36,24 @@ export default function AttachmentList({ list }: AttachmentListProps) {
     const [openFile, setOpenFile]     = useState<File|null>(null);
     const [openViewer, setOpenViewer] = useState<boolean>(false);
     
+    const { setSeverity, setMessage } = useContext(AlertContext);
     const { storage } = useContext(FirebaseContext);
 
     useEffect(() => {
-        const fetchFiles = () => {
-            const fileList: Array<File> = [];
+        const fileList: Array<File> = [];
 
-            list.forEach(async (filename: string) => {
-                const file = await getFileByFilename(storage, filename);
-                if (!!file) {
-                    fileList.push(file);
-                }
-            });
-
-            setFiles(fileList);
-        }
-
-        fetchFiles();
+        list.forEach((filename: string) => {
+            getFileByFilename(storage, filename)
+                .then((file) => (
+                    fileList.push(file) 
+                ))
+                .catch((error) => {
+                    setSeverity(error.severity);
+                    setMessage(error.message);
+                });
+        });
+        
+        setFiles(fileList);
     }, []);
 
     const listItemButton = (file: File, key: number) => ({
