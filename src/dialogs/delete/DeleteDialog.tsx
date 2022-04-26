@@ -1,9 +1,5 @@
 // Libs
-import { 
-    useState, 
-    useEffect, 
-    useContext 
-} from "react";
+import { useContext } from "react";
 import {
     Dialog,
     DialogTitle,
@@ -22,35 +18,14 @@ import {
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
-import { 
-    deleteActivityByUuid, 
-    getActivityByUuid 
-} from "@local/api/collections/Activities";
-
-// Interfaces
-import { Task } from "@local/interfaces";
+import { deleteActivityByUuid } from "@local/api/collections/Activities";
 
 export default function DeleteDialog() {
-    const [task, setTask] = useState<Task|null>(null);
-    
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { db } = useContext(FirebaseContext);
     
     const { uuid: taskUuid } = useParams();
     const navigate = useNavigate();
-    
-    useEffect(() => {
-        if (!!taskUuid) {
-            getActivityByUuid(db, taskUuid)
-                .then((task) => (
-                    setTask(task)
-                ))
-                .catch((error) => {
-                    setSeverity(error.severity);
-                    setMessage(error.message); 
-                });
-        }
-    }, [task, taskUuid, db]);
     
     const dialog = {
         open: true
@@ -65,10 +40,15 @@ export default function DeleteDialog() {
     
     const deleteButton = {
         onClick: () => {
-            if (!!task && !!taskUuid) {
-                deleteActivityByUuid(db, task.uuid)
+            if (!!taskUuid) {
+                deleteActivityByUuid(db, taskUuid)
                     .then(() => (
-                        navigate("/", { replace: true })
+                        navigate("/", { 
+                            replace: true, 
+                            state: {
+                                enableLoader: true 
+                            }
+                        })
                     ))
                     .catch((error) => {
                         setSeverity(error.severity);
