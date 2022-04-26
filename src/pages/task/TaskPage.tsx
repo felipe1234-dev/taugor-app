@@ -28,6 +28,7 @@ import "@local/style/pages/TaskPage.scss";
 
 export default function TaskPage() {
     const [task, setTask] = useState<Task|null>(null);
+    const [ready, setReady] = useState<boolean>(false);
     
     const { db } = useContext(FirebaseContext);
     const { setSeverity, setMessage } = useContext(AlertContext);
@@ -46,8 +47,15 @@ export default function TaskPage() {
             .catch((error) => {
                 setSeverity(error.severity);
                 setMessage(error.message); 
-            });
-    }, [task, taskUuid, db]);
+            })
+            .then(() => (
+                setReady(true)
+            ));
+    }, [db, taskUuid]);
+    
+    if (!ready) {
+        return <span></span>;
+    }
     
     return (
         !!task? (
