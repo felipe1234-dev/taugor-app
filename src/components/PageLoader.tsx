@@ -75,10 +75,9 @@ export default function PageLoader() {
 
     return (
         <div className="PageLoader">
-            {(!!loader && !!joke) && (<>
-            {loader}
+            {(!!loader && !!joke) && (
                 <LoadingAnimation {...loadingAnimation} />
-            </>)}
+            )}
         </div>
     );
 };
