@@ -36,9 +36,6 @@ import {
 // Functions
 import { isRouteState } from "@local/functions";
 
-// Types
-import { RouteState } from "@local/types";
-
 // Contexts
 import { AlertContext } from "@local/contexts";
 
@@ -59,10 +56,10 @@ export default function App() {
     const { pathname: pathNow, state } = locationNow;
     
     let bgLocation: Location|null = null;
-    let enableLoader: boolean = true;
+    let enableLoader: boolean     = true;
     
     if (isRouteState(state)) {
-        bgLocation = state.background || null;
+        bgLocation   = state.background   || null;
         enableLoader = state.enableLoader || false;
     }
 
@@ -128,7 +125,7 @@ export default function App() {
     
     const dialogs = {
         edit: {
-            path: "/edit/:uuid",
+            path: "/task/:uuid",
             element: (
                 <RequireAuth>
                     <Edit />
@@ -137,7 +134,7 @@ export default function App() {
             exact: true
         },
         delete: {
-            path: "/delete/:uuid",
+            path: "/task/:uuid",
             element: (
                 <RequireAuth>
                     <Delete />
