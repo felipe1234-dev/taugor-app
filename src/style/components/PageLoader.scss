@@ -3,7 +3,7 @@
 
 @each $theme-name, $theme in $themes {
     body[theme="#{$theme-name}"] .PageLoader {
-        --wrapper-color: #{map-deep-get($theme, "secondary", "normal")};
+        --wrapper-color: #{map-deep-get($theme, "secondary", "light")};
         --loader-color: #{map-deep-get($theme, "primary", "normal")};
         --text-color: #{map-deep-get($theme, "shadow", "dark")};
     }
