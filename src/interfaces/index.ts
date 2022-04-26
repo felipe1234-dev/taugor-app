@@ -1,10 +1,12 @@
 import { Timestamp } from "firebase/firestore";
+import { Location } from "react-router-dom";
 import { 
     WhereClasule, 
     OrderByClasule, 
     Status, 
     Environment,
-    Priority
+    Priority,
+    Severity
 } from "@local/types";
 
 export interface User {
@@ -44,4 +46,15 @@ export interface File {
     name: string,
     type: "pdf" | "txt",
     url : string
+};
+
+export interface RouteState { 
+    from?: Location, 
+    background?: Location, 
+    enableLoader?: boolean
+};
+
+export interface Alert { 
+    severity: Severity,
+    message: string
 };

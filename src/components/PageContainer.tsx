@@ -9,7 +9,7 @@ import RequireAuth from "./RequireAuth";
 import { isRouteState } from "@local/functions";
 
 // Local types
-import { RouteState } from "@local/types";
+import { RouteState } from "@local/interfaces";
 
 // Props interface
 interface PageContainerProps {
@@ -26,11 +26,8 @@ export default function PageContainer({
     const locationNow = useLocation();
     const { state } = locationNow;
     
-    let routeState: RouteState|null = null;
     let bgLocation: Location|null = null;
-    
     if (isRouteState(state)) {
-        routeState = state;
         bgLocation = state.background || null;
     }
 

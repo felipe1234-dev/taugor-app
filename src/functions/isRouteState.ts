@@ -1,4 +1,4 @@
-import { RouteState } from "@local/types";
+import { RouteState } from "@local/interfaces";
 import isLocation from "./isLocation";
 
 export default function isRouteState(object: any): object is RouteState {

@@ -1,4 +1,4 @@
-import { Alert } from "@local/types";
+import { Alert } from "@local/interfaces";
 import { FirebaseError } from "firebase/app";
 
 export default function toAlert(error: FirebaseError): Alert {

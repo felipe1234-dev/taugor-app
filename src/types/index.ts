@@ -10,16 +10,7 @@ import {
     STATUS_TYPES
 } from "@local/constants";
 
-export type RouteState = { 
-    from?: Location, 
-    background?: Location, 
-    enableLoader?: boolean,
-    args?: unknown
-};
-
 export type Severity = "error" | "warning" | "info" | "success";
-
-export type Alert = { message: string, severity: Severity }
 
 export type WhereClasule = readonly [FieldPath|string, WhereFilterOp, unknown];
 
