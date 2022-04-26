@@ -15,11 +15,11 @@ export default function getUserByUuid(db: Firestore, uuid: string): Promise<User
                 uuid, 
                 ...docSnap.data() 
             } as User); 
+        } else {
+            reject({
+                severity: "error",
+                message: "Usuário não existe"
+            });
         }
-        
-        reject({
-            severity: "error",
-            message: "Usuário não existe"
-        });
     });
 };

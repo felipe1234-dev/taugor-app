@@ -15,11 +15,11 @@ export default function getActivityByUuid(db: Firestore, uuid: string): Promise<
                 uuid, 
                 ...docSnap.data() 
             } as Task);
+        } else {
+            reject({
+                severity: "error",
+                message: "Atividade não existe"
+            });
         }
-        
-        reject({
-            severity: "error",
-            message: "Atividade não existe"
-        });
     });
 };

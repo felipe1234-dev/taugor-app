@@ -45,11 +45,11 @@ export default function getActivityByUuid(db: Firestore, uuid: string): Promise<
                 .catch((error) => (
                     reject(error)
                 ));
+        } else {
+            reject({
+                severity: "error",
+                message: "Atividade não existe"
+            });
         }
-        
-        reject({
-            severity: "error",
-            message: "Atividade não existe"
-        });
     });
 };
