@@ -24,11 +24,11 @@ export default function getFileByFilename(storage: FirebaseStorage, filename: st
                 .catch((error) => (
                     reject(toAlert(error))
                 ));
+        } else {
+            reject({
+                severity: "warning",
+                message: `Anexo ${fileName}.${fileType} não existe`
+            });
         }
-        
-        reject({
-            severity: "warning",
-            message: `Anexo ${fileName}.${fileType} não existe`
-        });
     });
 };
