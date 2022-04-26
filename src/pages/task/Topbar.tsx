@@ -51,7 +51,7 @@ export default function Topbar(task: Task) {
         variant: "outlined" as "outlined",
         startIcon: <DeleteIcon />,
         component: Link,
-        to: `/delete/${task.uuid}`,
+        to: `/task/${task.uuid}`,
         state: { 
             background: location, 
             enableLoader: false
@@ -63,11 +63,10 @@ export default function Topbar(task: Task) {
         variant: "outlined" as "outlined",
         startIcon: <EditIcon />,
         component: Link,
-        to: `/edit/${task.uuid}`,
+        to: `/task/${task.uuid}`,
         state: { 
             background: location, 
-            enableLoader: false,
-            args: task
+            enableLoader: false
         }
     }
     
