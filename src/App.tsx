@@ -125,7 +125,7 @@ export default function App() {
     
     const dialogs = {
         edit: {
-            path: "/task/:uuid",
+            path: "/edit/:uuid",
             element: (
                 <RequireAuth>
                     <Edit />
@@ -134,7 +134,7 @@ export default function App() {
             exact: true
         },
         delete: {
-            path: "/task/:uuid",
+            path: "/delete/:uuid",
             element: (
                 <RequireAuth>
                     <Delete />
@@ -146,7 +146,7 @@ export default function App() {
 
     const alertMessage = {
         open: !!message && !!severity,
-        type: !!severity ? severity : undefined,
+        type: severity || undefined,
         duration: 6000,
         message: message as string|undefined,
         onClose: () => {

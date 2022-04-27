@@ -39,7 +39,8 @@ export default function Topbar(task: Task) {
     const backButton = {
         component: Link,
         to: "/",
-        replace: true
+        replace: true,
+        state: { enableLoader: true }
     }
     
     const box = {
@@ -51,7 +52,7 @@ export default function Topbar(task: Task) {
         variant: "outlined" as "outlined",
         startIcon: <DeleteIcon />,
         component: Link,
-        to: `/task/${task.uuid}`,
+        to: `/delete/${task.uuid}`,
         state: { 
             background: location, 
             enableLoader: false
@@ -63,7 +64,7 @@ export default function Topbar(task: Task) {
         variant: "outlined" as "outlined",
         startIcon: <EditIcon />,
         component: Link,
-        to: `/task/${task.uuid}`,
+        to: `/edit/${task.uuid}`,
         state: { 
             background: location, 
             enableLoader: false
