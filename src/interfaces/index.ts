@@ -6,7 +6,8 @@ import {
     Status, 
     Environment,
     Priority,
-    Severity
+    Severity,
+    Influence
 } from "@local/types";
 
 export interface User {
@@ -24,7 +25,7 @@ export interface Task {
     tags: Array<string>,
     attachments: Array<string>, 
     priority: Priority, 
-    influencedUsers: "1-10" | "11-30" | "31-50" | "50+", 
+    influencedUsers: Influence,
     product: string,
     environment: Environment,
     status: Status,
