@@ -1,4 +1,5 @@
 export { default as AlertMessage } from "./AlertMessage";
+export { default as ChipField } from "./ChipField";
 export { default as FileViewer } from "./FileViewer";
 export { default as PageContainer } from "./PageContainer";
 export { default as PageLoader } from "./PageLoader";
