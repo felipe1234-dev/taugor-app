@@ -24,7 +24,8 @@ import { getActivityByUuid } from "@local/api/collections/Activities";
 // Constants
 import { 
     STATUS_TYPES,
-    PRIORITY_TYPES
+    PRIORITY_TYPES,
+    ENV_TYPES
 } from "@local/constants";
 
 export default function EditForm() {
@@ -119,6 +120,11 @@ export default function EditForm() {
         defaultValue: task?.priority
     }
     
+    const envSelectField = {
+        name: "environment",
+        defaultValue: task?.environment
+    }
+    
     return (
         <Box {...form}>
             <DialogContentText>
@@ -138,19 +144,29 @@ export default function EditForm() {
                         {...baseSelectField} 
                         {...statusSelectField}
                     >
-                        {STATUS_TYPES.map((status: string, i: number) => (
-                            <MenuItem key={i} value={status}>
-                                {status}
+                        {STATUS_TYPES.map((value, i) => (
+                            <MenuItem key={i} value={value}>
+                                {value}
                             </MenuItem>
                         ))}
                     </TextField>
                     <TextField 
-                        {...baseSelectField} 
+                        {...baseSelectField}
                         {...prioritySelectField}
                     >
-                        {PRIORITY_TYPES.map((status: string, i: number) => (
-                            <MenuItem key={i} value={status}>
-                                {status}
+                        {PRIORITY_TYPES.map((value, i) => (
+                            <MenuItem key={i} value={value}>
+                                {value}
+                            </MenuItem>
+                        ))}
+                    </TextField>
+                    <TextField 
+                        {...baseSelectField}
+                        {...envSelectField}
+                    >
+                        {ENV_TYPES.map((value, i) => (
+                            <MenuItem key={i} value={value}>
+                                {value}
                             </MenuItem>
                         ))}
                     </TextField>
