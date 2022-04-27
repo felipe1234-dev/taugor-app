@@ -134,7 +134,7 @@ export default function FilterSelector({ filter, setFilter }: FilterSelectorProp
                     </FormControl>
                     <FormControl>
                         <Select {...statusSelector}>
-                            {["Todos", ...STATUS_TYPES].map((status: string, i: number) => (
+                            {["Todos", ...STATUS_TYPES].map((status, i) => (
                                 <MenuItem key={i} value={status}>
                                     {status}
                                 </MenuItem>
@@ -149,7 +149,7 @@ export default function FilterSelector({ filter, setFilter }: FilterSelectorProp
                     </FormControl>
                     <FormControl>
                         <Select {...prioritySelector}>
-                            {["Todas", ...PRIORITY_TYPES].map((priority: string, i: number) => (
+                            {["Todas", ...PRIORITY_TYPES].map((priority, i) => (
                                 <MenuItem key={i} value={priority}>
                                     {priority}
                                 </MenuItem>
