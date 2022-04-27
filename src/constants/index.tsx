@@ -51,3 +51,10 @@ export const ENV_TYPES = [
     "Ambiente de Produção - Cliente Ativo/Licença",
     "Dados/Ambiente de Testes - Somente testes"
 ] as const;
+
+export const INFLUENCED_USERS = [
+    "1-10",
+    "11-30",
+    "31-50",
+    "50+"
+] as const;
