@@ -42,14 +42,19 @@ export default function DeleteDialog() {
         onClick: () => {
             if (!!taskUuid) {
                 deleteActivityByUuid(db, taskUuid)
-                    .then(() => (
-                        navigate("/", { 
-                            replace: true, 
-                            state: {
-                                enableLoader: true 
-                            }
-                        })
-                    ))
+                    .then(() => {
+                        setSeverity("success");
+                        setMessage("Atividade excluída com sucesso");
+                        
+                        setTimeout(() => {
+                            navigate("/", { 
+                                replace: true, 
+                                state: {
+                                    enableLoader: true 
+                                }
+                            });
+                        }, 4000);
+                    })
                     .catch((error) => {
                         setSeverity(error.severity);
                         setMessage(error.message);
