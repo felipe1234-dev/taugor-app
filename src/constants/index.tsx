@@ -58,3 +58,7 @@ export const INFLUENCED_USERS = [
     "31-50",
     "51+"
 ] as const;
+
+export const TAGS = [
+    "Produtos e serviços"
+] as const;
