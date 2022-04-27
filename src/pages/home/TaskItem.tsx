@@ -73,7 +73,8 @@ export default function TaskItem(task: Task) {
 
     const listItem = {
         component: Link,
-        to: `/task/${task.uuid}`
+        to: `/task/${task.uuid}`,
+        state: { enableLoader: true }
     }
 
     const tooltip = {
