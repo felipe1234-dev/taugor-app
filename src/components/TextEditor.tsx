@@ -39,10 +39,12 @@ export default function TextEditor({
     }
     
     return (
-        !isPreview? (
-            <RichTextEditor {...richTextEditor}/>
-        ) : (
-            <Box {...previewContainer}/>
-        )
+        <div className="TextEditor">
+            {!isPreview? (
+                <RichTextEditor {...richTextEditor}/>
+            ) : (
+                <Box {...previewContainer}/>
+            )}
+        </div>
     );
 };
