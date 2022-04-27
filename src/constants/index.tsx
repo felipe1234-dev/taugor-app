@@ -56,5 +56,5 @@ export const INFLUENCED_USERS = [
     "1-10",
     "11-30",
     "31-50",
-    "50+"
+    "51+"
 ] as const;
