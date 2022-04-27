@@ -55,7 +55,7 @@ export default function FilterSelector({ filter, setFilter }: FilterSelectorProp
 
         /* Quando temos um objeto com propriedades duplicadas, o valor que 
          * vier por último tem prioridade, portanto, "where: conditions" 
-         * ssobrescreverá "filter.where".
+         * sobrescreverá "filter.where".
          */
         setFilter({
             ...filter,
