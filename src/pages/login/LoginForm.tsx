@@ -58,9 +58,11 @@ export default function LoginForm() {
         const password = data.get("password")?.toString() || "";
         
         logIn(email, password)
-            .then(() => (
-                navigate(from, { replace: true })
-            ))
+            .then(() => {
+                setSeverity("success");
+                setMessage("Login feito com sucesso");
+                setTimeout(() => navigate(from, { replace: true }), 3000);
+            })
             .catch((error) => {
                 setSeverity(error.severity);
                 setMessage(error.message);
