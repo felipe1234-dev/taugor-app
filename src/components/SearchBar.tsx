@@ -10,7 +10,7 @@ interface SearchBarProps {
     hasIcon?: boolean
 };
 
-export default function SearchBar({ hasIcon = false, ...rest }: SearchBarProps & TextFieldProps) {
+export default function SearchBar({ hasIcon = false, ...textField }: SearchBarProps & TextFieldProps) {
     return (
         <div className="SearchBar">
             {hasIcon && (
@@ -18,7 +18,7 @@ export default function SearchBar({ hasIcon = false, ...rest }: SearchBarProps &
                     <SearchIcon />
                 </div>
             )}
-            <TextField {...rest} fullWidth/>
+            <TextField {...textField} fullWidth/>
         </div>
     );
 };

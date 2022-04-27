@@ -18,7 +18,7 @@ interface FileViewerProps {
 export default function FileViewer({
     title = "", 
     filePath, 
-    ...rest 
+    ...modal 
 }: FileViewerProps & Omit<ModalProps, "children">) {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -33,7 +33,7 @@ export default function FileViewer({
     }
     
     return (
-        <Modal className="FileViewer" {...rest}>
+        <Modal className="FileViewer" {...modal}>
             <iframe {...iframe} />
         </Modal>
     );
