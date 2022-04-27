@@ -6,7 +6,8 @@ import {
 import { 
     ENV_TYPES,
     PRIORITY_TYPES, 
-    STATUS_TYPES
+    STATUS_TYPES,
+    INFLUENCED_USERS
 } from "@local/constants";
 
 export type Severity = "error" | "warning" | "info" | "success";
@@ -20,3 +21,5 @@ export type Status = typeof STATUS_TYPES[number];
 export type Priority = typeof PRIORITY_TYPES[number];
 
 export type Environment = typeof ENV_TYPES[number];
+
+export type Influence = typeof INFLUENCED_USERS[number];
