@@ -1,5 +1,10 @@
 // Libs
 import {
+    useState,
+    useEffect,
+    useContext
+} from "react";
+import {
     Dialog,
     DialogTitle,
     DialogContent,
@@ -9,15 +14,55 @@ import {
 import { Link, useParams } from "react-router-dom";
 
 // Dialog components
-import EditForm from "./EditForm";
+import TaskFormFields from "../TaskFormFields";
+
+// Contexts
+import { AlertContext, FirebaseContext } from "@local/contexts";
+
+// Interfaces
+import { Task } from "@local/interfaces";
+
+// API
+import { getActivityByUuid } from "@local/api/collections/Activities";
 
 export default function EditDialog() {
+    const [task, setTask] = useState<Task|null>(null);
+    
+    const { setSeverity, setMessage } = useContext(AlertContext);
+    const { db } = useContext(FirebaseContext);
+    
     const { uuid: taskUuid } = useParams();
     
-    const dialog = {
-        open: true,
+    useEffect(() => {
+        if (!taskUuid) {
+            return;
+        }
+        
+        getActivityByUuid(db, taskUuid)
+            .then((task) => (
+                setTask(task)
+            ))
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message); 
+            });
+    }, [db, taskUuid]);
+    
+    const onSubmit = (event: any) => {
+        event.preventDefault();
+    }
+
+    const onChange = () => {
+
+    }
+    
+    const form = {
+        component: "form" as "form",
+        onSubmit: onSubmit,
+        onChange: onChange,
         maxWidth: "lg" as "lg",
         scroll: "paper" as "paper",
+        open: true,
         fullWidth: true
     }
     
@@ -27,19 +72,25 @@ export default function EditDialog() {
         state: { enableLoader: false }
     }
     
+    const saveButton = {
+        type: "submit" as "submit",
+    }
+    
     return (
-        <Dialog {...dialog}>
+        <Dialog {...form}>
             <DialogTitle>
                 Editar atividade
             </DialogTitle>
             <DialogContent>
-                <EditForm />
+                {!!task && (
+                    <TaskFormFields {...task}/>
+                )}
             </DialogContent>
             <DialogActions>
                 <Button {...cancelButton}>
                     Cancelar
                 </Button>
-                <Button>
+                <Button {...saveButton}>
                     Salvar
                 </Button>
             </DialogActions>
