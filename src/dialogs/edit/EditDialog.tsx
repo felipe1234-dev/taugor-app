@@ -16,7 +16,7 @@ export default function EditDialog() {
     
     const dialog = {
         open: true,
-        maxWidth: "md" as "md",
+        maxWidth: "lg" as "lg",
         scroll: "paper" as "paper",
         fullWidth: true
     }
