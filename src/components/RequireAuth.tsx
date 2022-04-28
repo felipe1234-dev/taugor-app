@@ -17,7 +17,7 @@ import {
 } from "@local/contexts";
 
 // Props interface
-interface RequireAuthProps {
+export interface RequireAuthProps {
     children: JSX.Element
 };
 

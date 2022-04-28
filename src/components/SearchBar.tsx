@@ -6,7 +6,7 @@ import { Search as SearchIcon } from "@mui/icons-material";
 import "@local/style/components/SearchBar.scss";
 
 // Props interface
-interface SearchBarProps {
+export interface SearchBarProps {
     hasIcon?: boolean
 };
 

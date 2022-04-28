@@ -2,7 +2,7 @@ import React from "react";
 import { Alert, Snackbar } from "@mui/material";
 import { Severity } from "@local/types";
 
-interface AlertMessageProps {
+export interface AlertMessageProps {
     open?: boolean,
     type?: Severity,
     children?: React.ReactNode,

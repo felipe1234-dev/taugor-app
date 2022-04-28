@@ -8,3 +8,15 @@ export { default as RequireAuth } from "./RequireAuth";
 export { default as SearchBar } from "./SearchBar";
 export { default as Spinner } from "./Spinner";
 export { default as TextEditor } from "./TextEditor";
+
+export type { AlertMessageProps } from "./AlertMessage";
+export type { ChipFieldProps } from "./ChipField";
+export type { FileViewerProps } from "./FileViewer";
+export type { PageContainerProps } from "./PageContainer";
+// export type { PageLoaderProps } from "./PageLoader";
+// PageLoader não tem props
+export type { ProfileImageProps } from "./ProfileImage";
+export type { RequireAuthProps } from "./RequireAuth";
+export type { SearchBarProps } from "./SearchBar";
+export type { SpinnerProps } from "./Spinner";
+export type { TextEditorProps } from "./TextEditor";

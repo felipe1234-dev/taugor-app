@@ -10,7 +10,7 @@ import {
 import "@local/style/components/FileViewer.scss";
 
 // Props interface
-interface FileViewerProps {
+export interface FileViewerProps {
     title?: string,
     filePath: string
 };

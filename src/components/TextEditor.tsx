@@ -7,7 +7,7 @@ import RichTextEditor, { EditorValue } from "react-rte";
 import "@local/style/components/TextEditor.scss";
 
 // Props interface
-interface TextEditorProps {
+export interface TextEditorProps {
     name?: string,
     initialContent?: string,
     readOnly?: boolean,

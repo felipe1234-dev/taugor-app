@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 
 // Props interface
-interface ChipFieldProps {
+export interface ChipFieldProps {
     options: Array<string>,
     defaultValue: Array<string>
 };

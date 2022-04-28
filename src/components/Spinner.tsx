@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 // Styles
 import "@local/style/components/Spinner.scss";
 
-interface SpinnerProps {
+export interface SpinnerProps {
     wrapper?: CSSProperties,
     spinner?: CSSProperties
 };

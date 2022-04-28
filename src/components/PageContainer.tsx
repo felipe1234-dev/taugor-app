@@ -12,7 +12,7 @@ import { isRouteState } from "@local/functions";
 import { RouteState } from "@local/interfaces";
 
 // Props interface
-interface PageContainerProps {
+export interface PageContainerProps {
     title: string,
     requireAuth?: boolean,
     children: JSX.Element

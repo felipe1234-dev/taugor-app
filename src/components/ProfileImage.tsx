@@ -1,7 +1,7 @@
 import { Avatar, AvatarProps } from "@mui/material";
 import { stringToAvatar } from "@local/functions";
 
-interface ProfileImageProps {
+export interface ProfileImageProps {
     src?: string, 
     alt: string
 };
