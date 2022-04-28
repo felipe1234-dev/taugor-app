@@ -9,13 +9,13 @@ import "@local/style/components/TextEditor.scss";
 // TextEditorProps interface
 interface TextEditorProps {
     initialContent?: string,
-    isPreview?: boolean,
+    readOnly?: boolean,
     onChange?: Function
 };
 
 export default function TextEditor({ 
     initialContent = "<h1>Olá, mundo!</h1>", 
-    isPreview = false, 
+    readOnly = false, 
     onChange = () => {}
 }: TextEditorProps) {
     const [content, setContent] = useState<EditorValue>(
@@ -40,7 +40,7 @@ export default function TextEditor({
     
     return (
         <div className="TextEditor">
-            {!isPreview? (
+            {!readOnly? (
                 <RichTextEditor {...richTextEditor}/>
             ) : (
                 <Box {...previewContainer}/>

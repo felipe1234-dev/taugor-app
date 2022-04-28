@@ -36,7 +36,7 @@ export default function Body(task: Task) {
     }
 
     const textEditor = {
-        isPreview: true,
+        readOnly: true,
         initialContent: task.description
     }
     
