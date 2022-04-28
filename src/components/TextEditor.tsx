@@ -6,14 +6,16 @@ import RichTextEditor, { EditorValue } from "react-rte";
 // Styles
 import "@local/style/components/TextEditor.scss";
 
-// TextEditorProps interface
+// Props interface
 interface TextEditorProps {
+    name?: string,
     initialContent?: string,
     readOnly?: boolean,
     onChange?: Function
 };
 
-export default function TextEditor({ 
+export default function TextEditor({
+    name,
     initialContent = "<h1>Olá, mundo!</h1>", 
     readOnly = false, 
     onChange = () => {}
@@ -21,6 +23,13 @@ export default function TextEditor({
     const [content, setContent] = useState<EditorValue>(
         RichTextEditor.createValueFromString(initialContent, "html")
     );
+    
+    const textarea = {
+        name: name,
+        type: "hidden",
+        defaultValue: content.toString("html"),
+        style: { display: "none" }
+    }
     
     const richTextEditor = {
         value: content,
@@ -41,7 +50,10 @@ export default function TextEditor({
     return (
         <div className="TextEditor">
             {!readOnly? (
-                <RichTextEditor {...richTextEditor}/>
+                <>
+                    <textarea {...textarea}/>
+                    <RichTextEditor {...richTextEditor}/>
+                </>
             ) : (
                 <Box {...previewContainer}/>
             )}
