@@ -6,6 +6,7 @@ import {
 } from "react";
 
 // Page components
+import { MasterProvider } from "./contexts";
 import Navbar from "./Navbar";
 import Header from "./Header";
 import Body from "./Body";
@@ -14,18 +15,13 @@ import Body from "./Body";
 import { useOnScreen } from "@local/hooks";
 
 // Contexts
-import { 
-    TimelineContext,
-    TimelineProvider, 
-    FilterContext,
-    FilterProvider 
-} from "./contexts";
+import { TimelineContext, FilterContext } from "./contexts";
 import { FirebaseContext } from "@local/contexts";
 
 // Style
 import "@local/style/pages/HomePage.scss";
 
-export default function HomePage() {
+function Home() {
     const { filter } = useContext(FilterContext);
     const { db } = useContext(FirebaseContext);
     const {
@@ -42,16 +38,24 @@ export default function HomePage() {
     }, [db, filter]);
 
     useEffect(() => {
-        updateTimeline(filter, "add");
+        if (loaderIsOnScreen) {
+            updateTimeline(filter, "add");
+        }
     }, [db, loaderIsOnScreen]);
 
     return (
-        <FilterProvider>
-            <TimelineProvider>
-                <Navbar />
-                <Header />
-                <Body loaderRef={loaderRef}/>
-            </TimelineProvider>
-        </FilterProvider>
+        <>
+            <Navbar />
+            <Header />
+            <Body loaderRef={loaderRef}/>
+        </>
+    );
+}
+
+export default function HomePage() {
+    return (
+        <MasterProvider>
+            <Home />
+        </MasterProvider>
     );
 }
