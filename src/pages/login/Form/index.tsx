@@ -7,6 +7,7 @@ import {
     IconButton,
     Button
 } from "@mui/material";
+import { TextFieldProps } from "@mui/material";
 import {
     MailOutline as MailOutlineIcon, 
     Visibility as VisibilityOnIcon,
@@ -26,10 +27,10 @@ import { logIn } from "@local/api/auth";
 // Contexts
 import { AlertContext } from "@local/contexts";
 
-export default function LoginForm() {
-    const [formIsLoading, setFormIsLoading]       = useState<boolean>(false);
+export default function Form() {
+    const [formIsLoading, setFormIsLoading] = useState<boolean>(false);
     const [submitIsDisabled, setSubmitIsDisabled] = useState<boolean>(false);
-    const [passIsMasked, setPassIsMasked]         = useState<boolean>(true);
+    const [passIsMasked, setPassIsMasked] = useState<boolean>(true);
     
     const navigate  = useNavigate();
     const { state, pathname: pathNow } = useLocation();
@@ -79,86 +80,72 @@ export default function LoginForm() {
         );
     }
     
-    const form = {
-        onSubmit: onSubmit,
-        onChange: onChange,
-        component: "form" as "form",
-        sx: { mt: 1 }
-    }
-    
-    const baseTextField = {
-        margin: "normal" as "normal",
+    const baseTextField: TextFieldProps = {
+        margin: "normal",
         fullWidth: true,
         required: true,
-        variant: "standard" as "standard"
-    }
-    
-    const emailTextField = {
-        name: "email",
-        label: "Email",
-        type: "email",
-        defaultValue: "Seu email",
-        InputProps: {
-            endAdornment: (
-                <InputAdornment style={{ padding: "12px" }} position="end">
-                    <MailOutlineIcon />
-                </InputAdornment>
-            )
-        }
-    }
-    
-    const passwordTextField = {
-        name: "password",
-        label: "Senha",
-        type: passIsMasked ? "password" : "text",
-        defaultValue: "12345",
-        InputProps: {
-            autoComplete: "new-password",
-            endAdornment: (
-                <InputAdornment position="end">
-                    <IconButton onClick={() => setPassIsMasked(prevState => !prevState)}>
-                        {passIsMasked ? <VisibilityOffIcon /> : <VisibilityOnIcon />}
-                    </IconButton>
-                </InputAdornment>
-            )
-        }
-    }
-    
-    const loginButton = {
-        className: `LoginPage-loginButton${formIsLoading ? " isLoading" : ""}`,
-        variant: "contained" as "contained",
-        component: "button" as "button",
-        type: "submit" as "submit",
-        disabled: submitIsDisabled,
-        fullWidth: true,
-        sx: { mt: 3, mb: 2 },
-        disableElevation: true
-    }
-    
-    const spinner = {
-        wrapper: {
-            minWidth: "100%",
-            minHeight: "100%"
-        },
-        spinner: {
-            minWidth: "1em",
-            minHeight: "1em"
-        }
+        variant: "standard"
     }
      
     return (
-        <Box {...form}>
+        <Box
+            component="form"
+            onSubmit={onSubmit}
+            onChange={onChange}
+            sx={{ mt: 1 }}
+        >
             <TextField 
-                {...baseTextField} 
-                {...emailTextField} 
+                {...baseTextField}
+                name="email"
+                label="Email"
+                type="email"
+                defaultValue="Seu email"
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment style={{ padding: "12px" }} position="end">
+                            <MailOutlineIcon />
+                        </InputAdornment>
+                    )
+                }}
             />
             <TextField
-                {...baseTextField} 
-                {...passwordTextField} 
+                {...baseTextField}
+                name="password"
+                label="Senha"
+                type={passIsMasked ? "password" : "text"}
+                defaultValue="12345"
+                InputProps={{
+                    autoComplete: "new-password",
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton onClick={() => setPassIsMasked(prevState => !prevState)}>
+                                {passIsMasked ? <VisibilityOffIcon /> : <VisibilityOnIcon />}
+                            </IconButton>
+                        </InputAdornment>
+                    )
+                }}
             />
-            <Button {...loginButton}>
+            <Button
+                className={`LoginPage-loginButton${formIsLoading ? " isLoading" : ""}`}
+                variant="contained"
+                type="submit"
+                disabled={submitIsDisabled}
+                disableElevation
+                fullWidth
+                sx={{ mt: 3, mb: 2 }}
+            >
                 <span>Entrar</span>
-                <Spinner {...spinner}/>
+                <Spinner
+                    wrapper={{
+                        minWidth: "100%",
+                        minHeight: "100%"
+                    }}
+                    
+                    spinner={{
+                        minWidth: "1em",
+                        minHeight: "1em"
+                    }}
+                />
             </Button>
         </Box>
     );
