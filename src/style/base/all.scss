@@ -41,14 +41,14 @@ body {
     white-space: pre-line !important;
     
     &-hasCoolUnderline {
-        --width: 40%;
+        --underline-width: 40%;
         position: relative;
         padding-bottom: .3em !important;
 
         &::before {
             content: "";
             position: absolute;
-            width: var(--width);
+            width: var(--underline-width);
             height: 1px;
             bottom: 0;
             left: 0;
