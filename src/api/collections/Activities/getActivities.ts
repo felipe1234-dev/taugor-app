@@ -50,20 +50,20 @@ export default function getActivities(db: Firestore, filter: Filter): Promise<Ar
             ...lastVisible,
             limit(filter.limit? filter.limit : 10)
         );
+        
+        try {
+            const resp = await getDocs(q);
             
-        getDocs(q)
-            .then((resp) => {
-                const docs: Array<Task> = resp.docs.map((doc: any) => {
-                    return ({
-                        uuid: doc.id,
-                        ...doc.data()
-                    });
+            const docs: Array<Task> = resp.docs.map((doc: any) => {
+                return ({
+                    uuid: doc.id,
+                    ...doc.data()
                 });
-                
-                resolve(docs);
-            })
-            .catch((error: FirebaseError) => (
-                reject(toAlert(error))
-            ));
+            });
+            
+            resolve(docs);
+        } catch (error) {
+            reject(toAlert(error as FirebaseError))
+        }
     });
 };

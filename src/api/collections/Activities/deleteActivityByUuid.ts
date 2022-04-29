@@ -12,16 +12,19 @@ import toAlert from "@local/api/toAlert";
 export default function getActivityByUuid(db: Firestore, uuid: string): Promise<void> {
     return new Promise(async (resolve, reject) => {
         const docRef  = doc(db, "Activities", uuid);
-        const docSnap = await getDoc(docRef);
         
-        if (docSnap.exists()) {
-            const task = { 
-                uuid, 
-                ...docSnap.data() 
-            } as Task;
+        try {
+            const docSnap = await getDoc(docRef);
             
-            getCurrentUser(db)
-                .then((user) => {
+            if (docSnap.exists()) {
+                const task = { 
+                    uuid, 
+                    ...docSnap.data() 
+                } as Task;
+                
+                try {
+                    const user = await getCurrentUser(db);
+                    
                     if (!!user) {
                         if (user.uuid === task.postedBy) {
                             deleteDoc(docRef)
@@ -41,15 +44,17 @@ export default function getActivityByUuid(db: Firestore, uuid: string): Promise<
                             message: "Usuário não logado"
                         });
                     }
-                })
-                .catch((error) => (
-                    reject(error)
-                ));
-        } else {
-            reject({
-                severity: "error",
-                message: "Atividade não existe"
-            });
+                } catch (error) {
+                    reject(error);
+                }
+            } else {
+                reject({
+                    severity: "error",
+                    message: "Atividade não existe"
+                });
+            }
+        } catch (error) {
+            reject(toAlert(error as FirebaseError));
         }
     });
 };
