@@ -74,105 +74,76 @@ export default function App() {
             setPageIsLoading(false);
         }, 8000);
     });
-
-    const main = {
-        style: {
-            display: pageIsLoading ? "none" : "block"
-        }
-    }
     
-    const pageSwitch = {
-        location: bgLocation || locationNow
-    }
-
-    const pages = {
-        home: {
-            path: "/",
-            element: (
-                <Page title={`Home - ${appName}`} requireAuth>
-                    <Home />
-                </Page>
-            ),
-            exact: true
-        },
-        login: {
-            path: "/login",
-            element: (
-                <Page title={`Entrar - ${appName}`}>
-                    <Login />
-                </Page>
-            ),
-            exact: true
-        },
-        task: {
-            path: "/task/:uuid",
-            element: (
-                <Page title={`Atividade - ${appName}`} requireAuth>
-                    <Task />
-                </Page>
-            ),
-            exact: true
-        },
-        error404: {
-            path: "*",
-            element: (
-                <Page title={`Página não encontrada - ${appName}`}>
-                    <Error404 />
-                </Page>
-            )
-        }
-    }
-    
-    const dialogs = {
-        edit: {
-            path: "/edit/:uuid",
-            element: (
-                <RequireAuth>
-                    <Edit />
-                </RequireAuth>
-            ),
-            exact: true
-        },
-        delete: {
-            path: "/delete/:uuid",
-            element: (
-                <RequireAuth>
-                    <Delete />
-                </RequireAuth>
-            ),
-            exact: true
-        }
-    }
-
-    const alertMessage = {
-        open: !!message && !!severity,
-        type: severity || undefined,
-        duration: 6000,
-        message: message as string|undefined,
-        onClose: () => {
-            setMessage(null);
-            setSeverity(null);
-        }
-    }
-
     return (
         <>
-            <main {...main}>
-                <Switch {...pageSwitch}>
-                    <Route {...pages.home}/>
-                    <Route {...pages.login}/>
-                    <Route {...pages.task}/>
-                    <Route {...pages.error404}/>
+            <main style={{ display: pageIsLoading ? "none" : "block" }}>
+                <Switch location={bgLocation || locationNow}>
+                    <Route
+                        path="/"
+                        element={(
+                            <Page title={`Home - ${appName}`} requireAuth>
+                                <Home />
+                            </Page>
+                        )}
+                    />
+                    <Route
+                         path="/login"
+                         element={(
+                             <Page title={`Entrar - ${appName}`}>
+                                 <Login />
+                             </Page>
+                        )}
+                    />
+                    <Route
+                        path="/task/:uuid"
+                        element={(
+                            <Page title={`Atividade - ${appName}`} requireAuth>
+                                <Task />
+                            </Page>
+                        )}
+                    />
+                    <Route            
+                        path="*"
+                        element={(
+                            <Page title={`Página não encontrada - ${appName}`}>
+                                <Error404 />
+                            </Page>
+                        )}
+                    />
                 </Switch>
                 
                 {bgLocation && (
                     <Switch>
-                        <Route {...dialogs.delete}/>
-                        <Route {...dialogs.edit}/>
+                        <Route 
+                            path="/edit/:uuid"
+                            element={(
+                                <RequireAuth>
+                                    <Edit />
+                                </RequireAuth>
+                            )}
+                        />
+                        <Route 
+                            path="/delete/:uuid"
+                            element={(
+                                <RequireAuth>
+                                    <Delete />
+                                </RequireAuth>
+                            )}
+                        />
                     </Switch>
                 )}
                 
-                <AlertMessage {...alertMessage}/>
+                <AlertMessage
+                    open={!!message && !!severity}
+                    type={severity || undefined}
+                    duration={6000}
+                    message={message}
+                    onClose={() => {
+                        setMessage(null);
+                        setSeverity(null);
+                    }}
+                />
             </main>
             {pageIsLoading && (
                 <PageLoader />
