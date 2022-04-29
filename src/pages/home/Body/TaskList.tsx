@@ -1,23 +1,23 @@
 // Libs
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import {
     List,
     ListSubheader,
     Divider
 } from "@mui/material";
 
-// Components 
+// TaskList components 
 import TaskItem from "./TaskItem";
 
+// Contexts
+import { TimelineContext } from "../contexts";
+
 // Interfaces
-import { Task, Timeline } from "@local/interfaces";
+import { Task } from "@local/interfaces";
 
-// Props interface
-interface TaskListProps {
-    timeline: Timeline
-};
-
-export default function TaskList({ timeline }: TaskListProps) {
+export default function TaskList() {
+    const { timeline } = React.useContext(TimelineContext);
+    
     return (
         <List className="HomePage-taskList">
             {Object.entries(timeline).map(([time, tasks]: [string, Array<Task>]) => (
