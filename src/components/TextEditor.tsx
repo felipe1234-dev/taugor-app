@@ -44,7 +44,6 @@ export default function TextEditor({
             ) : (
                 <Box 
                     className="TextEditor-content"
-                    component="article"
                     dangerouslySetInnerHTML={{
                         __html: content.toString("html")
                     }}
