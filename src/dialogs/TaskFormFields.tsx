@@ -93,6 +93,7 @@ export default function TaskFormFields(task: Task) {
     }
 
     const textEditor = {
+        name: "description",
         readOnly: false,
         initialContent: task.description,
         onChange: (html: string) => {
@@ -178,4 +179,4 @@ export default function TaskFormFields(task: Task) {
             </TextField>
         </Box>
     );
-}
+};
