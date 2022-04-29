@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "@local/interfaces/index";
+import { User } from "@local/interfaces";
 
 export interface UserValue {
     user: User|null,
