@@ -37,9 +37,6 @@ export function TimelineProvider(props: { children: React.ReactNode }) {
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { db }                      = useContext(FirebaseContext);
 
-    const loaderRef        = React.useRef<HTMLDivElement>(null);
-    const loaderIsOnScreen = useOnScreen(loaderRef, [timeline, isLoading]);
-
     const fetchTasks = (filter: Filter, add: boolean) => {
         if (!add) {
             setIsLoading(true);
@@ -70,7 +67,7 @@ export function TimelineProvider(props: { children: React.ReactNode }) {
     }
     
     const updateTimeline = (filter: Filter, mode: "add"|"reset" = "add") => {
-        if (mode === "add" && hasNextPage && loaderIsOnScreen) {
+        if (mode === "add" && hasNextPage) {
             const timestamps = Object.keys(timeline);
             const oldest = timestamps.at(-1);
             const lastTask = timeline[oldest!].at(-1);
