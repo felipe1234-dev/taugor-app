@@ -23,18 +23,16 @@ export default function FileViewer({
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("md"));
     
-    const iframe = {
-        title: title,
-        src: filePath, 
-        style: { 
-            minWidth: isMobile? "90vw" : "60vw",
-            maxWidth: isMobile? "90vw" : "60vw"
-        }
-    }
-    
     return (
         <Modal className="FileViewer" {...modal}>
-            <iframe {...iframe} />
+            <iframe
+                title={title}
+                src={filePath}
+                style={{ 
+                    minWidth: isMobile? "90vw" : "60vw",
+                    maxWidth: isMobile? "90vw" : "60vw"
+                }}
+            />
         </Modal>
     );
 };

@@ -24,38 +24,31 @@ export default function TextEditor({
         RichTextEditor.createValueFromString(initialContent, "html")
     );
     
-    const textarea = {
-        name: name,
-        type: "hidden",
-        defaultValue: content.toString("html"),
-        style: { display: "none" }
-    }
-    
-    const richTextEditor = {
-        value: content,
-        onChange: (newContent: EditorValue) => {
-            setContent(newContent);
-            onChange(newContent.toString("html"));
-        }
-    }
-    
-    const previewContainer = {
-        className: "TextEditor-content",
-        component: "article" as "article",
-        dangerouslySetInnerHTML: {
-            __html: content.toString("html")
-        }
-    }
-    
     return (
         <div className="TextEditor">
             {!readOnly? (
                 <>
-                    <textarea {...textarea}/>
-                    <RichTextEditor {...richTextEditor}/>
+                    <textarea
+                        name={name}
+                        defaultValue={content.toString("html")}
+                        style={{ display: "none" }}
+                    />
+                    <RichTextEditor
+                        value={content}
+                        onChange={(newContent: EditorValue) => {
+                            setContent(newContent);
+                            onChange(newContent.toString("html"));
+                        }}
+                    />
                 </>
             ) : (
-                <Box {...previewContainer}/>
+                <Box 
+                    className="TextEditor-content"
+                    component="article"
+                    dangerouslySetInnerHTML={{
+                        __html: content.toString("html")
+                    }}
+                />
             )}
         </div>
     );

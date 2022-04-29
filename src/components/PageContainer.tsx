@@ -8,9 +8,6 @@ import RequireAuth from "./RequireAuth";
 // Local functions
 import { isRouteState } from "@local/functions";
 
-// Local types
-import { RouteState } from "@local/interfaces";
-
 // Props interface
 export interface PageContainerProps {
     title: string,

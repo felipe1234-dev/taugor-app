@@ -6,7 +6,7 @@ export interface AlertMessageProps {
     open?: boolean,
     type?: Severity,
     children?: React.ReactNode,
-    message?: string, 
+    message?: string|null, 
     duration?: number,
     onClose?: Function
 };
@@ -25,21 +25,17 @@ export default function AlertMessage({
         }
     }
     
-    const snackBar = {
-        open: open,
-        autoHideDuration: duration,
-        onClose: handleOnClose
-    }
-    
-    const alert = {
-        severity: type,
-        sx: { width: "100%" },
-        onClose: handleOnClose
-    }
-    
     return (
-        <Snackbar {...snackBar}>
-            <Alert {...alert}>
+        <Snackbar
+            onClose={handleOnClose}
+            autoHideDuration={duration}
+            open={open}
+        >
+            <Alert
+                severity={type}
+                sx={{ width: "100%" }}
+                onClose={handleOnClose}
+            >
                 {message && message}
                 {children && children}
             </Alert>

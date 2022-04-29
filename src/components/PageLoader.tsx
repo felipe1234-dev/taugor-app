@@ -60,23 +60,19 @@ export default function PageLoader() {
         }
     }, []);
 
-    const loadingAnimation = {
-        loader: loader,
-        sentences: [joke],
-        height: "100vh",
-        width: "100%",
-        fadeIn: true,
-        wrapperBackgroundColor: `var(--wrapper-color)`,
-        color: "var(--loader-color)",
-        textStyles: {
-            color: "var(--text-color)",
-        }
-    };
-
     return (
         <div className="PageLoader">
             {(!!loader && !!joke) && (
-                <LoadingAnimation {...loadingAnimation} />
+                <LoadingAnimation 
+                    loader={loader}
+                    sentences={[ joke ]}
+                    height="100vh"
+                    width="100%"
+                    wrapperBackgroundColor={`var(--wrapper-color)`}
+                    color="var(--loader-color)"
+                    textStyles={{ color: "var(--text-color)" }}
+                    fadeIn
+                />
             )}
         </div>
     );
