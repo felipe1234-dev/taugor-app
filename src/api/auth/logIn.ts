@@ -1,10 +1,6 @@
 // Firebase
 import { FirebaseError } from "firebase/app";
-import { 
-    UserCredential, 
-    getAuth, 
-    signInWithEmailAndPassword 
-} from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 // Local
 import toAlert from "../toAlert";
