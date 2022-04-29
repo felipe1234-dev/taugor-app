@@ -82,6 +82,32 @@
                 .MuiIconButton-root {
                     color: $text-color;
                 }
+        
+                &-searchBar {
+                    background-color: map-deep-get($theme, "primary", "dark");    
+                    position: relative;
+                    border-radius: .8em;
+                    margin-left: 0;
+                    width: 20%;
+                    transition: width 1s ease;
+                    
+                    &:hover {
+                        width: 25%;
+                        background-color: map-deep-get($theme, "primary", "light");
+                    }
+                    
+                    .MuiInputBase-root {
+                        .MuiInputBase-input {
+                            padding: .5em .8em;
+                            width: 100%;
+                            color: map-deep-get($theme, "text", "light") !important;
+                        }
+                        
+                        fieldset {
+                            border-style: none !important;
+                        }
+                    }
+                }
             }
 
             &-header {
