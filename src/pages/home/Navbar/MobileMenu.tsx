@@ -14,7 +14,7 @@ import { User } from "@local/interfaces";
 
 // Props interface
 interface MobileMenuProps {
-    isOpen?: boolean,
+    open?: boolean,
     onClose?: Function
 }
 
@@ -24,7 +24,7 @@ export default function MobileMenu({
     tab,
     setTab,
     menuItems,
-    isOpen = false,
+    open = false,
     onClose = () => { },
     ...user
 }: MenuProps & MobileMenuProps & User) {
@@ -32,7 +32,8 @@ export default function MobileMenu({
         <Drawer
             className="HomePage-navbar-burgerMenu"
             anchor="left"
-            open={isOpen}
+            variant="persistent"
+            open={open}
             onClose={() => onClose()}
         >
             <Box
