@@ -5,17 +5,24 @@ import {
     useContext
 } from "react";
 import {
+    Drawer,
+    DrawerProps,
+    IconButton,
     List,
-    ListItemIcon,
-    ListItemButton,
+    ListItem,
     ListItemText
 } from "@mui/material";
-import {
-    AttachFile as AttachFileIcon
+import { 
+    VisibilityRounded as EyeIcon,
+    SimCardDownloadRounded as DownloadIcon
 } from "@mui/icons-material";
+import fileDownload from "js-file-download";
 
 // Local components
 import { FileViewer } from "@local/components";
+
+// Hooks
+import { useOnMobile } from "@local/hooks";
 
 // Contexts
 import { AlertContext, FirebaseContext } from "@local/contexts";
@@ -26,10 +33,19 @@ import { getFileByFilename } from "@local/api/storage/attachments";
 // Interfaces
 import { File, Task } from "@local/interfaces";
 
-export default function Attachs(task: Task) {
+// Functions
+import { getEnv } from "@local/functions";
+
+export default function Attachs({ 
+    open = false, 
+    task, 
+    ...drawer 
+}: DrawerProps & { task: Task }) {
     const [files, setFiles] = useState<Array<File>>([]);
     const [openFile, setOpenFile] = useState<File|null>(null);
     const [openViewer, setOpenViewer] = useState<boolean>(false);
+    
+    const isMobile = useOnMobile("md");
     
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { storage } = useContext(FirebaseContext);
@@ -51,26 +67,19 @@ export default function Attachs(task: Task) {
         setFiles(fileList);
     }, []);
     
+    const onOpenFile = (file: File) => {
+        setOpenFile(file);
+        setOpenViewer(true);
+    }
+    
+    const onDownload = (file: File) => {
+        fetch(getEnv("CORS_PROXY") + file.url)
+            .then((resp) => resp.blob())
+            .then((resp) => fileDownload(resp, file.name));
+    }
+    
     return (
         <>
-            <List>
-                {files.length > 0 && files.map((file, i) => (
-                    <ListItemButton 
-                        key={i}
-                        onClick={() => {
-                            setOpenFile(file);
-                            setOpenViewer(true);
-                        }}
-                    >
-                        <ListItemIcon>
-                            <AttachFileIcon />
-                        </ListItemIcon>
-                        <ListItemText 
-                            primary={file.name + "." + file.type} 
-                        />
-                    </ListItemButton>
-                ))}
-            </List>
             {!!openFile && (
                 <FileViewer
                     title={openFile.name}
@@ -80,6 +89,48 @@ export default function Attachs(task: Task) {
                     keepMounted
                 />
             )}
+            <Drawer
+                open={open}
+                anchor={isMobile ? "bottom" : "right"}
+                variant="persistent"
+                PaperProps={{
+                    sx: { 
+                        maxHeight: isMobile ? "240px" : "100%",
+                        minWidth: isMobile ? "100%" : "240px" 
+                    }
+                }}
+                {...drawer}
+            >
+                <List>
+                    {files.length > 0 && files.map((file, i) => (
+                        <ListItem
+                            key={i}
+                            component="li"
+                            secondaryAction={(
+                                <div style={{ display: "inline-flex" }}>
+                                    <IconButton
+                                        onClick={() => onOpenFile(file)}
+                                        edge="end" 
+                                        aria-label="download"
+                                        sx={{ mr: ".1em" }}
+                                    >
+                                        <EyeIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        onClick={() => onDownload(file)}
+                                        edge="end" 
+                                        aria-label="download"
+                                    >
+                                        <DownloadIcon />
+                                    </IconButton>
+                                </div>
+                            )}
+                        >
+                            <ListItemText primary={`${file.name}.${file.type}`} />
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
         </>
     );
 }
