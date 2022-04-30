@@ -96,7 +96,7 @@ export default function RightSide(user: User) {
         ) : (
             <>
                 <MobileMenu
-                    isOpen={burgerIsOpen}
+                    open={burgerIsOpen}
                     onClose={() => setBurgerIsOpen(false)}
                     {...baseProps}
                     {...user}
