@@ -39,17 +39,20 @@ export default function Info(task: Task) {
                 flexDirection="column"
                 justifyContent="center"
                 alignItems="flex-start"
-                sx={{ mb: ".6em" }}
+                sx={{
+                    pl: "0",
+                    mb: ".6em" 
+                }}
             >
-                {infoItems.map((item) => (
+                {infoItems.map((item, i) => (
                     <Box
+                        key={i}
                         component="li"
                         display="flex"
                         flexDirection="row"
                         justifyContent="flex-start"
                         alignItems="center"
-                        sx={{ 
-                            pl: "0",
+                        sx={{
                             mb: ".6em", 
                             mr: "1.2em" 
                         }}
