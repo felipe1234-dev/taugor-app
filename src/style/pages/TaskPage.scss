@@ -3,7 +3,7 @@
 
 @each $theme-name, $theme in $themes {
     body[theme="#{$theme-name}"][page^="/task"] {
-        $icon-color: $orange;
+        $icon-color: map-deep-get($theme, "text", "light");
         $text-color: map-deep-get($theme, "text", "light");
         $dark-bg-color: map-deep-get($theme, "primary", "normal");
         $light-bg-color: map-deep-get($theme, "secondary", "light");
@@ -87,10 +87,18 @@
                     color: $icon-color;
                     margin-right: 0.1em;
                 }
+                
+                .MuiListItemButton-root {
+                    padding-left: 0;
+                    
+                    .MuiListItemText-root {
+                        color: $text-color;
+                    }
+                }
             }
             
             &-body {
-                padding: 1.3em !important;
+                padding: 1.5em 2.5em  !important;
                 transform: translateY(-50px);
                 border-radius: 1em !important;
             }
