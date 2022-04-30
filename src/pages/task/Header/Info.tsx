@@ -49,11 +49,12 @@ export default function Info(task: Task) {
                         justifyContent="flex-start"
                         alignItems="center"
                         sx={{ 
+                            pl: "0",
                             mb: ".6em", 
                             mr: "1.2em" 
                         }}
                     >
-                        {item.text}
+                        {item.icon} <span>{item.text}</span>
                     </Box>
                 ))}
             </Box>
