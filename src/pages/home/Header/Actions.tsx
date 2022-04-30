@@ -18,13 +18,14 @@ export default function Actions() {
             <Tooltip title="Lista de filtros">
                 <IconButton 
                     className="HomePage-filters-button"
-                    onClick={() => setIsOpen(true)}
+                    onClick={() => setIsOpen(prevState => !prevState)}
                 >
                     {!isOpen ? <FilterListIcon /> : <CloseIcon />}
                 </IconButton>
             </Tooltip>
             <Filters
                 anchor="bottom"
+                variant="persistent"
                 open={isOpen}
                 onOpen={() => setIsOpen(true)}
                 onClose={() => setIsOpen(false)}
