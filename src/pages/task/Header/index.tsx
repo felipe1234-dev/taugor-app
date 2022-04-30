@@ -16,13 +16,25 @@ export default function Header(task: Task) {
             container
             className="TaskPage-header"
             component="header"
-            direction="column"
-            alignItems="flex-start"
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
         >
-            <Heading {...task}/>
-            <TagList {...task}/>
-            <Info {...task}/>
-            <Attachs {...task}/>
+            <Grid
+                item
+                direction="column"
+                alignItems="flex-start"
+            >
+                <Heading {...task}/>
+                <TagList {...task}/>
+                <Info {...task}/>
+            </Grid>
+            <Grid 
+                item
+                alignItems="flex-start"
+            >
+                <Attachs {...task}/>
+            </Grid>
         </Grid>
     );
 }
