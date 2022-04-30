@@ -15,14 +15,12 @@ import "@local/style/pages/LoginPage.scss";
 export default function LoginPage() {
 	return ( 
 		<Grid
-            component="main"
             justifyContent="center"
             alignItems="center"
         >
 			<Grid item>
 				<Container
                     className="LoginPage"
-                    component="main"
                     maxWidth="xs"
                 >
 					<Box
