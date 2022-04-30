@@ -66,6 +66,26 @@
                     color: $text-color;
                 }
 
+                li.MuiBox-root, &-seeAttachs {
+                    font-size: 1.2em;
+                }
+                
+                li.MuiBox-root {
+                    padding-left: 0;
+                    
+                    .MuiSvgIcon-root {
+                        color: $icon-color;
+                        margin-right: 0.1em;
+                    }
+                }
+                
+                &-seeAttachs {
+                    padding: 0;
+                    text-transform: none !important;
+                    color: $text-color;
+                    background-color: transparent;
+                }
+                
                 .MuiChip {
                     &-root {
                         font-weight: 600;
@@ -80,19 +100,6 @@
                     &-outlined {
                         color: $light-bg-color;
                         border-color: $light-bg-color;
-                    }
-                }
-
-                .MuiSvgIcon-root {
-                    color: $icon-color;
-                    margin-right: 0.1em;
-                }
-                
-                .MuiListItemButton-root {
-                    padding-left: 0;
-                    
-                    .MuiListItemText-root {
-                        color: $text-color;
                     }
                 }
             }
