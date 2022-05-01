@@ -10,11 +10,8 @@ import { Filter, Timeline } from "@local/interfaces";
 // Functions
 import { groupDocsByTime } from "@local/functions";
 
-// Hooks
-import { useOnScreen } from "@local/hooks";
-
 // API
-import { getActivities } from "@local/api/collections/Activities";
+import { getTasks } from "@local/api/collections/Tasks";
 
 export interface TimelineValue {
     timeline: Timeline,
@@ -42,7 +39,7 @@ export function TimelineProvider(props: { children: React.ReactNode }) {
             setIsLoading(true);
         }
 
-        getActivities(db, 
+        getTasks(db, 
             (!!lastVisible && add) ? (
                 { ...filter, startAfter: lastVisible } 
             ) : (
