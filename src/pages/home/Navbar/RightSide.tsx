@@ -25,6 +25,7 @@ import { User } from "@local/interfaces";
 
 // Contexts
 import { FilterContext } from "../contexts";
+import { useOnMobile } from "@local/hooks";
 
 const menuItems = [
     {
@@ -46,14 +47,13 @@ export interface MenuProps {
 }
 
 export default function RightSide(user: User) {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    
     const [burgerIsOpen, setBurgerIsOpen] = useState<boolean>(false);
     const [search, setSearch] = useState<string>("");
     const [tab, setTab] = useState<0|1>(0);
     const { filter, setFilter } = useContext(FilterContext);
 
+    const isMobile = useOnMobile("md");
+    
     useEffect(() => {
         const { where } = filter;
         
