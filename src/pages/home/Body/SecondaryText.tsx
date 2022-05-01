@@ -1,16 +1,7 @@
-// Libs
-import { 
-    Box, 
-    Chip, 
-    Typography, 
-    useMediaQuery, 
-    useTheme 
-} from "@mui/material";
+import { Box, Chip, Typography } from "@mui/material";
 
-// Local components
+import { useOnMobile } from "@local/hooks";
 import { ProfileImage } from "@local/components";
-
-// Interfaces
 import { User, Task } from "@local/interfaces";
 
 interface SecondaryTextProps {
@@ -21,8 +12,7 @@ interface SecondaryTextProps {
 }
 
 export default function SecondaryText({ user, poster, task, date }: SecondaryTextProps) {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+    const isMobile = useOnMobile("md");
     
     return (
         <>
