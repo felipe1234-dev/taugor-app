@@ -1,4 +1,5 @@
 // Libs
+import { useState, useEffect } from "react";
 import { TextField, Autocomplete } from "@mui/material";
 import { TextFieldProps } from "@mui/material";
 
@@ -13,18 +14,29 @@ export default function ChipField({
     defaultValue, 
     ...textField 
 }: ChipFieldProps & TextFieldProps) {
+    const [value, setValue] = useState<Array<string>>([]);
+    
+    useEffect(() => {
+        setValue(defaultValue);
+    }, [defaultValue]);
+    
     return (
-        <Autocomplete
-            options={options}
-            defaultValue={defaultValue}
-            renderInput={(params: TextFieldProps) => (
-                <TextField
-                    {...params}
-                    {...textField}
-                />
-            )}
-            filterSelectedOptions
-            multiple
-        />
+        <>
+            <Autocomplete
+                options={options}
+                defaultValue={defaultValue}
+                onChange={(event, value) => setValue(value)}
+                renderInput={(params: TextFieldProps) => (
+                    <TextField {...params}/>
+                )}
+                filterSelectedOptions
+                multiple
+            />
+            <TextField 
+                sx={{ display: "none" }}
+                defaultValue={value.join(", ")}
+                {...textField}
+            />
+        </>
     );
 };
