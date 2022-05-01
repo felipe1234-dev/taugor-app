@@ -14,7 +14,7 @@ import {
 import { Link, useParams } from "react-router-dom";
 
 // Dialog components
-import TaskFormFields from "../TaskFormFields";
+import TaskForm from "../TaskForm";
 
 // Contexts
 import { AlertContext, FirebaseContext } from "@local/contexts";
@@ -56,44 +56,35 @@ export default function EditDialog() {
 
     }
     
-    const form = {
-        component: "form" as "form",
-        onSubmit: onSubmit,
-        onChange: onChange,
-        maxWidth: "lg" as "lg",
-        scroll: "paper" as "paper",
-        open: true,
-        fullWidth: true
-    }
-    
-    const cancelButton = {
-        component: Link,
-        to: `/task/${taskUuid}`,
-        state: { enableLoader: false }
-    }
-    
-    const saveButton = {
-        type: "submit" as "submit",
-    }
-    
     return (
-        <Dialog {...form}>
-            <DialogTitle>
-                Editar atividade
-            </DialogTitle>
-            <DialogContent>
-                {!!task && (
-                    <TaskFormFields {...task}/>
-                )}
-            </DialogContent>
-            <DialogActions>
-                <Button {...cancelButton}>
-                    Cancelar
-                </Button>
-                <Button {...saveButton}>
-                    Salvar
-                </Button>
-            </DialogActions>
+        <Dialog
+            open
+            fullWidth
+            maxWidth="lg"
+            scroll="paper"
+        >
+            <form onSubmit={onSubmit} onChange={onChange}>
+                <DialogTitle>
+                    Editar atividade
+                </DialogTitle>
+                <DialogContent>
+                    {!!task && (
+                        <TaskForm {...task}/>
+                    )}
+                </DialogContent>
+                <DialogActions>
+                    <Button            
+                        component={Link}
+                        to={`/task/${taskUuid}`}
+                        state={{ enableLoader: false }}
+                    >
+                        Cancelar
+                    </Button>
+                    <Button type="submit">
+                        Salvar
+                    </Button>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 };
