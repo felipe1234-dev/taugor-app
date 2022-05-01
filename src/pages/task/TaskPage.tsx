@@ -18,7 +18,7 @@ import Body from "./Body";
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
-import { getActivityByUuid } from "@local/api/collections/Activities";
+import { getTaskByUuid } from "@local/api/collections/Tasks";
 
 // Interfaces
 import { Task } from "@local/interfaces";
@@ -40,7 +40,7 @@ export default function TaskPage() {
             return;
         }
         
-        getActivityByUuid(db, taskUuid)
+        getTaskByUuid(db, taskUuid)
             .then((task) => (
                 setTask(task)
             ))
