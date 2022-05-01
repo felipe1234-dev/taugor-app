@@ -18,7 +18,7 @@ import {
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
-import { deleteActivityByUuid } from "@local/api/collections/Activities";
+import { deleteTaskByUuid } from "@local/api/collections/Tasks";
 
 export default function DeleteDialog() {
     const { setSeverity, setMessage } = useContext(AlertContext);
@@ -41,7 +41,7 @@ export default function DeleteDialog() {
     const deleteButton = {
         onClick: () => {
             if (!!taskUuid) {
-                deleteActivityByUuid(db, taskUuid)
+                deleteTaskByUuid(db, taskUuid)
                     .then(() => {
                         setSeverity("success");
                         setMessage("Atividade excluída com sucesso");
