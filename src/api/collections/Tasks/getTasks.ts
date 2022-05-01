@@ -16,7 +16,7 @@ import { Filter, Task } from "@local/interfaces";
 import { OrderByClasule, WhereClasule } from "@local/types";
 import toAlert from "@local/api/toAlert";
 
-export default function getActivities(db: Firestore, filter: Filter): Promise<Array<Task>> {
+export default function getTasks(db: Firestore, filter: Filter): Promise<Array<Task>> {
     return new Promise(async (resolve, reject) => {
         let conditions: Array<QueryConstraint>  = [];
         let orders: Array<QueryConstraint>      = [];
@@ -35,7 +35,7 @@ export default function getActivities(db: Firestore, filter: Filter): Promise<Ar
         }
         
         if (filter.startAfter) {
-            const docRef  = doc(db, "Activities", filter.startAfter);
+            const docRef  = doc(db, "Tasks", filter.startAfter);
             const docSnap = await getDoc(docRef);
             
             if (docSnap.exists()) {
@@ -44,7 +44,7 @@ export default function getActivities(db: Firestore, filter: Filter): Promise<Ar
         }
         
         const q = query(
-            collection(db, "Activities"), 
+            collection(db, "Tasks"), 
             ...conditions,
             ...orders,
             ...lastVisible,

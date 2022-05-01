@@ -7,9 +7,9 @@ import {
 import { Task } from "@local/interfaces";
 import toAlert from "@local/api/toAlert";
 
-export default function getActivityByUuid(db: Firestore, uuid: string): Promise<Task> {
+export default function getTaskByUuid(db: Firestore, uuid: string): Promise<Task> {
     return new Promise(async (resolve, reject) => {
-        const docRef  = doc(db, "Activities", uuid);
+        const docRef  = doc(db, "Tasks", uuid);
         
         try {
             const docSnap = await getDoc(docRef);
