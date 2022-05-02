@@ -11,10 +11,17 @@ import {
     DialogActions,
     Button
 } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { 
+    Link, 
+    useParams,
+    useNavigate
+} from "react-router-dom";
 
 // Dialog components
 import TaskForm from "../TaskForm";
+
+// Local components
+import { Spinner } from "@local/components";
 
 // Contexts
 import { AlertContext, FirebaseContext } from "@local/contexts";
@@ -23,7 +30,7 @@ import { AlertContext, FirebaseContext } from "@local/contexts";
 import { Task } from "@local/interfaces";
 
 // API
-import { getActivityByUuid } from "@local/api/collections/Activities";
+import { getTaskByUuid, updateTaskByUuid } from "@local/api/collections/Tasks";
 
 export default function EditDialog() {
     const [task, setTask] = useState<Task|null>(null);
@@ -32,13 +39,14 @@ export default function EditDialog() {
     const { db } = useContext(FirebaseContext);
     
     const { uuid: taskUuid } = useParams();
-    
+    const navigate = useNavigate();    
+
     useEffect(() => {
         if (!taskUuid) {
             return;
         }
         
-        getActivityByUuid(db, taskUuid)
+        getTaskByUuid(db, taskUuid)
             .then((task) => (
                 setTask(task)
             ))
@@ -50,12 +58,61 @@ export default function EditDialog() {
     
     const onSubmit = (event: any) => {
         event.preventDefault();
-    }
-
-    const onChange = () => {
-
+        
+        if (!!taskUuid && !!task) {
+            const data = new FormData(event.currentTarget);
+            const newValues: any = {};
+            
+            for (const [ key, value ] of data.entries()) {
+                const sample = task[key as keyof Task];
+                
+                switch (true) {
+                    case sample instanceof Array: 
+                        newValues[key] = (value as string).split(key === "tags" ? ", " : " ");
+                        break;
+                        
+                    case typeof sample === "string":
+                        newValues[key] = value as string;
+                        break;
+                }
+            }
+            
+            updateTaskByUuid(db, taskUuid, newValues as Task)
+                .then(() => {
+                    setSeverity("success"); 
+                    setMessage("Atividade editada com sucesso");
+                    
+                    setTimeout(() => {
+                        navigate(`/task/${taskUuid}`, { 
+                           state: { enableLoader: false } 
+                        });
+                        
+                        window.location.reload();
+                    }, 4000);
+                })
+                .catch((error) => {
+                    setSeverity(error.severity);
+                    setMessage(error.message);
+                });
+        }
     }
     
+    if (!task || !taskUuid) {
+        return (
+            <Spinner 
+                wrapper={{
+                    width: "100%",
+                    height: "300px"
+                }}
+                        
+                spinner={{
+                    width: "2.3em",
+                    height: "2.3em"
+                }}
+            />
+        );
+    } 
+
     return (
         <Dialog
             open
@@ -63,7 +120,7 @@ export default function EditDialog() {
             maxWidth="lg"
             scroll="paper"
         >
-            <form onSubmit={onSubmit} onChange={onChange}>
+            <form onSubmit={onSubmit}>
                 <DialogTitle>
                     Editar atividade
                 </DialogTitle>
