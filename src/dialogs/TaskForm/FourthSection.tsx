@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { 
     DialogContentText, 
     TextField, 
@@ -41,8 +42,8 @@ export default function FourthSection(task: Task) {
     
     return (
         <>
-            {selects.map((item) => (
-                <>
+            {selects.map((item, i) => (
+                <Fragment key={i}>
                     <DialogContentText mt={2}>
                         {item.label}
                     </DialogContentText>
@@ -60,7 +61,7 @@ export default function FourthSection(task: Task) {
                             </MenuItem>
                         ))}
                     </TextField>
-                </>
+                </Fragment>
             ))}
         </>
     );
