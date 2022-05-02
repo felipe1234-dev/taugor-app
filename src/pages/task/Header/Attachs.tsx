@@ -31,7 +31,7 @@ import { AlertContext, FirebaseContext } from "@local/contexts";
 import { getFileByFilename } from "@local/api/storage/attachments";
 
 // Interfaces
-import { File, Task } from "@local/interfaces";
+import { Alert, File, Task } from "@local/interfaces";
 
 // Functions
 import { getEnv } from "@local/functions";
@@ -52,16 +52,15 @@ export default function Attachs({
 
     useEffect(() => {
         const fileList: Array<File> = [];
-
-        task.attachments.forEach((filename) => {
-            getFileByFilename(storage, filename)
-                .then((file) => (
-                    fileList.push(file) 
-                ))
-                .catch((error) => {
-                    setSeverity(error.severity);
-                    setMessage(error.message);
-                });
+        
+        task.attachments.forEach(async (filename) => {
+            try {
+                const file = await getFileByFilename(storage, filename);
+                fileList.push(file);
+            } catch (error) {
+                setSeverity((error as Alert).severity);
+                setMessage((error as Alert).message);
+            }
         });
         
         setFiles(fileList);
