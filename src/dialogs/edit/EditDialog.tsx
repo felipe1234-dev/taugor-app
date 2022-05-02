@@ -117,7 +117,7 @@ export default function EditDialog() {
         <Dialog
             open
             fullWidth
-            maxWidth="lg"
+            maxWidth="md"
             scroll="paper"
         >
             <form onSubmit={onSubmit}>
