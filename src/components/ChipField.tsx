@@ -43,9 +43,7 @@ export default function ChipField({
                 required={required}
                 defaultValue={value.join(", ")}
                 value={value.join(", ")}
-                
                 sx={{ display: "none" }}
-                {...textField}
             />
         </>
     );
