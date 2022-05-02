@@ -30,7 +30,6 @@ export default function TextEditor({
                 <>
                     <textarea
                         name={name}
-                        defaultValue={content.toString("html")}
                         value={content.toString("html")}
                         style={{ display: "none" }}
                     />
