@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Severity } from "@local/types";
 
 export interface AlertValue {
@@ -18,6 +18,27 @@ export const AlertContext = React.createContext<AlertValue>({
 export function AlertProvider(props: { children: React.ReactNode }) {
     const [message, setMessage]   = useState<string|null>(null);
     const [severity, setSeverity] = useState<Severity|null>("error");
+    
+    useEffect(() => {
+        if (!message || !severity) {
+            return;
+        }
+        
+        switch (severity) {
+            case "error": 
+                console.error("Alerta! ", message);
+                break;
+            case "warning": 
+                console.warn("Alerta! ", message);
+                break;
+            case "info": 
+                console.info("Alerta! ", message);
+                break;
+            case "success": 
+                console.log("Alerta! ", message);
+                break;
+        }
+    }, [message, severity])
     
     return (
         <AlertContext.Provider value={{
