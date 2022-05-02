@@ -11,7 +11,10 @@ export interface ChipFieldProps {
 
 export default function ChipField({ 
     options, 
-    defaultValue, 
+    defaultValue,
+    name,
+    required = false,
+    placeholder,
     ...textField 
 }: ChipFieldProps & TextFieldProps) {
     const [value, setValue] = useState<Array<string>>([]);
@@ -27,14 +30,21 @@ export default function ChipField({
                 defaultValue={defaultValue}
                 onChange={(event, value) => setValue(value)}
                 renderInput={(params: TextFieldProps) => (
-                    <TextField {...params}/>
+                    <TextField 
+                        {...params}
+                        {...textField}
+                    />
                 )}
                 filterSelectedOptions
                 multiple
             />
             <TextField 
-                sx={{ display: "none" }}
+                name={name}
+                required={required}
                 defaultValue={value.join(", ")}
+                value={value.join(", ")}
+                
+                sx={{ display: "none" }}
                 {...textField}
             />
         </>
