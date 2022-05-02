@@ -31,7 +31,7 @@ import { AlertContext, FirebaseContext } from "@local/contexts";
 import { getFileByFilename } from "@local/api/storage/attachments";
 
 // Interfaces
-import { Alert, File, Task } from "@local/interfaces";
+import { File, Task } from "@local/interfaces";
 
 // Functions
 import { getEnv } from "@local/functions";
@@ -53,17 +53,20 @@ export default function Attachs({
     useEffect(() => {
         const fileList: Array<File> = [];
         
-        task.attachments.forEach(async (filename) => {
-            try {
-                const file = await getFileByFilename(storage, filename);
-                fileList.push(file);
-            } catch (error) {
-                setSeverity((error as Alert).severity);
-                setMessage((error as Alert).message);
-            }
+        task.attachments.forEach((filename) => {
+            getFileByFilename(storage, filename)
+                .then((file) => {
+                    fileList.push(file);
+                    
+                    if (fileList.length === task.attachments.length) {
+                        setFiles(fileList);
+                    }
+                })
+                .catch((error) => {
+                    setSeverity(error.severity);
+                    setMessage(error.message);
+                });
         });
-        
-        setFiles(fileList);
     }, []);
     
     const onOpenFile = (file: File) => {
@@ -101,13 +104,14 @@ export default function Attachs({
                 {...drawer}
             >
                 <List>
-                    {files.length > 0 && files.map((file, i) => (
+                    {files.map((file, i) => (
                         <ListItem
                             key={i}
                             component="li"
                             secondaryAction={(
                                 <div style={{ display: "inline-flex" }}>
                                     <IconButton
+                                        color="primary"
                                         onClick={() => onOpenFile(file)}
                                         edge="end" 
                                         aria-label="download"
@@ -116,6 +120,7 @@ export default function Attachs({
                                         <EyeIcon />
                                     </IconButton>
                                     <IconButton
+                                        color="primary"
                                         onClick={() => onDownload(file)}
                                         edge="end" 
                                         aria-label="download"
