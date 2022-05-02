@@ -3,16 +3,19 @@ import {
     doc, 
     Firestore,
     getDoc,
-    setDoc
+    updateDoc
 } from "firebase/firestore";
 import { Task } from "@local/interfaces";
 import { getCurrentUser } from "@local/api/auth";
 import toAlert from "@local/api/toAlert";
 
-export default function updateTaskByUuid(db: Firestore, uuid: string, newValues: Partial<Task>) {
+export default function updateTaskByUuid(db: Firestore, uuid: string, newValues: Partial<Task>): Promise<void> {
     return new Promise(async (resolve, reject) => {
         const docRef = doc(db, "Tasks", uuid);
-        
+        // Por segurança
+        delete newValues.createdAt;
+        delete newValues.postedBy;
+
         try {
             const docSnap = await getDoc(docRef);
             
@@ -27,7 +30,7 @@ export default function updateTaskByUuid(db: Firestore, uuid: string, newValues:
                     
                     if (!!user) {
                         if (user.uuid === task.postedBy) {
-                            setDoc(docRef, newValues)
+                            updateDoc(docRef, newValues)
                                 .then(resolve)
                                 .catch((error: FirebaseError) => (
                                     reject(toAlert(error))
