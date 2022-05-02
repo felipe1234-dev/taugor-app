@@ -22,7 +22,8 @@
 		"baseUrl": "./",
 		"paths": {
 			"@local/*": [ "./src/*" ]
-		}
+		},
+		"downlevelIteration": true
 	},
 	"include": [
 		"src"
