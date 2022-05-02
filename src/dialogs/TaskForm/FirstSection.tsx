@@ -25,8 +25,9 @@ export default function FirstSection(task: Task) {
     
     return (
         <>
-            {textInputs.map((item) => (
+            {textInputs.map((item, i) => (
                 <TextField
+                    key={i}
                     required
                     fullWidth
                     multiline
