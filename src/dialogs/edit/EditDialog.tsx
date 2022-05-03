@@ -30,7 +30,7 @@ import { AlertContext, FirebaseContext } from "@local/contexts";
 import { Task } from "@local/interfaces";
 
 // API
-import { getTaskByUuid, updateTaskByUuid } from "@local/api/collections/Tasks";
+import { getTask, updateTask } from "@local/api/collections/Tasks";
 
 export default function EditDialog() {
     const [task, setTask] = useState<Task|null>(null);
@@ -46,7 +46,7 @@ export default function EditDialog() {
             return;
         }
         
-        getTaskByUuid(db, taskUuid)
+        getTask(db, taskUuid)
             .then((task) => (
                 setTask(task)
             ))
@@ -77,7 +77,7 @@ export default function EditDialog() {
                 }
             }
             
-            updateTaskByUuid(db, taskUuid, newValues as Task)
+            updateTask(db, taskUuid, newValues as Task)
                 .then(() => {
                     setSeverity("success"); 
                     setMessage("Atividade editada com sucesso");
