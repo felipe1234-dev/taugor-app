@@ -1,5 +1,5 @@
 // Libs
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Box } from "@mui/material";
 import RichTextEditor, { EditorValue } from "react-rte";
 
@@ -11,7 +11,7 @@ export interface TextEditorProps {
     name?: string,
     initialContent?: string,
     readOnly?: boolean,
-    onChange?: Function
+    onChange?: (html: string) => void
 };
 
 export default function TextEditor({
@@ -21,8 +21,14 @@ export default function TextEditor({
     onChange = () => {}
 }: TextEditorProps) {
     const [content, setContent] = useState<EditorValue>(
-        RichTextEditor.createValueFromString(initialContent, "html")
+        RichTextEditor.createValueFromString("", "html")
     );
+    
+    useEffect(() => {
+        setContent(
+            RichTextEditor.createValueFromString(initialContent, "html")
+        );
+    }, [initialContent])
     
     return (
         <div className="TextEditor">
@@ -30,7 +36,7 @@ export default function TextEditor({
                 <>
                     <textarea
                         name={name}
-                        value={content.toString("html")}
+                        defaultValue={content.toString("html")}
                         style={{ display: "none" }}
                     />
                     <RichTextEditor
