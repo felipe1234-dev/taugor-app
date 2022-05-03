@@ -31,7 +31,7 @@ import {
 import { STATUS_ICONS } from "@local/constants";
 
 // API
-import { getUserByUuid } from "@local/api/collections/Users";
+import { getUser } from "@local/api/collections/Users";
 
 // Interfaces
 import { Task, User } from "@local/interfaces";
@@ -45,7 +45,7 @@ export default function TaskItem(task: Task) {
     const { user } = useContext(UserContext);
 
     useEffect(() => {
-        getUserByUuid(db, task.postedBy)
+        getUser(db, task.postedBy)
             .then((user) => (
                 setPoster(user)
             ))
