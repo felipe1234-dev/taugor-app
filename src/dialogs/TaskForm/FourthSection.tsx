@@ -52,28 +52,24 @@ export default function FourthSection(task: Task) {
     const selects = [
         {
             label: "Situação atual",
-            name: "status",
             value: status || "",
             onChange: (event: any) => setStatus(event.target.value),
             options: [ ...STATUS_TYPES ]
         },
         {
             label: "Nível de urgência",
-            name: "priority",
             value: priority || "",
             onChange: (event: any) => setPriority(event.target.value),
             options: [ ...PRIORITY_TYPES ]
         },
         {
             label: "Ambiente",
-            name: "environment",
             value: environment || "",
             onChange: (event: any) => setEnvironment(event.target.value),
             options: [ ...ENV_TYPES ]
         },
         {
             label: "Usuários influenciados",
-            name: "influencedUsers",
             value: influence || "",
             onChange: (event: any) => setInfluence(event.target.value),
             options: [ ...INFLUENCED_USERS ]
@@ -88,11 +84,10 @@ export default function FourthSection(task: Task) {
                         {item.label}
                     </DialogContentText>
                     <TextField
-                        name={item.name}
+                        select
+                        required
                         value={item.value}
                         onChange={item.onChange}
-                        required
-                        select
                         sx={{ mb: 0, mt: 2 }}
                     >
                         {item.options.map((value, i) => (

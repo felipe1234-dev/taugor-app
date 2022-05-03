@@ -28,7 +28,6 @@ export default function SecondSection(task: Task) {
     return (
         <>
             <TextEditor
-                name="description"
                 initialContent={description}
                 onChange={(html) => setDescription(html)}
                 readOnly={false}
@@ -41,12 +40,10 @@ export default function SecondSection(task: Task) {
                 
                 value={tags}
                 onChange={(value) => setTags(value as Array<Tag>)}
-         
-                required
+
                 fullWidth
                 multiline
                 
-                name="tags"
                 placeholder="Categorias"
             />
             <Divider sx={{ m: 2 }}/>

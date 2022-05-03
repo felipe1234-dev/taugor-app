@@ -26,21 +26,18 @@ export default function FirstSection(task: Task) {
     
     const textInputs = [
         {
-            name: "title", 
             placeholder: "Título",
             maxLength: 50,
             value: title,
             onChange: (event: any) => setTitle(event.target.value)
         },
         { 
-            name: "brief", 
             placeholder: "Explicação breve",
             maxLength: 150,
             value: brief,
             onChange: (event: any) => setBrief(event.target.value)
         },
         { 
-            name: "product", 
             placeholder: "Nome do produto",
             maxLength: 20,
             value: product,
@@ -57,7 +54,6 @@ export default function FirstSection(task: Task) {
                     fullWidth
                     multiline
                     maxRows={4}
-                    name={item.name}
                     placeholder={item.placeholder}
                     value={item.value}
                     onChange={item.onChange}
