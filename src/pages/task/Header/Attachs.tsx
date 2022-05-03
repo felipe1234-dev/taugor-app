@@ -28,10 +28,10 @@ import { useOnMobile } from "@local/hooks";
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // API
-import { getFileByFilename } from "@local/api/storage/attachments";
+import { getAttach } from "@local/api/storage/attachments";
 
 // Interfaces
-import { File, Task } from "@local/interfaces";
+import { Attach, Task } from "@local/interfaces";
 
 // Functions
 import { getEnv } from "@local/functions";
@@ -41,8 +41,8 @@ export default function Attachs({
     task, 
     ...drawer 
 }: DrawerProps & { task: Task }) {
-    const [files, setFiles] = useState<Array<File>>([]);
-    const [openFile, setOpenFile] = useState<File|null>(null);
+    const [attachs, setAttachs] = useState<Array<Attach>>([]);
+    const [openAttach, setOpenAttach] = useState<Attach|null>(null);
     const [openViewer, setOpenViewer] = useState<boolean>(false);
     
     const isMobile = useOnMobile("md");
@@ -51,15 +51,15 @@ export default function Attachs({
     const { storage } = useContext(FirebaseContext);
 
     useEffect(() => {
-        const fileList: Array<File> = [];
+        const attachList: Array<Attach> = [];
         
-        task.attachments.forEach((filename) => {
-            getFileByFilename(storage, filename)
-                .then((file) => {
-                    fileList.push(file);
+        task.attachments.forEach((attachname) => {
+            getAttach(storage, attachname)
+                .then((attach) => {
+                    attachList.push(attach);
                     
-                    if (fileList.length === task.attachments.length) {
-                        setFiles(fileList);
+                    if (attachList.length === task.attachments.length) {
+                        setAttachs(attachList);
                     }
                 })
                 .catch((error) => {
@@ -69,23 +69,23 @@ export default function Attachs({
         });
     }, []);
     
-    const onOpenFile = (file: File) => {
-        setOpenFile(file);
+    const onOpen = (attach: Attach) => {
+        setOpenAttach(attach);
         setOpenViewer(true);
     }
     
-    const onDownload = (file: File) => {
-        fetch(getEnv("CORS_PROXY") + file.url)
+    const onDownload = (attach: Attach) => {
+        fetch(getEnv("CORS_PROXY") + attach.url)
             .then((resp) => resp.blob())
-            .then((resp) => fileDownload(resp, file.name));
+            .then((resp) => fileDownload(resp, attach.name));
     }
     
     return (
         <>
-            {!!openFile && (
+            {!!openAttach && (
                 <FileViewer
-                    title={openFile.name}
-                    filePath={openFile.url}
+                    title={openAttach.name}
+                    filePath={openAttach.url}
                     open={openViewer}
                     onClose={() => setOpenViewer(false)}
                     keepMounted
@@ -104,7 +104,7 @@ export default function Attachs({
                 {...drawer}
             >
                 <List>
-                    {files.map((file, i) => (
+                    {attachs.map((attach, i) => (
                         <ListItem
                             key={i}
                             component="li"
@@ -112,7 +112,7 @@ export default function Attachs({
                                 <div style={{ display: "inline-flex" }}>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => onOpenFile(file)}
+                                        onClick={() => onOpen(attach)}
                                         edge="end" 
                                         aria-label="download"
                                         sx={{ mr: ".1em" }}
@@ -121,7 +121,7 @@ export default function Attachs({
                                     </IconButton>
                                     <IconButton
                                         color="primary"
-                                        onClick={() => onDownload(file)}
+                                        onClick={() => onDownload(attach)}
                                         edge="end" 
                                         aria-label="download"
                                     >
@@ -130,7 +130,10 @@ export default function Attachs({
                                 </div>
                             )}
                         >
-                            <ListItemText primary={`${file.name}.${file.type}`} />
+                            <ListItemText
+                                primary={`#${attach.id}`} 
+                                secondary={`${attach.name}.${attach.type}`}
+                            />
                         </ListItem>
                     ))}
                 </List>
