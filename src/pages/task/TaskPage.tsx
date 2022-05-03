@@ -54,7 +54,7 @@ export default function TaskPage() {
     }, [db, taskUuid]);
     
     if (!ready) {
-        return <span></span>;
+        return <></>;
     }
     
     return (
