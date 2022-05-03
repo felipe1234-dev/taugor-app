@@ -1,4 +1,4 @@
-export { default as deleteTaskByUuid } from "./deleteTaskByUuid";
+export { default as deleteTask } from "./deleteTask";
 export { default as getTasks } from "./getTasks";
-export { default as getTaskByUuid } from "./getTaskByUuid";
-export { default as updateTaskByUuid } from "./updateTaskByUuid";
+export { default as getTask } from "./getTask";
+export { default as updateTask } from "./updateTask";
