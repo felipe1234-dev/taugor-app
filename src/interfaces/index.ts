@@ -44,10 +44,12 @@ export interface Filter {
     startAfter?: string
 };
 
-export interface File {
+export interface Attach {
     name: string,
     type: "pdf" | "txt",
-    url : string
+    url: string,
+    id: string | number,
+    file?: File
 };
 
 export interface RouteState { 
