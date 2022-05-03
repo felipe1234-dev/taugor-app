@@ -16,25 +16,28 @@ import {
     UploadFileRounded as UploadFileIcon
 } from "@mui/icons-material";
 
+import { TaskFormContext } from "./index";
 import { AlertContext } from "@local/contexts";
 import { storage } from "@local/api";
-import { getFileByFilename } from "@local/api/storage/attachments";
-import { File, Task } from "@local/interfaces";
+import { getAttach } from "@local/api/storage/attachments";
+import { Attach, Task } from "@local/interfaces";
 
 export default function ThirdSection(task: Task) {
-    const [files, setFiles] = useState<Array<File>>([]);
+    const [attachs, setAttachs] = useState<Array<Attach>>([]);
+    
     const { setSeverity, setMessage } = useContext(AlertContext);
+    const { update, upload } = useContext(TaskFormContext);
     
     useEffect(() => {
-        const fileList: Array<File> = [];
+        const attachList: Array<Attach> = [];
         
-        task.attachments.forEach((filename) => {
-            getFileByFilename(storage, filename)
-                .then((file) => {
-                    fileList.push(file);
+        task.attachments.forEach((attachname) => {
+            getAttach(storage, attachname)
+                .then((attach) => {
+                    attachList.push(attach);
                     
-                    if (fileList.length === task.attachments.length) {
-                        setFiles(fileList);
+                    if (attachList.length === task.attachments.length) {
+                        setAttachs(attachList);
                     }
                 })
                 .catch((error) => {
@@ -42,23 +45,38 @@ export default function ThirdSection(task: Task) {
                     setMessage(error.message);
                 });
         });
-    }, []);
+    }, [task.attachments]);
+    
+    useEffect(() => {
+        update({
+           attachments: attachs.map((item) => `${item.name}-id${item.id}.${item.type}`)
+        });
+        
+        upload(
+            attachs
+                .filter((item) => item.file !== undefined)
+                .map((item) => item.file) as Array<File>
+        );
+    }, [attachs]);
     
     const onUpload = (event: any) => {
         const value = event.target.value;
-        const fileList: Array<File> = JSON.parse(JSON.stringify(files));
+        const file = event.target.files[0] as File;
+        const attachList: Array<Attach> = JSON.parse(JSON.stringify(attachs));
         
-        fileList.push({
+        attachList.push({
+            id: new Date().getTime(),
             name: value.replace("C:\\fakepath\\", "").replace(/\.\w+$/, ""),
             type: value.match(/\.\w+$/)[0].replace(".", ""),
-            url: value
+            url: value,
+            file: file
         });
-        
-        setFiles(fileList);
+         
+        setAttachs(attachList);
     }
     
-    const onDelete = (file: File) => {
-        setFiles(prevState => (
+    const onDelete = (file: Attach) => {
+        setAttachs(prevState => (
             prevState.filter(item => item !== file)
         ));
     }
@@ -82,6 +100,7 @@ export default function ThirdSection(task: Task) {
                             id="icon-button-file"
                             accept=".pdf,.txt"
                             type="file"
+                            name="attachments"
                             multiple
                             style={{ display: "none" }}
                             onInput={(event: any) => onUpload(event)}
@@ -97,7 +116,7 @@ export default function ThirdSection(task: Task) {
                 </Grid>
             </Grid>
             <List>
-                {files.map((file, i) => (
+                {attachs.map((file, i) => (
                     <ListItem
                         key={i}
                         secondaryAction={(
@@ -111,7 +130,10 @@ export default function ThirdSection(task: Task) {
                             </IconButton>
                         )}
                     >
-                        <ListItemText primary={`${file.name}.${file.type}`} />
+                        <ListItemText
+                            primary={`#${file.id}`} 
+                            secondary={`${file.name}.${file.type}`} 
+                        />
                     </ListItem>
                 ))}
             </List>
