@@ -7,7 +7,7 @@ import {
 import { User } from "@local/interfaces";
 import toAlert from "@local/api/toAlert";
 
-export default function getUserByUuid(db: Firestore, uuid: string): Promise<User> {
+export default function getUser(db: Firestore, uuid: string): Promise<User> {
     return new Promise(async (resolve, reject) => {
         const docRef  = doc(db, "Users", uuid);
         
@@ -17,7 +17,7 @@ export default function getUserByUuid(db: Firestore, uuid: string): Promise<User
             if (docSnap.exists()) {
                 resolve({ 
                     uuid, 
-                    ...docSnap.data() 
+                    ...docSnap.data()
                 } as User); 
             } else {
                 reject({
