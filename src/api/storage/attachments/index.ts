@@ -1,1 +1,2 @@
-export { default as getFileByFilename } from "./getFileByFilename";
+export { default as getAttach } from "./getAttach";
+export { default as uploadAttach } from "./uploadAttach";
