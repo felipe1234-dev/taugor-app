@@ -65,7 +65,7 @@ export default function RequireAuth({ children }: RequireAuthProps) {
     }, [db]); 
 
     if (!ready) {
-        return <span></span>;
+        return <></>;
     }
     
     if (!allowed) {
