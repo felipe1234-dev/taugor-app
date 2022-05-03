@@ -4,7 +4,7 @@ import { Firestore } from "@firebase/firestore";
 
 // Local
 import { User } from "@local/interfaces";
-import { getUserByUuid } from "../collections/Users";
+import { getUser } from "../collections/Users";
 import logOut from "./logOut";
 
 export default function getCurrentUser(db: Firestore): Promise<User|null> {
@@ -34,7 +34,7 @@ export default function getCurrentUser(db: Firestore): Promise<User|null> {
             if (!!user) {
                 const { uid } = user; 
                 
-                getUserByUuid(db, uid)
+                getUser(db, uid)
                     .then((user) => (
                         resolve(user)
                     ))
