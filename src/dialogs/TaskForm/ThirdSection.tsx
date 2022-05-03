@@ -65,7 +65,7 @@ export default function ThirdSection(task: Task) {
         const attachList: Array<Attach> = JSON.parse(JSON.stringify(attachs));
         
         attachList.push({
-            id: new Date().getTime(),
+            id: file.lastModified,
             name: value.replace("C:\\fakepath\\", "").replace(/\.\w+$/, ""),
             type: value.match(/\.\w+$/)[0].replace(".", ""),
             url: value,
@@ -97,11 +97,10 @@ export default function ThirdSection(task: Task) {
                 <Grid item>
                     <label htmlFor="icon-button-file">
                         <input 
+                            multiple
                             id="icon-button-file"
                             accept=".pdf,.txt"
                             type="file"
-                            name="attachments"
-                            multiple
                             style={{ display: "none" }}
                             onInput={(event: any) => onUpload(event)}
                         />
