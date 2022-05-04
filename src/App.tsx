@@ -29,6 +29,7 @@ import {
 
 // Dialogs
 import {
+    AddDialog as Add,
     EditDialog as Edit,
     DeleteDialog as Delete
 } from "@local/dialogs";
@@ -115,6 +116,14 @@ export default function App() {
                 
                 {bgLocation && (
                     <Switch>
+                        <Route 
+                            path="/add/"
+                            element={(
+                                <RequireAuth>
+                                    <Add />
+                                </RequireAuth>
+                            )}
+                        />
                         <Route 
                             path="/edit/:uuid"
                             element={(
