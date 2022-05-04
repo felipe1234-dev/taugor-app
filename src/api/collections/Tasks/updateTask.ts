@@ -13,6 +13,7 @@ export default function updateTaskByUuid(db: Firestore, uuid: string, newValues:
     return new Promise(async (resolve, reject) => {
         const docRef = doc(db, "Tasks", uuid);
         // Por segurança
+        delete newValues.uuid;
         delete newValues.createdAt;
         delete newValues.postedBy;
 
