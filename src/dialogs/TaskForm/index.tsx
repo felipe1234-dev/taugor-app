@@ -11,7 +11,21 @@ import Steps from "./Steps";
 // Interfaces
 import { Task } from "@local/interfaces";
 
-export interface TaskFormValue {
+const sampleTask: Partial<Task> = {
+    title: [],
+    description: "",
+    brief: "",  
+    tags: [ "Produtos e serviços" ],
+    attachments: [], 
+    priority: "Baixa", 
+    influencedUsers: "1-10",
+    product: "",
+    environment: "Dados/Ambiente de Testes - Somente testes",
+    status: "Em análise"
+};
+
+interface TaskFormValue {
+    task: Partial<Task>,
     updates: Partial<Task>,
     uploads: Array<File>,
     update: (newData: Partial<Task>) => void,
@@ -20,11 +34,12 @@ export interface TaskFormValue {
 };
 
 export const TaskFormContext = createContext<TaskFormValue>({
+    task: sampleTask,
     updates: {},
     uploads: [],
-    update: () => { },
-    upload: () => { },
-    submit: () => { }
+    update: () => {},
+    upload: () => {},
+    submit: () => {}
 });
 
 interface TaskFormProps {
@@ -42,8 +57,8 @@ export default function TaskForm({
     onSubmit, 
     onChange, 
     onUpload, 
-    ...task 
-}: Task & TaskFormProps) {
+    ...task
+}: TaskFormProps & Partial<Task>) {
     const [updates, setUpdates] = useState<Partial<Task>>({});
     const [uploads, setUploads] = useState<Array<File>>([]);
 
@@ -59,6 +74,7 @@ export default function TaskForm({
 
     return (
         <TaskFormContext.Provider value={{
+            task: !!task ? task : sampleTask,
             updates,
             uploads,
             submit: () => {
@@ -75,7 +91,7 @@ export default function TaskForm({
                 setUploads(fileList)
             )
         }}>
-            <Steps formTitle={formTitle} {...task} />
+            <Steps formTitle={formTitle}/>
         </TaskFormContext.Provider>
     );
 };

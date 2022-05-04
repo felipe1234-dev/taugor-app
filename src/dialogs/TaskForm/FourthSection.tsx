@@ -20,7 +20,6 @@ import {
     INFLUENCED_USERS,
     TAGS
 } from "@local/constants";
-import { Task } from "@local/interfaces";
 import { 
     Status, 
     Environment,
@@ -29,7 +28,7 @@ import {
     Tag
 } from "@local/types";
 
-export default function FourthSection(task: Task) {
+export default function FourthSection() {
     const [status, setStatus] = useState<Status>();
     const [priority, setPriority] = useState<Priority>();
     const [environment, setEnvironment] = useState<Environment>();
@@ -37,15 +36,26 @@ export default function FourthSection(task: Task) {
     const [product, setProduct] = useState<string>("");
     const [tags, setTags] = useState<Array<Tag>>([]);
     
-    const { update } = useContext(TaskFormContext);
+    const { update, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        setStatus(task.status);
-        setPriority(task.priority);
-        setEnvironment(task.environment);
-        setInfluence(task.influencedUsers);
-        setProduct(task.product);
-        setTags(task.tags);
+        if (!!task.status)
+            setStatus(task.status);
+        
+        if (!!task.priority)
+            setPriority(task.priority);
+        
+        if (!!task.environment)
+            setEnvironment(task.environment);
+            
+        if (!!task.influencedUsers)
+            setInfluence(task.influencedUsers);
+        
+        if (!!task.product)
+            setProduct(task.product);
+            
+        if (!!task.tags)
+            setTags(task.tags);
     }, [
         task.status, 
         task.priority, 

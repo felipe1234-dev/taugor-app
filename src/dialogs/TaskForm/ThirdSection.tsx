@@ -20,23 +20,23 @@ import { TaskFormContext } from "./index";
 import { AlertContext } from "@local/contexts";
 import { storage } from "@local/api";
 import { getAttach } from "@local/api/storage/attachments";
-import { Attach, Task } from "@local/interfaces";
+import { Attach } from "@local/interfaces";
 
-export default function ThirdSection(task: Task) {
+export default function ThirdSection() {
     const [attachs, setAttachs] = useState<Array<Attach>>([]);
     
     const { setSeverity, setMessage } = useContext(AlertContext);
-    const { update, upload } = useContext(TaskFormContext);
+    const { update, upload, task } = useContext(TaskFormContext);
     
     useEffect(() => {
         const attachList: Array<Attach> = [];
         
-        task.attachments.forEach((attachname) => {
+        task.attachments?.forEach((attachname) => {
             getAttach(storage, attachname)
                 .then((attach) => {
                     attachList.push(attach);
                     
-                    if (attachList.length === task.attachments.length) {
+                    if (attachList.length === task.attachments?.length) {
                         setAttachs(attachList);
                     }
                 })

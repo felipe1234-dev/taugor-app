@@ -9,17 +9,21 @@ import {
     DialogTitle
 } from "@mui/material";
 import { TaskFormContext } from "./index";
-import { Task } from "@local/interfaces";
 
-export default function FirstSection(task: Task) {
+export default function FirstSection() {
     const [title, setTitle] = useState<string>("");
     const [brief, setBrief] = useState<string>("");
     
-    const { update } = useContext(TaskFormContext);
+    const { update, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        setTitle(task.title.join(" "));
-        setBrief(task.brief);
+        if (!!task.title) {
+            setTitle(task.title.join(" "));
+        }
+        
+        if (!!task.brief) {
+            setBrief(task.brief);
+        }
     }, [task.title, task.brief])
     
     useEffect(() => {

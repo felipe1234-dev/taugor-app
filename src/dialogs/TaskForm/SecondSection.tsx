@@ -9,18 +9,16 @@ import {
 } from "@mui/material";
 
 import { TaskFormContext } from "./index";
-import { TextEditor, ChipField } from "@local/components";
-import { TAGS } from "@local/constants";
-import { Task } from "@local/interfaces";
-import { Tag } from "@local/types";
+import { TextEditor } from "@local/components";
 
-export default function SecondSection(task: Task) {
+export default function SecondSection() {
     const [description, setDescription] = useState<string>("");
     
-    const { update } = useContext(TaskFormContext);
+    const { update, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        setDescription(task.description);
+        if (!!task.description)
+            setDescription(task.description);
     }, [task.description]);
     
     useEffect(() => {

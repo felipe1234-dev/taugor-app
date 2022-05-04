@@ -28,15 +28,15 @@ interface StepsProps {
     formTitle: string
 };
 
-export default function Steps({ formTitle, ...task }: StepsProps & Task) {
+export default function Steps({ formTitle }: StepsProps) {
     const [activeStep, setActiveStep] = useState<number>(0);
     const { submit } = useContext(TaskFormContext);
     
     const steps = [
-        <FirstSection {...task}/>,
-        <SecondSection {...task}/>,
-        <ThirdSection {...task}/>,
-        <FourthSection {...task}/>
+        <FirstSection />,
+        <SecondSection />,
+        <ThirdSection />,
+        <FourthSection />
     ];
     
     return (
