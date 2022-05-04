@@ -1,5 +1,12 @@
-import { useState, useEffect, useContext } from "react";
-import { Divider } from "@mui/material";
+import { 
+    useState, 
+    useEffect, 
+    useContext 
+} from "react";
+import { 
+    DialogContentText,
+    DialogTitle
+} from "@mui/material";
 
 import { TaskFormContext } from "./index";
 import { TextEditor, ChipField } from "@local/components";
@@ -9,44 +16,32 @@ import { Tag } from "@local/types";
 
 export default function SecondSection(task: Task) {
     const [description, setDescription] = useState<string>("");
-    const [tags, setTags] = useState<Array<Tag>>([]);
     
     const { update } = useContext(TaskFormContext);
     
     useEffect(() => {
         setDescription(task.description);
-        setTags(task.tags);
-    }, [task.description, task.tags]);
+    }, [task.description]);
     
     useEffect(() => {
-        update({
-            description,
-            tags
-        });
-    }, [description, tags]);
-    
+        update({ description });
+    }, [description]);
+ 
     return (
         <>
+            <DialogTitle sx={{ pl: 0 }}>
+                Descrição longa
+            </DialogTitle>
+            <DialogContentText sx={{ mb: 4 }}>
+                Faça uma descrição bem detalhada da sua atividade, ao contrário da 
+                descrição breve, aqui o número de caracteres é infinito, assim como 
+                contém controle total do HTML para lhe prover mais liberdade.
+            </DialogContentText>
             <TextEditor
                 initialContent={description}
                 onChange={(html) => setDescription(html)}
                 readOnly={false}
             />
-            <Divider sx={{ m: 2 }}/>
-            
-            <ChipField 
-                options={[...TAGS]}
-                maxRows={4}
-                
-                value={tags}
-                onChange={(value) => setTags(value as Array<Tag>)}
-
-                fullWidth
-                multiline
-                
-                placeholder="Categorias"
-            />
-            <Divider sx={{ m: 2 }}/>
         </>
     );
 }

@@ -4,25 +4,29 @@ import {
     useEffect, 
     useContext 
 } from "react";
-import { 
+import {
+    DialogTitle,
     DialogContentText, 
     TextField, 
     MenuItem 
 } from "@mui/material";
 
 import { TaskFormContext } from "./index";
+import { ChipField } from "@local/components";
 import { 
     STATUS_TYPES, 
     PRIORITY_TYPES, 
     ENV_TYPES, 
-    INFLUENCED_USERS 
+    INFLUENCED_USERS,
+    TAGS
 } from "@local/constants";
 import { Task } from "@local/interfaces";
 import { 
     Status, 
     Environment,
     Priority,
-    Influence
+    Influence,
+    Tag
 } from "@local/types";
 
 export default function FourthSection(task: Task) {
@@ -30,6 +34,8 @@ export default function FourthSection(task: Task) {
     const [priority, setPriority] = useState<Priority>();
     const [environment, setEnvironment] = useState<Environment>();
     const [influence, setInfluence] = useState<Influence>();
+    const [product, setProduct] = useState<string>("");
+    const [tags, setTags] = useState<Array<Tag>>([]);
     
     const { update } = useContext(TaskFormContext);
     
@@ -38,16 +44,44 @@ export default function FourthSection(task: Task) {
         setPriority(task.priority);
         setEnvironment(task.environment);
         setInfluence(task.influencedUsers);
-    }, [task.status, task.priority, task.environment, task.influencedUsers]);
+        setProduct(task.product);
+        setTags(task.tags);
+    }, [
+        task.status, 
+        task.priority, 
+        task.environment, 
+        task.influencedUsers, 
+        task.product,
+        task.tags
+    ]);
     
     useEffect(() => {
         update({
             status,
             priority,
             environment,
-            influencedUsers: influence
+            influencedUsers: influence,
+            product,
+            tags
         });
-    }, [status, priority, environment, influence]);
+    }, [
+        status, 
+        priority, 
+        environment, 
+        influence, 
+        product, 
+        tags
+    ]);
+    
+    const textInputs = [
+        {
+            label: "Nome do produto",
+            placeholder: "Nome do produto",
+            maxLength: 20,
+            value: product,
+            onChange: (event: any) => setProduct(event.target.value)
+        }
+    ];
     
     const selects = [
         {
@@ -78,6 +112,44 @@ export default function FourthSection(task: Task) {
     
     return (
         <>
+            <DialogTitle sx={{ pl: 0 }}>
+                Mais informações
+            </DialogTitle>
+            <DialogContentText sx={{ mb: 2 }}>
+                Aqui estão mais algumas informações variadas para você verificar
+            </DialogContentText>
+            
+            <DialogContentText mt={2}>
+                Categorias
+            </DialogContentText>
+            <ChipField 
+                multiline
+                options={[...TAGS]}
+                maxRows={4}
+                value={tags}
+                onChange={(value) => setTags(value as Array<Tag>)}
+                placeholder="Categorias"
+                sx={{ mb: 0, mt: 2 }}
+            />
+            
+            {textInputs.map((item, i) => (
+                <Fragment key={i}>
+                    <DialogContentText mt={2}>
+                        {item.label}
+                    </DialogContentText>
+                    <TextField
+                        required
+                        multiline
+                        maxRows={4}
+                        placeholder={item.placeholder}
+                        value={item.value}
+                        onChange={item.onChange}
+                        inputProps={{ maxLength: item.maxLength }}
+                        sx={{ mb: 0, mt: 2 }}
+                    />
+                </Fragment>
+            ))}
+            
             {selects.map((item, i) => (
                 <Fragment key={i}>
                     <DialogContentText mt={2}>

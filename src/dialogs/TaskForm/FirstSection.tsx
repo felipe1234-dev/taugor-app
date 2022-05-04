@@ -1,28 +1,33 @@
-import { useContext, useState, useEffect } from "react";
-import { TextField, Divider } from "@mui/material";
+import { 
+    useContext, 
+    useState, 
+    useEffect 
+} from "react";
+import { 
+    TextField, 
+    DialogContentText,
+    DialogTitle
+} from "@mui/material";
 import { TaskFormContext } from "./index";
 import { Task } from "@local/interfaces";
 
 export default function FirstSection(task: Task) {
     const [title, setTitle] = useState<string>("");
     const [brief, setBrief] = useState<string>("");
-    const [product, setProduct] = useState<string>("");
     
     const { update } = useContext(TaskFormContext);
     
     useEffect(() => {
         setTitle(task.title.join(" "));
         setBrief(task.brief);
-        setProduct(task.product);
-    }, [task.title, task.brief, task.product])
+    }, [task.title, task.brief])
     
     useEffect(() => {
         update({
             title: title.split(" "),
-            brief,
-            product
+            brief
         });
-    }, [title, brief, product])
+    }, [title, brief])
     
     const textInputs = [
         {
@@ -36,17 +41,17 @@ export default function FirstSection(task: Task) {
             maxLength: 150,
             value: brief,
             onChange: (event: any) => setBrief(event.target.value)
-        },
-        { 
-            placeholder: "Nome do produto",
-            maxLength: 20,
-            value: product,
-            onChange: (event: any) => setProduct(event.target.value)
         }
     ];
     
     return (
         <>
+            <DialogTitle sx={{ pl: 0 }}>
+                Título & Descrição breve
+            </DialogTitle>
+            <DialogContentText>
+                O título pode comportar 50 caracteres e a descrição 150
+            </DialogContentText>
             {textInputs.map((item, i) => (
                 <TextField
                     key={i}
@@ -61,7 +66,6 @@ export default function FirstSection(task: Task) {
                     sx={{ mb: 0, mt: 2 }}
                 />
             ))}
-            <Divider sx={{ m: 2 }}/>
         </>
     );
 }
