@@ -58,7 +58,7 @@ export default function DeleteDialog() {
                 Tem certeza que quer excluir?
             </DialogTitle>
             <DialogContent>
-                <DialogContentText>
+                <DialogContentText sx={{ p: 1 }}>
                     Esta ação não pode ser revertida
                 </DialogContentText>
             </DialogContent>
