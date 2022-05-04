@@ -7,6 +7,7 @@
             position: relative;
             max-height: 30em;
             overflow-y: scroll;
+            border: none;
 
             .EditorToolbar__root___3_Aqz {
                 position: sticky;
@@ -17,7 +18,13 @@
         }
 
         &-content, .public-DraftEditor-content {
-            font-size: 1.15em !important;
+            font-family: "Roboto","Helvetica","Arial",sans-serif;
+            font-weight: 400;
+            font-size: 1.15em;
+            line-height: 1.5;
+            letter-spacing: 0.00938em;
+            color: rgba(0, 0, 0, 0.6);
+            margin-top: 16px;
 
             li {
                 & + li {
