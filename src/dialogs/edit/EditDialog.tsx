@@ -4,18 +4,8 @@ import {
     useEffect,
     useContext
 } from "react";
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button
-} from "@mui/material";
-import { 
-    Link, 
-    useParams,
-    useNavigate
-} from "react-router-dom";
+import { Dialog } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
 
 // Dialog components
 import TaskForm from "../TaskForm";
@@ -27,19 +17,20 @@ import { Spinner } from "@local/components";
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // Interfaces
-import { Task } from "@local/interfaces";
+import { Attach, Task } from "@local/interfaces";
 
 // API
 import { getTask, updateTask } from "@local/api/collections/Tasks";
+import { uploadAttach } from "@local/api/storage/attachments";
 
 export default function EditDialog() {
-    const [task, setTask] = useState<Task|null>(null);
+    const [sourceTask, setSourceTask] = useState<Task|null>(null);
     
     const { setSeverity, setMessage } = useContext(AlertContext);
-    const { db } = useContext(FirebaseContext);
+    const { db, storage } = useContext(FirebaseContext);
     
     const { uuid: taskUuid } = useParams();
-    const navigate = useNavigate();    
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!taskUuid) {
@@ -48,7 +39,7 @@ export default function EditDialog() {
         
         getTask(db, taskUuid)
             .then((task) => (
-                setTask(task)
+                setSourceTask(task)
             ))
             .catch((error) => {
                 setSeverity(error.severity);
@@ -56,48 +47,45 @@ export default function EditDialog() {
             });
     }, [db, taskUuid]);
     
-    const onSubmit = (event: any) => {
-        event.preventDefault();
+    const onSubmit = (params: {
+        updates: Partial<Task>,
+        uploads: Array<File>
+    }) => {
+        if (!taskUuid || !sourceTask) {
+            return;
+        }
         
-        if (!!taskUuid && !!task) {
-            const data = new FormData(event.currentTarget);
-            const newValues: any = {};
-            
-            for (const [ key, value ] of data.entries()) {
-                const sample = task[key as keyof Task];
-                
-                switch (true) {
-                    case sample instanceof Array: 
-                        newValues[key] = (value as string).split(key === "tags" ? ", " : " ");
-                        break;
-                        
-                    case typeof sample === "string":
-                        newValues[key] = value as string;
-                        break;
-                }
-            }
-            
-            updateTask(db, taskUuid, newValues as Task)
-                .then(() => {
-                    setSeverity("success"); 
-                    setMessage("Atividade editada com sucesso");
-                    
-                    setTimeout(() => {
-                        navigate(`/task/${taskUuid}`, { 
-                           state: { enableLoader: false } 
-                        });
-                        
-                        window.location.reload();
-                    }, 4000);
-                })
+        const { updates, uploads } = params;
+        
+        uploads.forEach((file) => {
+            uploadAttach(storage, file)
                 .catch((error) => {
                     setSeverity(error.severity);
                     setMessage(error.message);
                 });
-        }
+        });
+    
+        updateTask(db, taskUuid, updates)
+            .then(() => {
+                setSeverity("success"); 
+                setMessage("Atividade editada com sucesso");
+                    
+                setTimeout(() => {
+                    navigate(`/task/${taskUuid}`, { 
+                       state: { enableLoader: false } 
+                    });
+                        
+                    window.location.reload();
+                }, 4000);
+            })
+            .catch((error) => {
+                setSeverity(error.severity);
+                setMessage(error.message);
+            });
+    
     }
     
-    if (!task || !taskUuid) {
+    if (!sourceTask || !taskUuid) {
         return (
             <Spinner 
                 wrapper={{
@@ -111,7 +99,7 @@ export default function EditDialog() {
                 }}
             />
         );
-    } 
+    }
 
     return (
         <Dialog
@@ -119,29 +107,17 @@ export default function EditDialog() {
             fullWidth
             maxWidth="md"
             scroll="paper"
+            onClose={() => navigate(`/task/${taskUuid}`, {
+                state: { enableLoader: false }
+            })}
         >
-            <form onSubmit={onSubmit}>
-                <DialogTitle>
-                    Editar atividade
-                </DialogTitle>
-                <DialogContent>
-                    {!!task && (
-                        <TaskForm {...task}/>
-                    )}
-                </DialogContent>
-                <DialogActions>
-                    <Button            
-                        component={Link}
-                        to={`/task/${taskUuid}`}
-                        state={{ enableLoader: false }}
-                    >
-                        Cancelar
-                    </Button>
-                    <Button type="submit">
-                        Salvar
-                    </Button>
-                </DialogActions>
-            </form>
+            {!!sourceTask && (
+                <TaskForm
+                    formTitle="Editar atividade"
+                    onSubmit={onSubmit}
+                    {...sourceTask}
+                />
+            )}
         </Dialog>
     );
 };
