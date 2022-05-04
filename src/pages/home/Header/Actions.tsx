@@ -6,12 +6,14 @@ import {
     FilterListRounded as FilterListIcon,
     CloseRounded as CloseIcon,
 } from "@mui/icons-material";
+import { Link, useLocation } from "react-router-dom";
 
 // Actions components
 import Filters from "./Filters";
 
 export default function Actions() {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const location = useLocation();
     
     return (
         <Grid item>
@@ -33,7 +35,15 @@ export default function Actions() {
                 disableSwipeToOpen={false}
             />
             <Tooltip title="Adicionar uma atividade">
-                <IconButton className="HomePage-header-addActivButton">
+                <IconButton 
+                    className="HomePage-header-addActivButton"
+                    component={Link}
+                    to="/add/"
+                    state={{
+                        background: location,
+                        enableLoader: false
+                    }}
+                >
                     <PencilIcon />
                 </IconButton>
             </Tooltip>
