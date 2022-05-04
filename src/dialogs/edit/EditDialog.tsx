@@ -107,9 +107,9 @@ export default function EditDialog() {
             fullWidth
             maxWidth="md"
             scroll="paper"
-            onClose={() => navigate(`/task/${taskUuid}`, {
-                state: { enableLoader: false }
-            })}
+            onClose={() => (
+                navigate(`/task/${taskUuid}`, { state: { enableLoader: false }})
+            )}
         >
             {!!sourceTask && (
                 <TaskForm
