@@ -8,11 +8,7 @@ import {
     DialogActions,
     Button
 } from "@mui/material";
-import { 
-    Link, 
-    useNavigate, 
-    useParams 
-} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 // Contexts
 import { AlertContext, FirebaseContext } from "@local/contexts";
@@ -23,48 +19,41 @@ import { deleteTask } from "@local/api/collections/Tasks";
 export default function DeleteDialog() {
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { db } = useContext(FirebaseContext);
-    
+
     const { uuid: taskUuid } = useParams();
     const navigate = useNavigate();
-    
-    const dialog = {
-        open: true
-    }
-    
-    const cancelButton = {
-        component: Link,
-        to: `/task/${taskUuid}`,
-        replace: true,
-        state: { enableLoader: false }
-    }
-    
-    const deleteButton = {
-        onClick: () => {
-            if (!!taskUuid) {
-                deleteTask(db, taskUuid)
-                    .then(() => {
-                        setSeverity("success");
-                        setMessage("Atividade excluída com sucesso");
-                        
-                        setTimeout(() => {
-                            navigate("/", { 
-                                replace: true, 
-                                state: {
-                                    enableLoader: true 
-                                }
-                            });
-                        }, 4000);
-                    })
-                    .catch((error) => {
-                        setSeverity(error.severity);
-                        setMessage(error.message);
-                    });
-            }
+
+    const onDelete = () => {
+        if (!!taskUuid) {
+            deleteTask(db, taskUuid)
+                .then(() => {
+                    setSeverity("success");
+                    setMessage("Atividade excluída com sucesso");
+
+                    setTimeout(() => {
+                        navigate("/", {
+                            replace: true,
+                            state: {
+                                enableLoader: true
+                            }
+                        });
+                    }, 4000);
+                })
+                .catch((error) => {
+                    setSeverity(error.severity);
+                    setMessage(error.message);
+                });
         }
+
     }
-    
+
     return (
-        <Dialog {...dialog}>
+        <Dialog
+            open
+            onClose={() => navigate(`/task/${taskUuid}`, {
+                state: { enableLoader: false }
+            })}
+        >
             <DialogTitle>
                 Tem certeza que quer excluir?
             </DialogTitle>
@@ -74,10 +63,7 @@ export default function DeleteDialog() {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button {...cancelButton}>
-                    Cancelar
-                </Button>
-                <Button {...deleteButton}>
+                <Button onClick={onDelete}>
                     Confirmar
                 </Button>
             </DialogActions>
