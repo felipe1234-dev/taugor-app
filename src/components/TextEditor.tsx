@@ -17,7 +17,7 @@ export default function TextEditor({
     readOnly = false, 
     placeholder,
     onChange = () => {}
-}: TextEditorProps & RichTextEditorProps) {
+}: TextEditorProps & Omit<RichTextEditorProps, "value" | "onChange">) {
     const [content, setContent] = useState<EditorValue>(
         RichTextEditor.createValueFromString(initialContent, "html")
     );
