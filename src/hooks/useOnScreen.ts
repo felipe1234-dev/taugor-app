@@ -6,7 +6,7 @@ import {
 } from "react";
 
 export default function useOnScreen(ref: RefObject<HTMLElement>, triggers: Array<any> = []) {
-    const [isOnScreen, setIsOnScreen] = useState(false);
+    const [isOnScreen, setIsOnScreen] = useState<boolean>(false);
     const observerRef = useRef<IntersectionObserver>();
 
     useEffect(() => {
