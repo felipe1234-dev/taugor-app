@@ -26,7 +26,9 @@ import { TaskFormContext } from "./index";
 
 export default function Steps() {
     const [activeStep, setActiveStep] = useState<number>(0);
-    const [completed, setCompleted] = useState<Array<number>>([]);
+    const [completed, setCompleted] = useState<{
+        [key: number]: boolean
+    }>({});
     
     const { formTitle, submit } = useContext(TaskFormContext);
     const formRef = useRef<HTMLFormElement>(null);
@@ -50,19 +52,29 @@ export default function Steps() {
     }
     
     const goBack = () => {
+        setCompleted((prevState) => {
+            prevState[activeStep] = false;
+            return prevState;
+        });
         setActiveStep((prevState) => prevState - 1);
     }
     
     const goNext = () => {
         if (!!formElem) {
-            if (!formElem.checkValidity()) {
+            if (!formIsValid) {
                 if (formElem.reportValidity) {
                     formElem.reportValidity();
                 }
                 
-                setCompleted((prevState) => prevState.filter((step) => step !== activeStep));
+                setCompleted((prevState) => {
+                    prevState[activeStep] = false;
+                    return prevState;
+                });
             } else {
-                setCompleted((prevState) => [ ...prevState, activeStep ]);
+                setCompleted((prevState) => {
+                    prevState[activeStep] = true;
+                    return prevState;
+                });
                 setActiveStep((prevState) => prevState + 1);
             }
         }
@@ -75,9 +87,9 @@ export default function Steps() {
             </DialogTitle>
             <DialogContent>
                 <Box sx={{ mb: 2 }}>
-                    <Stepper nonLinear activeStep={activeStep}>
+                    <Stepper activeStep={activeStep}>
                         {steps.map((elem, i) => (
-                            <Step key={i} completed={i in completed}>
+                            <Step key={i} completed={completed[i]}>
                                 <StepButton color="inherit" onClick={() => setActiveStep(i)}>
                                     Etapa {i + 1}
                                 </StepButton>
