@@ -17,7 +17,7 @@ import { Spinner } from "@local/components";
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // Interfaces
-import { Attach, Task } from "@local/interfaces";
+import { Task } from "@local/interfaces";
 
 // API
 import { getTask, updateTask } from "@local/api/collections/Tasks";
