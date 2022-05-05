@@ -9,7 +9,7 @@ import { Task } from "@local/interfaces";
 import { getCurrentUser } from "@local/api/auth";
 import toAlert from "@local/api/toAlert";
 
-export default function updateTaskByUuid(db: Firestore, uuid: string, newValues: Partial<Task>): Promise<void> {
+export default function updateTask(db: Firestore, uuid: string, newValues: Partial<Task>): Promise<Task> {
     return new Promise(async (resolve, reject) => {
         const docRef = doc(db, "Tasks", uuid);
         // Por segurança
@@ -32,7 +32,7 @@ export default function updateTaskByUuid(db: Firestore, uuid: string, newValues:
                     if (!!user) {
                         if (user.uuid === task.postedBy) {
                             updateDoc(docRef, newValues)
-                                .then(resolve)
+                                .then(() => resolve(task))
                                 .catch((error: FirebaseError) => (
                                     reject(toAlert(error))
                                 ));
