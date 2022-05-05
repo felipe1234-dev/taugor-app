@@ -39,7 +39,7 @@ export default function AddDialog() {
         addTask(db, updates)
             .then((task) => {
                 setSeverity("success"); 
-                setMessage("Atividade editada com sucesso");
+                setMessage("Atividade adicionada com sucesso");
                     
                 setTimeout(() => (
                     navigate(`/task/${task.uuid}`, { 
