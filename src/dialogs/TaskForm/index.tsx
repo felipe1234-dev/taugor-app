@@ -25,6 +25,7 @@ const sampleTask: Partial<Task> = {
 };
 
 interface TaskFormValue {
+    formTitle: string,
     task: Partial<Task>,
     updates: Partial<Task>,
     uploads: Array<File>,
@@ -34,6 +35,7 @@ interface TaskFormValue {
 };
 
 export const TaskFormContext = createContext<TaskFormValue>({
+    formTitle: "",
     task: sampleTask,
     updates: {},
     uploads: [],
@@ -74,6 +76,7 @@ export default function TaskForm({
 
     return (
         <TaskFormContext.Provider value={{
+            formTitle,
             task: !!task ? task : sampleTask,
             updates,
             uploads,
@@ -91,7 +94,7 @@ export default function TaskForm({
                 setUploads(fileList)
             )
         }}>
-            <Steps formTitle={formTitle}/>
+            <Steps />
         </TaskFormContext.Provider>
     );
 };
