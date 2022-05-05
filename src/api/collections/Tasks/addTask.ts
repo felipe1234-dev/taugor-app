@@ -8,9 +8,10 @@ import {
 } from "firebase/firestore";
 import { Task } from "@local/interfaces";
 import { getCurrentUser } from "@local/api/auth";
+import getTask from "./getTask";
 import toAlert from "@local/api/toAlert";
 
-export default function addTask(db: Firestore, newTask: Partial<Task>): Promise<DocumentReference> {
+export default function addTask(db: Firestore, newTask: Partial<Task>): Promise<Task> {
     return new Promise(async (resolve, reject) => {
         // Por segurança
         delete newTask.uuid;
@@ -39,7 +40,12 @@ export default function addTask(db: Firestore, newTask: Partial<Task>): Promise<
             
             const docRef = await addDoc(collectionRef, newTask);
             
-            resolve(docRef);
+            try {
+                const task = await getTask(db, docRef.id);
+                resolve(task);
+            } catch (error) {
+                reject(error);
+            }
         } catch (error) {
             reject(toAlert(error as FirebaseError))
         }
