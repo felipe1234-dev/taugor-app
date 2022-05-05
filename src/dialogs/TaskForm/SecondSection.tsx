@@ -36,6 +36,7 @@ export default function SecondSection() {
                 contém controle total do HTML para lhe prover mais liberdade.
             </DialogContentText>
             <TextEditor
+                placeholder="Descrição..."
                 initialContent={description}
                 onChange={(html) => setDescription(html)}
                 readOnly={false}
