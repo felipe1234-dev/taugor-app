@@ -1,10 +1,10 @@
-import { 
-    Fragment, 
+import {
     useState, 
     useEffect, 
     useContext 
 } from "react";
 import {
+    Grid,
     DialogTitle,
     DialogContentText, 
     TextField, 
@@ -29,33 +29,33 @@ import {
 } from "@local/types";
 
 export default function FourthSection() {
-    const [status, setStatus] = useState<Status>();
-    const [priority, setPriority] = useState<Priority>();
+    const [status, setStatus]           = useState<Status>();
+    const [priority, setPriority]       = useState<Priority>();
     const [environment, setEnvironment] = useState<Environment>();
-    const [influence, setInfluence] = useState<Influence>();
-    const [product, setProduct] = useState<string>("");
-    const [tags, setTags] = useState<Array<Tag>>([]);
+    const [influence, setInfluence]     = useState<Influence>();
+    const [product, setProduct]         = useState<string>("");
+    const [tags, setTags]               = useState<Array<Tag>>([]);
     
-    const { update, task } = useContext(TaskFormContext);
+    const { update, updates, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        if (!!task.status)
-            setStatus(task.status);
+        if (!!task.status || !!updates.status)
+            setStatus(updates.status || task.status || STATUS_TYPES[0]);
         
-        if (!!task.priority)
-            setPriority(task.priority);
+        if (!!task.priority || !!updates.priority)
+            setPriority(updates.priority || task.priority || PRIORITY_TYPES[0]);
         
-        if (!!task.environment)
-            setEnvironment(task.environment);
+        if (!!task.environment || !!updates.environment)
+            setEnvironment(updates.environment || task.environment || ENV_TYPES[0]);
             
-        if (!!task.influencedUsers)
-            setInfluence(task.influencedUsers);
+        if (!!task.influencedUsers || !!updates.influencedUsers)
+            setInfluence(updates.influencedUsers || task.influencedUsers || INFLUENCED_USERS[0]);
         
-        if (!!task.product)
-            setProduct(task.product);
+        if (!!task.product || !!updates.status)
+            setProduct(updates.status || task.status || STATUS_TYPES[0]);
             
-        if (!!task.tags)
-            setTags(task.tags);
+        if (!!task.tags || !!updates.tags)
+            setTags(updates.tags || task.tags || [ TAGS[0] ]);
     }, [
         task.status, 
         task.priority, 
@@ -142,44 +142,48 @@ export default function FourthSection() {
                 sx={{ mb: 0, mt: 2 }}
             />
             
-            {textInputs.map((item, i) => (
-                <Fragment key={i}>
-                    <DialogContentText mt={2}>
-                        {item.label}
-                    </DialogContentText>
-                    <TextField
-                        required
-                        multiline
-                        maxRows={4}
-                        placeholder={item.placeholder}
-                        value={item.value}
-                        onChange={item.onChange}
-                        inputProps={{ maxLength: item.maxLength }}
-                        sx={{ mb: 0, mt: 2 }}
-                    />
-                </Fragment>
-            ))}
+            <Grid container spacing={2}>
+                {textInputs.map((item, i) => (
+                    <Grid key={i} item xs={6}>
+                        <DialogContentText mt={2}>
+                            {item.label}
+                        </DialogContentText>
+                        <TextField
+                            required
+                            multiline
+                            fullWidth
+                            maxRows={4}
+                            placeholder={item.placeholder}
+                            value={item.value}
+                            onChange={item.onChange}
+                            inputProps={{ maxLength: item.maxLength }}
+                            sx={{ mb: 0, mt: 2 }}
+                        />
+                    </Grid>
+                ))}
             
-            {selects.map((item, i) => (
-                <Fragment key={i}>
-                    <DialogContentText mt={2}>
-                        {item.label}
-                    </DialogContentText>
-                    <TextField
-                        select
-                        required
-                        value={item.value}
-                        onChange={item.onChange}
-                        sx={{ mb: 0, mt: 2 }}
-                    >
-                        {item.options.map((value, i) => (
-                            <MenuItem key={i} value={value}>
-                                {value}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                </Fragment>
-            ))}
+                {selects.map((item, i) => (
+                    <Grid key={i} item xs={6}>
+                        <DialogContentText mt={2}>
+                            {item.label}
+                        </DialogContentText>
+                        <TextField
+                            select
+                            required
+                            fullWidth
+                            value={item.value}
+                            onChange={item.onChange}
+                            sx={{ mb: 0, mt: 2 }}
+                        >
+                            {item.options.map((value, i) => (
+                                <MenuItem key={i} value={value}>
+                                    {value}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                ))}
+            </Grid>
         </>
     );
 }

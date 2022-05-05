@@ -14,11 +14,11 @@ import { TextEditor } from "@local/components";
 export default function SecondSection() {
     const [description, setDescription] = useState<string>("");
     
-    const { update, task } = useContext(TaskFormContext);
+    const { update, updates, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        if (!!task.description)
-            setDescription(task.description);
+        if (!!task.description || !!updates.description)
+            setDescription(updates.description || task.description || "");
     }, [task.description]);
     
     useEffect(() => {
@@ -40,6 +40,11 @@ export default function SecondSection() {
                 initialContent={description}
                 onChange={(html) => setDescription(html)}
                 readOnly={false}
+            />
+            <textarea
+                style={{ visibility: "hidden" }}
+                defaultValue={description}
+                required
             />
         </>
     );

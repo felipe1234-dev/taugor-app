@@ -14,15 +14,17 @@ export default function FirstSection() {
     const [title, setTitle] = useState<string>("");
     const [brief, setBrief] = useState<string>("");
     
-    const { update, task } = useContext(TaskFormContext);
+    const { update, updates, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        if (!!task.title) {
-            setTitle(task.title.join(" "));
+        if (!!task.title || !!updates.title) {
+            const newTitle = updates?.title?.join(" ") || task?.title?.join(" ") || "";
+            setTitle(newTitle);
         }
         
-        if (!!task.brief) {
-            setBrief(task.brief);
+        if (!!task.brief || !!updates.brief) {
+            const newBrief = updates.brief || task.brief || "";
+            setBrief(newBrief);
         }
     }, [task.title, task.brief])
     
