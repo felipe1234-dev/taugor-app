@@ -1,5 +1,9 @@
 // Libs
-import { useState, useContext } from "react";
+import { 
+    useState, 
+    useContext, 
+    useRef
+} from "react";
 import {
     Box,
     Button,
@@ -20,17 +24,13 @@ import FourthSection from "./FourthSection";
 // Contexts
 import { TaskFormContext } from "./index";
 
-// Interfaces
-import { Task } from "@local/interfaces";
-
-// Props interface
-interface StepsProps {
-    formTitle: string
-};
-
-export default function Steps({ formTitle }: StepsProps) {
+export default function Steps() {
     const [activeStep, setActiveStep] = useState<number>(0);
-    const { submit } = useContext(TaskFormContext);
+    const [completed, setCompleted] = useState<Array<number>>([]);
+    
+    const { formTitle, submit } = useContext(TaskFormContext);
+    const formRef = useRef<HTMLFormElement>(null);
+    const formElem = formRef.current;
     
     const steps = [
         <FirstSection />,
@@ -39,8 +39,37 @@ export default function Steps({ formTitle }: StepsProps) {
         <FourthSection />
     ];
     
+    const formIsValid = formElem?.checkValidity() || false;
+    const stepIsLast = activeStep === steps.length - 1;
+    const stepIsFirst = activeStep === 0;
+    
+    const onSubmit = (event: any) => {
+        event.preventDefault();
+    
+        submit();
+    }
+    
+    const goBack = () => {
+        setActiveStep((prevState) => prevState - 1);
+    }
+    
+    const goNext = () => {
+        if (!!formElem) {
+            if (!formElem.checkValidity()) {
+                if (formElem.reportValidity) {
+                    formElem.reportValidity();
+                }
+                
+                setCompleted((prevState) => prevState.filter((step) => step !== activeStep));
+            } else {
+                setCompleted((prevState) => [ ...prevState, activeStep ]);
+                setActiveStep((prevState) => prevState + 1);
+            }
+        }
+    }
+    
     return (
-        <>
+        <form ref={formRef} onSubmit={onSubmit}>
             <DialogTitle>
                 {formTitle}
             </DialogTitle>
@@ -48,7 +77,7 @@ export default function Steps({ formTitle }: StepsProps) {
                 <Box sx={{ mb: 2 }}>
                     <Stepper nonLinear activeStep={activeStep}>
                         {steps.map((elem, i) => (
-                            <Step key={i} completed={false}>
+                            <Step key={i} completed={i in completed}>
                                 <StepButton color="inherit" onClick={() => setActiveStep(i)}>
                                     Etapa {i + 1}
                                 </StepButton>
@@ -62,26 +91,26 @@ export default function Steps({ formTitle }: StepsProps) {
             </DialogContent>
             <DialogActions>
                 <Button
-                    disabled={activeStep === 0}
-                    onClick={() => setActiveStep((prevState) => prevState - 1)}
+                    disabled={stepIsFirst}
+                    onClick={goBack}
                     sx={{ mr: 1 }}
                 >
                     Voltar
                 </Button>
                 <Box sx={{ flex: "1 1 auto" }} />
                 <Button
-                    disabled={activeStep === steps.length - 1}
-                    onClick={() => setActiveStep((prevState) => prevState + 1)}
+                    disabled={stepIsLast}
+                    onClick={goNext}
                     sx={{ mr: 1 }}
                 >
                     Seguir
                 </Button>
-                {(activeStep === steps.length - 1) && (
-                    <Button onClick={submit}>
+                {(stepIsLast && formIsValid) && (
+                    <Button type="submit">
                         Enviar
                     </Button>
                 )}
             </DialogActions>
-        </>
+        </form>
     );
 };
