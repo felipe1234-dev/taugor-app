@@ -3,7 +3,20 @@ import { FirebaseError } from "firebase/app";
 
 export default function toAlert(error: FirebaseError): Alert {
     switch (error.code) {
+        // Extra
+        case "permission-denied": 
+            return ({
+                severity: "error",
+                message: "Sua sessão expirou (duração máxima: 1h)"
+            });
+        
         // Auth
+        case "auth/network-request-failed":
+            return ({
+                severity: "error",
+                message: "Sua conexão com a Internet pode estar lenta, por favor, tente mais tarde"
+            });
+        
         case "auth/email-already-in-use":
             return ({
                 severity: "error",
@@ -26,7 +39,7 @@ export default function toAlert(error: FirebaseError): Alert {
         case "storage/object-not-found":
             return ({
                 severity: "error",
-                message: "Anexo não encontrado"
+                message: "Arquivo não encontrado"
             });
             
         default: 
