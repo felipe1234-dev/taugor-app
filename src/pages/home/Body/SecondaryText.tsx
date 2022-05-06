@@ -24,7 +24,7 @@ export default function SecondaryText({ user, poster, task, date }: SecondaryTex
                     mb: "1em !important"
                 }}
             >
-                {task.brief}
+                {task.brief} - {date}
             </Typography>
             <Box
                 component="div"
@@ -52,7 +52,6 @@ export default function SecondaryText({ user, poster, task, date }: SecondaryTex
                         label={tag}
                     />
                 ))}
-                {date}
             </Box>
         </>
     );
