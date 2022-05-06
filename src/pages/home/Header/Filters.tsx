@@ -14,6 +14,9 @@ import {
     SwipeableDrawerProps,
 } from "@mui/material";
 
+// Hooks
+import { useQueryParams } from "@local/hooks";
+
 // Contexts
 import { FilterContext } from "../contexts";
 
@@ -27,9 +30,15 @@ export default function Filters({
     swipeAreaWidth, 
     ...swipeableDrawer 
 }: SwipeableDrawerProps) {
-    const [status, setStatus]     = useState<"Todos" | Status>("Todos");
-    const [priority, setPriority] = useState<"Todas" | Priority>("Todas");
-    const { filter, setFilter }   = useContext(FilterContext);
+    const queryParams = useQueryParams();
+    
+    const initialStatus   = queryParams.get("status") as Status || "Todos";
+    const initialPriority = queryParams.get("priority") as Priority || "Todas";
+    
+    const [status, setStatus]     = useState<"Todos" | Status>(initialStatus);
+    const [priority, setPriority] = useState<"Todas" | Priority>(initialPriority);
+    
+    const { filter, setFilter } = useContext(FilterContext);
     
     useEffect(() => {
         const { where } = filter;
@@ -40,10 +49,16 @@ export default function Filters({
     
         if (status !== "Todos") {
             conditions.push(["status", "==", status]);
+            queryParams.set("status", status);
+        } else {
+            queryParams.delete("status");
         }
         
         if (priority !== "Todas") {
             conditions.push(["priority", "==", priority]);
+            queryParams.set("priority", priority);
+        } else {
+            queryParams.delete("priority");
         }
         
         /* Quando temos um objeto com propriedades duplicadas, o valor que 
