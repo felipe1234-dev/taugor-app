@@ -10,9 +10,7 @@ import {
 // Page components
 import NoResults from "./NoResults";
 import TaskList from "./TaskList";
-
-// Local components
-import { Spinner } from "@local/components";
+import Loading from "./Loading";
 
 // Contexts
 import { TimelineContext } from "../contexts";
@@ -34,7 +32,7 @@ export default function Body({ loaderRef }: BodyProps) {
             }}
         >
             <Paper
-                className={`HomePage-main${isLoading? " isLoading" : ""}`}
+                className="HomePage-main"
                 sx={{ pb: "50px" }}
                 elevation={0}
             >
@@ -68,17 +66,7 @@ export default function Body({ loaderRef }: BodyProps) {
                         <NoResults />
                     )
                 ) : (
-                    <Spinner 
-                        wrapper={{
-                            width: "100%",
-                            height: "300px"
-                        }}
-                        
-                        spinner={{
-                            width: "2em",
-                            height: "2em"
-                        }}
-                    />
+                    <Loading />
                 )}
             </Paper>
         </Container>
