@@ -6,16 +6,16 @@ import {
 } from "react";
 import {
     Box,
+    Grid,
     Typography,
     SwipeableDrawer,
-    FormControl,
-    Select,
+    TextField,
     MenuItem,
     SwipeableDrawerProps,
 } from "@mui/material";
 
 // Hooks
-import { useQueryParams } from "@local/hooks";
+import { useQueryParams, useOnMobile } from "@local/hooks";
 
 // Contexts
 import { FilterContext } from "../contexts";
@@ -31,6 +31,7 @@ export default function Filters({
     ...swipeableDrawer 
 }: SwipeableDrawerProps) {
     const queryParams = useQueryParams();
+    const isMobile = useOnMobile("md");
     
     const initialStatus   = queryParams.get("status") as Status || "Todos";
     const initialPriority = queryParams.get("priority") as Priority || "Todas";
@@ -71,6 +72,21 @@ export default function Filters({
         });
     }, [priority, status]);
 
+    const selects = [
+        {
+            label: "Situação",
+            value: status,
+            onChange: (event: any) => setStatus(event.target.value),
+            options: [ "Todos", ...STATUS_TYPES ]
+        },
+        {    
+            label: "Urgência",
+            value: priority,
+            onChange: (event: any) => setPriority(event.target.value),
+            options: [ "Todas", ...PRIORITY_TYPES ]
+        }
+    ];
+    
     return (
         <SwipeableDrawer 
             swipeAreaWidth={swipeAreaWidth}
@@ -79,60 +95,39 @@ export default function Filters({
             <Box sx={{ minHeight: swipeAreaWidth }}>
                 <Box className="HomePage-filters-puller" />
             </Box>
-            <Box
-                component="form"
-                sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    padding: "2em !important",
+            <Grid 
+                container 
+                spacing={2}
+                sx={{ 
+                    px: isMobile ? 2 : 20,
+                    py: 2 
                 }}
             >
-                <FormControl component="label">
-                    <Typography
-                        component="span"
-                        variant="body1"
-                        sx={{ m: "1em !important" }}
-                    >
-                        Status:
-                    </Typography>
-                </FormControl>
-                <FormControl>
-                    <Select
-                        value={status}
-                        onChange={(event: any) => setStatus(event.target.value)}
-                    >
-                        {["Todos", ...STATUS_TYPES].map((status, i) => (
-                            <MenuItem key={i} value={status}>
-                                {status}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-
-                <FormControl component="label">
-                    <Typography
-                        component="span"
-                        variant="body1"
-                        sx={{ m: "1em !important" }}
-                    >
-                        Prioridade:
-                    </Typography>
-                </FormControl>
-                <FormControl>
-                    <Select
-                        value={priority}
-                        onChange={(event: any) => setPriority(event.target.value)}
-                    >
-                        {["Todas", ...PRIORITY_TYPES].map((priority, i) => (
-                            <MenuItem key={i} value={priority}>
-                                {priority}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
-            </Box>
+                {selects.map((item, i) => (
+                    <Grid key={i} item xs={6}>
+                        <Typography
+                            component="span"
+                            variant="body1"
+                            sx={{ m: "1em !important" }}
+                        >
+                            {item.label}
+                        </Typography>
+                        <TextField
+                            select
+                            fullWidth
+                            value={item.value}
+                            onChange={item.onChange}
+                            sx={{ mb: 0, mt: 2 }}
+                        >
+                            {item.options.map((value, i) => (
+                                <MenuItem key={i} value={value}>
+                                    {value}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                    </Grid>
+                ))}
+            </Grid>
         </SwipeableDrawer>
     );
 };
