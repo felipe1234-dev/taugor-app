@@ -107,7 +107,7 @@ export default function App() {
                     <Route            
                         path="*"
                         element={(
-                            <Page title={`Página não encontrada - ${appName}`}>
+                            <Page title={`Página não encontrada - ${appName}`} is404>
                                 <Error404 />
                             </Page>
                         )}

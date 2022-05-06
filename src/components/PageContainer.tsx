@@ -12,12 +12,14 @@ import { isRouteState } from "@local/functions";
 export interface PageContainerProps {
     title: string,
     requireAuth?: boolean,
+    is404?: boolean,
     children: JSX.Element
 };
 
 export default function PageContainer({ 
     title, 
-    requireAuth = false, 
+    requireAuth = false,
+    is404 = false,
     children 
 }: PageContainerProps) {
     const locationNow = useLocation();
@@ -32,6 +34,14 @@ export default function PageContainer({
         document.title = title;
         document.body.setAttribute("page", bgLocation?.pathname || locationNow.pathname);
     }, [title]);
+    
+    useEffect(() => {
+        if (is404) {
+            document.body.setAttribute("not-found", "");
+        } else {
+            document.body.removeAttribute("not-found");
+        }
+    }, [is404]);
     
     if (requireAuth) {
         return (
