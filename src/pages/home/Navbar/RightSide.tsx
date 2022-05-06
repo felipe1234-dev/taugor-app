@@ -4,11 +4,7 @@ import {
     useState, 
     useEffect 
 } from "react";
-import { 
-    IconButton,
-    useMediaQuery,
-    useTheme
-} from "@mui/material";
+import { IconButton } from "@mui/material";
 import {
     ListAltTwoTone as ListIcon,
     Face as FaceIcon,
@@ -23,10 +19,14 @@ import MobileMenu from "./MobileMenu";
 // Interfaces
 import { User } from "@local/interfaces";
 
+// Hooks
+import { useQueryParams } from "@local/hooks";
+
 // Contexts
 import { FilterContext } from "../contexts";
 import { useOnMobile } from "@local/hooks";
 
+// Constants
 const menuItems = [
     {
         label: "Todas as atividades",
@@ -36,22 +36,28 @@ const menuItems = [
         label: "Suas atividades",
         icon: <FaceIcon />
     }
-]
+];
 
+// Props interface
 export interface MenuProps {
     search: string,
     setSearch(newSearch: string): void,
-    tab: 0|1,
-    setTab(newTab: 0|1): void,
+    tab: number,
+    setTab(newTab: number): void,
     menuItems: typeof menuItems
-}
+};
 
 export default function RightSide(user: User) {
+    const queryParams   = useQueryParams();
+    const initialSearch = queryParams.get("search") ?? "";
+    const initialTab    = Number(queryParams.get("tab")) ?? 0;
+    
+    const [search, setSearch] = useState<string>(initialSearch);
+    const [tab, setTab]       = useState<number>(initialTab);
+    
     const [burgerIsOpen, setBurgerIsOpen] = useState<boolean>(false);
-    const [search, setSearch] = useState<string>("");
-    const [tab, setTab] = useState<0|1>(0);
+    
     const { filter, setFilter } = useContext(FilterContext);
-
     const isMobile = useOnMobile("md");
     
     useEffect(() => {
@@ -63,11 +69,18 @@ export default function RightSide(user: User) {
 
         if (!!search) {
             conditions.push(["title", "array-contains-any", search.split(" ")]);
+            queryParams.set("search", search);
+        } else {
+            queryParams.delete("search");
         }
 
         if (tab === 1) {
             conditions.push(["postedBy", "==", user.uuid]);
         }
+        
+        
+        console.log("rightside.tsx")
+        console.log(queryParams.toString())
 
         /* Quando temos um objeto com propriedades duplicadas, o valor que 
          * vier por último tem prioridade, portanto, "where: conditions" 
