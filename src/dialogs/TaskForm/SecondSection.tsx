@@ -43,9 +43,9 @@ export default function SecondSection() {
             />
             <textarea
                 style={{ visibility: "hidden" }}
-                defaultValue={description}
+                defaultValue={description.replace(/(<[^>]+>)/ig, "")}
                 required
             />
         </>
     );
-}
+};
