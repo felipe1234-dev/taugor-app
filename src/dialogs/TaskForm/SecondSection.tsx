@@ -1,8 +1,4 @@
-import { 
-    useState, 
-    useEffect, 
-    useContext 
-} from "react";
+import { useContext } from "react";
 import { 
     DialogContentText,
     DialogTitle
@@ -10,20 +6,10 @@ import {
 
 import { TaskFormContext } from "./index";
 import { TextEditor } from "@local/components";
+import { stripTags } from "@local/functions";
 
 export default function SecondSection() {
-    const [description, setDescription] = useState<string>("");
-    
     const { update, updates, task } = useContext(TaskFormContext);
-    
-    useEffect(() => {
-        if (!!task.description || !!updates.description)
-            setDescription(updates.description || task.description || "");
-    }, [task.description]);
-    
-    useEffect(() => {
-        update({ description });
-    }, [description]);
  
     return (
         <>
@@ -37,14 +23,14 @@ export default function SecondSection() {
             </DialogContentText>
             <TextEditor
                 placeholder="Descrição..."
-                initialContent={description}
-                onChange={(html) => setDescription(html)}
+                initialContent={updates.description || task.description}
+                onChange={(html) => update({ description: html })}
                 readOnly={false}
             />
             <textarea
-                style={{ visibility: "hidden" }}
-                defaultValue={description.replace(/(<[^>]+>)/ig, "")}
                 required
+                defaultValue={stripTags(updates.description || task.description)}
+                style={{ opacity: 0 }}
             />
         </>
     );
