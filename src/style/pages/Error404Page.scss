@@ -2,7 +2,42 @@
 @import "../utils/_functions.scss";
 
 @each $theme-name, $theme in $themes {
-    body[theme="#{$theme-name}"][page="/"] {
-        background-color: map-deep-get($theme, "secondary", "light") !important;
+    body[theme="#{$theme-name}"][not-found] {
+        background-color: map-deep-get($theme, "primary", "normal");
+        
+        .MuiTypography { 
+            &-root {
+                opacity: .7;
+                font-size: 1.2em;
+                color: map-deep-get($theme, "secondary", "light");
+            }
+            
+            &-h5 {
+                font-size: 2em;
+            }
+        }
+        
+        .MuiButton-root {
+            color: map-deep-get($theme, "text", "light") !important;
+            background-color: $orange !important;
+            
+            padding: 0.7em 2em !important;
+            margin: 1.7em 0 0 0 !important;
+            border-radius: .8em !important;
+            font-weight: 500 !important;
+        
+            font-family: inherit !important;
+            text-transform: none !important;
+            
+            transition: color .3s, background-color .3s !important;
+            cursor: pointer !important;
+            
+            -webkit-appearance: none !important;
+            -webkit-tap-highlight-color: transparent !important;
+            
+            &:hover {
+                background-color: lighten($orange, 3%) !important;
+            }
+        }
     }
 }
