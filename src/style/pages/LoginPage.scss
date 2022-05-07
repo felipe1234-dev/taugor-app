@@ -7,8 +7,27 @@
         background-color: map-deep-get($theme, "primary", "normal") !important;
         
         .LoginPage {
+            &-logo {
+                @include user-drag(none);
+                cursor: pointer;
+                width: 180px;
+                height: auto;
+                margin-bottom: 1em; 
+            }
+            
             &-appName, &-catchline {
                 color: map-deep-get($theme, "text", "light") !important;
+                text-align: center;
+            }
+            
+            &-appName {
+                font-size: 1.5em !important;
+                font-weight: bold !important;
+            }
+            
+            &-catchline {
+                font-size: 1.1em !important;
+                opacity: .5 !important;
             }
             
             .MuiTextField-root {
@@ -24,6 +43,11 @@
                     input {
                         color: map-deep-get($theme, "secondary", "normal") !important;
                         caret-color: map-deep-get($theme, "secondary", "normal");
+                        font-size: .875em;
+                        font-weight: 500;
+                        font-family: inherit;
+                        letter-spacing: .025em;
+                        line-height: 1.2em;
                     }
                     
                     &::before {
@@ -44,7 +68,22 @@
                 color: map-deep-get($theme, "text", "light") !important;
                 background-color: $orange !important;
                 
+                padding: 0.7em 0 !important;
+                margin: 1.7em 0 0 0 !important;
+                border-radius: .8em !important;
+                font-weight: 500 !important;
+            
+                font-family: inherit !important;
+                text-transform: capitalize !important;
+                
+                transition: color .3s, background-color .3s !important;
+                cursor: pointer !important;
+                
+                -webkit-appearance: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+                
                 &:disabled {
+                    cursor: not-allowed !important;
                     pointer-events: auto !important;
                     color: map-deep-get($theme, "primary", "normal") !important;
                     background-color: map-deep-get($theme, "secondary", "normal") !important;
@@ -54,58 +93,6 @@
                     background-color: lighten($orange, 3%) !important;
                 }
             }
-        }
-    }
-}
-
-.LoginPage {
-    &-logo {
-        @include user-drag(none);
-        cursor: pointer;
-        width: 180px;
-        height: auto;
-        margin-bottom: 1em; 
-    }
-    
-    &-appName, &-catchline {
-        text-align: center;
-    }
-    
-    &-appName {
-        font-size: 1.5em !important;
-        font-weight: bold !important;
-    }
-    
-    &-catchline {
-        font-size: 1.1em !important;
-        opacity: .5 !important;
-    }
-    
-    .MuiTextField-root .MuiInputBase-root input {
-        font-size: .875em;
-        font-weight: 500;
-        font-family: inherit;
-        letter-spacing: .025em;
-        line-height: 1.2em;
-    }
-    
-    &-loginButton {
-        padding: 0.7em 0 !important;
-        margin: 1.7em 0 0 0 !important;
-        border-radius: .8em !important;
-        font-weight: 500 !important;
-    
-        font-family: inherit !important;
-        text-transform: capitalize !important;
-        
-        transition: color .3s, background-color .3s !important;
-        cursor: pointer !important;
-        
-        -webkit-appearance: none !important;
-        -webkit-tap-highlight-color: transparent !important;
-        
-        &:disabled {
-            cursor: not-allowed !important;
         }
     }
 }
