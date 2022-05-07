@@ -7,6 +7,7 @@ import {
     List,
     ListItem, 
     IconButton,
+    Button,
     ListItemText,
     DialogContentText,
     Grid
@@ -104,13 +105,13 @@ export default function ThirdSection() {
                             style={{ display: "none" }}
                             onInput={(event: any) => onUpload(event)}
                         />
-                        <IconButton 
+                        <Button 
                             color="primary" 
                             aria-label="upload file" 
                             component="span"
                         >
                             <UploadFileIcon />
-                        </IconButton>
+                        </Button>
                     </label>
                 </Grid>
             </Grid>
