@@ -1,8 +1,4 @@
-import { 
-    useContext, 
-    useState, 
-    useEffect 
-} from "react";
+import { useContext } from "react";
 import { 
     TextField, 
     DialogContentText,
@@ -11,42 +7,20 @@ import {
 import { TaskFormContext } from "./index";
 
 export default function FirstSection() {
-    const [title, setTitle] = useState<string>("");
-    const [brief, setBrief] = useState<string>("");
-    
     const { update, updates, task } = useContext(TaskFormContext);
-    
-    useEffect(() => {
-        if (!!task.title || !!updates.title) {
-            const newTitle = updates?.title?.join(" ") || task?.title?.join(" ") || "";
-            setTitle(newTitle);
-        }
-        
-        if (!!task.brief || !!updates.brief) {
-            const newBrief = updates.brief || task.brief || "";
-            setBrief(newBrief);
-        }
-    }, [task.title, task.brief])
-    
-    useEffect(() => {
-        update({
-            title: title.split(" "),
-            brief
-        });
-    }, [title, brief])
     
     const textInputs = [
         {
             placeholder: "Título",
             maxLength: 50,
-            value: title,
-            onChange: (event: any) => setTitle(event.target.value)
+            value: updates.title || task.title,
+            onChange: (event: any) => update({ title: event.target.value })
         },
         { 
             placeholder: "Explicação breve",
             maxLength: 150,
-            value: brief,
-            onChange: (event: any) => setBrief(event.target.value)
+            value: updates.brief || task.brief,
+            onChange: (event: any) => update({ brief: event.target.value })
         }
     ];
     
