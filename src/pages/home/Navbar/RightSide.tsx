@@ -50,7 +50,7 @@ export interface MenuProps {
 export default function RightSide(user: User) {
     const queryParams   = useQueryParams();
     const initialSearch = queryParams.get("search") ?? "";
-    const initialTab    = Number(queryParams.get("tab")) ?? 0;
+    const initialTab    = Number(queryParams.get("owner")) ?? 0;
     
     const [search, setSearch] = useState<string>(initialSearch);
     const [tab, setTab]       = useState<number>(initialTab);
@@ -76,11 +76,10 @@ export default function RightSide(user: User) {
 
         if (tab === 1) {
             conditions.push(["postedBy", "==", user.uuid]);
+            queryParams.set("owner", "1");
+        } else {
+            queryParams.delete("owner");
         }
-        
-        
-        console.log("rightside.tsx")
-        console.log(queryParams.toString())
 
         /* Quando temos um objeto com propriedades duplicadas, o valor que 
          * vier por último tem prioridade, portanto, "where: conditions" 
