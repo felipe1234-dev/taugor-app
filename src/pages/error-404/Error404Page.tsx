@@ -1,32 +1,56 @@
 // Libs
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
+import { 
+    QuestionMarkOutlined as QuestionMarkIcon 
+} from "@mui/icons-material";
 import { Link } from "react-router-dom";
 
-// Media
-import PageNotFoundImg from "@local/media/page-not-found.png";
+// Style
+import "@local/style/pages/Error404Page.scss";
 
 export default function Error404Page() {
+    const iconSize = 80;
+    
     return (
         <Box
             display="flex"
             flexDirection="column"
             alignItems="center"
             justifyContent="center"
-            sx={{ minWidth: "100%" }}
+            sx={{
+                minHeight: "100vh",
+                minWidth: "100%" 
+            }}
         >
-            <img
-                style={{ minHeight: "100vh" }}
-                src={PageNotFoundImg}
-                alt="Página não encontrada"
-            />
+            <Avatar 
+                sx={{
+                    mb: 3,
+                    backgroundColor: "transparent",
+                    width: iconSize, height: iconSize   
+                }}
+            >
+                <QuestionMarkIcon sx={{ fontSize: iconSize }}/>
+            </Avatar>
             <Typography variant="h5">
                 Awww... Essa não!
             </Typography>
             <Typography variant="body1">
                 A página que você estava procurando não existe!
-                Mas não criemos pânico! Você pode voltar para o
-                <Link to="/" replace>início</Link>
             </Typography>
+            <Typography variant="body1">
+                Mas não criemos pânico!
+            </Typography>
+            <Button
+                component={Link}
+                to="/"
+                state={{ enableLoader: true }}
+                replace
+                variant="contained"
+                disableElevation
+                sx={{ mt: 3, mb: 2 }}
+            >
+                Início
+            </Button>
         </Box>
     );
 };
