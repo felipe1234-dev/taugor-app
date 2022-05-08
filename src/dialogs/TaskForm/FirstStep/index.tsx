@@ -6,7 +6,7 @@ import {
 } from "@mui/material";
 import { TaskFormContext } from "./index";
 
-export default function FirstSection() {
+export default function FirstStep() {
     const { updateTask, updates, task } = useContext(TaskFormContext);
     
     const textInputs = [
@@ -48,4 +48,4 @@ export default function FirstSection() {
             ))}
         </>
     );
-}
+};

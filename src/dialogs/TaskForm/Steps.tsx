@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 
 // TaskForm components
-import FirstSection from "./FirstSection";
+import FirstStep from "./FirstStep";
 import SecondSection from "./SecondSection";
 import ThirdSection from "./ThirdSection";
 import FourthSection from "./FourthSection";
@@ -36,7 +36,7 @@ export default function Steps() {
     const formElem = formRef.current;
     
     const steps = [
-        <FirstSection />,
+        <FirstStep />,
         <SecondSection />,
         <ThirdSection />,
         <FourthSection />
