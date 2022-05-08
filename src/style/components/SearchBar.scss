@@ -1,0 +1,30 @@
+@import "../utils/_variables.scss";
+@import "../utils/_functions.scss";
+
+@each $theme-name, $theme in $themes {
+    body[theme="#{$theme-name}"] .SearchBar {
+        &-wrapper {
+            background-color: map-deep-get($theme, "primary", "dark");    
+            position: relative;
+            border-radius: .8em;
+            margin-left: 0;
+            transition: width 1s ease;
+            
+            &:hover {
+                background-color: map-deep-get($theme, "primary", "light");
+            }
+            
+            .MuiInputBase-root {
+                .MuiInputBase-input {
+                    padding: .5em .8em;
+                    width: 100%;
+                    color: map-deep-get($theme, "text", "light") !important;
+                }
+                
+                fieldset {
+                    border-style: none !important;
+                }
+            }
+        }
+    }
+}
