@@ -4,11 +4,11 @@ import {
     DialogTitle
 } from "@mui/material";
 
-import { TaskFormContext } from "./index";
+import { TaskFormContext } from "../index";
 import { TextEditor } from "@local/components";
 import { stripTags } from "@local/functions";
 
-export default function SecondSection() {
+export default function SecondStep() {
     const { updateTask, updates, task } = useContext(TaskFormContext);
  
     return (

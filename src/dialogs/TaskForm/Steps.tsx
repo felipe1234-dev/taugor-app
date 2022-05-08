@@ -18,7 +18,7 @@ import {
 
 // TaskForm components
 import FirstStep from "./FirstStep";
-import SecondSection from "./SecondSection";
+import SecondStep from "./SecondStep";
 import ThirdSection from "./ThirdSection";
 import FourthSection from "./FourthSection";
 
@@ -37,7 +37,7 @@ export default function Steps() {
     
     const steps = [
         <FirstStep />,
-        <SecondSection />,
+        <SecondStep />,
         <ThirdSection />,
         <FourthSection />
     ];
