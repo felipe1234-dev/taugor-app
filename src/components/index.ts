@@ -5,6 +5,7 @@ export { default as PageContainer } from "./PageContainer";
 export { default as PageLoader } from "./PageLoader";
 export { default as ProfileImage } from "./ProfileImage";
 export { default as RequireAuth } from "./RequireAuth";
+export { default as SearchBar } from "./SearchBar";
 export { default as Spinner } from "./Spinner";
 export { default as TextEditor } from "./TextEditor";
 
@@ -16,5 +17,6 @@ export type { PageContainerProps } from "./PageContainer";
 // PageLoader não tem props
 export type { ProfileImageProps } from "./ProfileImage";
 export type { RequireAuthProps } from "./RequireAuth";
+export type { SearchBarProps } from "./SearchBar";
 export type { SpinnerProps } from "./Spinner";
 export type { TextEditorProps } from "./TextEditor";
