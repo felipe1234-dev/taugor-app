@@ -2,7 +2,8 @@
 import { 
     useState, 
     useContext, 
-    useRef
+    useRef,
+    FormEvent
 } from "react";
 import {
     Box,
@@ -45,11 +46,11 @@ export default function Steps() {
     const stepIsLast = activeStep === steps.length - 1;
     const stepIsFirst = activeStep === 0;
     
-    const onSubmit = (event: any) => {
+    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
         submitTask();
-    }
+    };
     
     const goBack = () => {
         setCompleted((prevState) => {
@@ -57,7 +58,7 @@ export default function Steps() {
             return prevState;
         });
         setActiveStep((prevState) => prevState - 1);
-    }
+    };
     
     const goNext = () => {
         if (!!formElem) {
@@ -78,7 +79,7 @@ export default function Steps() {
                 setActiveStep((prevState) => prevState + 1);
             }
         }
-    }
+    };
     
     return (
         <form ref={formRef} onSubmit={onSubmit}>
