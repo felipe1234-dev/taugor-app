@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, ChangeEvent } from "react";
 import { 
     TextField, 
     DialogContentText,
     DialogTitle
 } from "@mui/material";
-import { TaskFormContext } from "./index";
+import { TaskFormContext } from "../index";
+import { Task } from "@local/interfaces";
 
 export default function FirstStep() {
     const { updateTask, updates, task } = useContext(TaskFormContext);
@@ -14,13 +15,17 @@ export default function FirstStep() {
             placeholder: "Título",
             maxLength: 50,
             value: updates.title?.join(" ") || task.title?.join(" "),
-            onChange: (event: any) => updateTask({ title: event.target.value.split(" ") })
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ title: event.target.value.split(" ") })
+            )
         },
         { 
             placeholder: "Explicação breve",
             maxLength: 150,
             value: updates.brief || task.brief,
-            onChange: (event: any) => updateTask({ brief: event.target.value })
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ brief: event.target.value })
+            )
         }
     ];
     

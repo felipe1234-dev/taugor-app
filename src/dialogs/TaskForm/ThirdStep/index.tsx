@@ -1,7 +1,8 @@
 import { 
     useState,
     useEffect, 
-    useContext 
+    useContext,
+    ChangeEvent
 } from "react";
 import { 
     Button,
@@ -18,7 +19,7 @@ import {
     UploadFileRounded as UploadFileIcon
 } from "@mui/icons-material";
 
-import { TaskFormContext } from "./index";
+import { TaskFormContext } from "../index";
 import { AlertContext } from "@local/contexts";
 import { storage } from "@local/api";
 import { getAttach } from "@local/api/storage/attachments";
@@ -78,9 +79,13 @@ export default function ThirdStep() {
         });
     }, [uploads]);
     
-    const onUpload = (event: any) => {
-        const file: File = event.target.files[0];
-        uploadFiles("add", [ file ]);
+    const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
+        const files = event.target?.files || [];
+        const file  = files.length > 0 ? files[0] : null;
+        
+        if (!!file) {
+            uploadFiles("add", [ file ]);
+        }
     };
     
     const onDelete = (file: File) => {
@@ -108,7 +113,7 @@ export default function ThirdStep() {
                             accept=".pdf,.txt"
                             type="file"
                             style={{ display: "none" }}
-                            onInput={(event: any) => onUpload(event)}
+                            onChange={onUpload}
                         />
                         <Button 
                             variant="contained"
