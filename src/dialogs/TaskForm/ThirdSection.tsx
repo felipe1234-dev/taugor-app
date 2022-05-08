@@ -1,15 +1,12 @@
+import { useEffect, useContext } from "react";
 import { 
-    useState, 
-    useEffect, 
-    useContext
-} from "react";
-import { 
+    Button,
     List,
     ListItem, 
     IconButton,
-    Button,
+    DialogTitle,
     ListItemText,
-    DialogContentText,
+    Skeleton,
     Grid
 } from "@mui/material";
 import { 
@@ -21,65 +18,54 @@ import { TaskFormContext } from "./index";
 import { AlertContext } from "@local/contexts";
 import { storage } from "@local/api";
 import { getAttach } from "@local/api/storage/attachments";
-import { Attach } from "@local/interfaces";
+import { Alert } from "@local/interfaces";
 
 export default function ThirdSection() {
-    const [attachs, setAttachs] = useState<Array<Attach>>([]);
-    
     const { setSeverity, setMessage } = useContext(AlertContext);
-    const { update, upload, task } = useContext(TaskFormContext);
+    const { update, upload, uploads, task } = useContext(TaskFormContext);
     
     useEffect(() => {
-        const attachList: Array<Attach> = [];
+        if (uploads.length > 0) {
+            return;
+        }
         
-        task.attachments?.forEach((attachname) => {
-            getAttach(storage, attachname)
+        const fileList: Array<File> = [];
+        
+        task.attachments?.forEach((name) => {
+            getAttach(storage, name)
                 .then((attach) => {
-                    attachList.push(attach);
+                    fileList.push(attach.file);
                     
-                    if (attachList.length === task.attachments?.length) {
-                        setAttachs(attachList);
+                    if (fileList.length === task.attachments?.length) {
+                        upload("reset", fileList);
                     }
                 })
                 .catch((error) => {
-                    setSeverity(error.severity);
-                    setMessage(error.message);
+                    setSeverity((error as Alert).severity);
+                    setMessage((error as Alert).message);
                 });
         });
     }, [task.attachments]);
     
     useEffect(() => {
         update({
-           attachments: attachs.map((item) => `${item.name}-id${item.id}.${item.type}`)
+            attachments: uploads.map((file) => {
+                const ext  = file.name.replace(/^.+\.(\w+)$/, "$1");
+                const name = file.name.replace("." + ext, "");
+                const id   = file.lastModified;
+            
+                return `${name}-id${id}.${ext}`;
+            })
         });
-        
-        upload(
-            attachs
-                .filter((item) => item.file !== undefined)
-                .map((item) => item.file) as Array<File>
-        );
-    }, [attachs]);
+    }, [uploads]);
     
     const onUpload = (event: any) => {
-        const value = event.target.value;
-        const file = event.target.files[0] as File;
-        const attachList: Array<Attach> = JSON.parse(JSON.stringify(attachs));
-        
-        attachList.push({
-            id: file.lastModified,
-            name: value.replace("C:\\fakepath\\", "").replace(/\.\w+$/, ""),
-            type: value.match(/\.\w+$/)[0].replace(".", ""),
-            url: value,
-            file: file
-        });
-         
-        setAttachs(attachList);
+        const file: File = event.target.files[0];
+        upload("add", [ file ]);
     }
     
-    const onDelete = (file: Attach) => {
-        setAttachs(prevState => (
-            prevState.filter(item => item !== file)
-        ));
+    const onDelete = (file: File) => {
+        upload("reset", uploads.filter(item => item !== file));
     }
     
     return (
@@ -91,9 +77,9 @@ export default function ThirdSection() {
                 alignItems="center"
             >
                 <Grid item>
-                    <DialogContentText mt={2}>
+                    <DialogTitle sx={{ pl: 0, mt: 2 }}>
                         Anexos
-                    </DialogContentText>
+                    </DialogTitle>
                 </Grid>
                 <Grid item>
                     <label htmlFor="icon-button-file">
@@ -106,37 +92,70 @@ export default function ThirdSection() {
                             onInput={(event: any) => onUpload(event)}
                         />
                         <Button 
+                            variant="contained"
                             color="primary" 
                             aria-label="upload file" 
                             component="span"
+                            endIcon={<UploadFileIcon />}
+                            disableElevation
+                            sx={{ textTransform: "none" }}
                         >
-                            <UploadFileIcon />
+                            Fazer upload
                         </Button>
                     </label>
                 </Grid>
             </Grid>
             <List>
-                {attachs.map((file, i) => (
-                    <ListItem
-                        key={i}
-                        secondaryAction={(
-                            <IconButton 
-                                color="primary"
-                                onClick={() => onDelete(file)}
-                                edge="end" 
-                                aria-label="delete"
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        )}
-                    >
-                        <ListItemText
-                            primary={`#${file.id}`} 
-                            secondary={`${file.name}.${file.type}`} 
-                        />
-                    </ListItem>
-                ))}
+                {(uploads.length > 0) ? (
+                    uploads.map((file, i) => (
+                        <ListItem
+                            key={i}
+                            secondaryAction={(
+                                <IconButton 
+                                    color="primary"
+                                    onClick={() => onDelete(file)}
+                                    edge="end" 
+                                    aria-label="delete"
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            )}
+                        >
+                            <ListItemText
+                                primary={`#${file.lastModified}`} 
+                                secondary={`${file.name} (${file.type})`} 
+                            />
+                        </ListItem>
+                    ))
+                ) : (
+                    [...Array(4).keys()].map((key) => (
+                        <ListItem
+                            key={key}
+                            secondaryAction={(
+                                <Skeleton 
+                                    variant="circular" 
+                                    width={40} height={40} 
+                                />
+                            )}
+                        >
+                            <ListItemText
+                                primary={(
+                                    <Skeleton 
+                                        variant="text" 
+                                        width={150}
+                                    />
+                                )} 
+                                secondary={(
+                                    <Skeleton 
+                                        variant="text" 
+                                        width={150}
+                                    />
+                                )} 
+                            />
+                        </ListItem>
+                    ))
+                )}
             </List>
         </>
     );
-}
+};
