@@ -6,14 +6,14 @@ export default function toAlert(error: FirebaseError): Alert {
         // Extra
         case "permission-denied": 
             return ({
-                severity: "error",
-                message: "Sua sessão expirou (duração máxima: 1h)"
+                severity: "warning",
+                message: "Sua sessão expirou (duração máxima: 1h), recarregue a página e logue novamente."
             });
         
         // Auth
         case "auth/network-request-failed":
             return ({
-                severity: "error",
+                severity: "warning",
                 message: "Sua conexão com a Internet pode estar lenta, por favor, tente mais tarde"
             });
         
@@ -38,7 +38,7 @@ export default function toAlert(error: FirebaseError): Alert {
         // Storage
         case "storage/object-not-found":
             return ({
-                severity: "error",
+                severity: "warning",
                 message: "Arquivo não encontrado"
             });
             
