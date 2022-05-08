@@ -1,4 +1,8 @@
-import { useEffect, useContext } from "react";
+import { 
+    useState,
+    useEffect, 
+    useContext 
+} from "react";
 import { 
     Button,
     List,
@@ -21,6 +25,8 @@ import { getAttach } from "@local/api/storage/attachments";
 import { Alert } from "@local/interfaces";
 
 export default function ThirdSection() {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { update, upload, uploads, task } = useContext(TaskFormContext);
     
@@ -28,6 +34,8 @@ export default function ThirdSection() {
         if (uploads.length > 0) {
             return;
         }
+        
+        setIsLoading(true);
         
         const fileList: Array<File> = [];
         
@@ -38,6 +46,7 @@ export default function ThirdSection() {
                     
                     if (fileList.length === task.attachments?.length) {
                         upload("reset", fileList);
+                        setIsLoading(false);
                     }
                 })
                 .catch((error) => {
@@ -106,7 +115,7 @@ export default function ThirdSection() {
                 </Grid>
             </Grid>
             <List>
-                {(uploads.length > 0) ? (
+                {!isLoading ? (
                     uploads.map((file, i) => (
                         <ListItem
                             key={i}
