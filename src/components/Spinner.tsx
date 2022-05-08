@@ -15,9 +15,9 @@ export default function Spinner({ wrapper = {}, spinner = {} }: SpinnerProps) {
         <Box
             className="Spinner-wrapper"
             display="flex"
-			alignItems="center"
-			justifyContent="center"
-			sx={wrapper}
+            alignItems="center"
+            justifyContent="center"
+            sx={wrapper}
         >
             <div
                 className="Spinner"
