@@ -1,18 +1,21 @@
 // Libs
-import { useState, MouseEvent } from "react";
+import { 
+    useState, 
+    MouseEvent, 
+    ChangeEvent 
+} from "react";
 import { 
     Tabs, 
     Tab, 
     Tooltip, 
     IconButton, 
-    Paper, 
-    TextField,
+    Paper,
     Menu,
     MenuItem
 } from "@mui/material";
 
 // Local components
-import { ProfileImage } from "@local/components";
+import { ProfileImage, SearchBar } from "@local/components";
 
 // Functions
 import { stringToColor } from "@local/functions";
@@ -35,26 +38,30 @@ export default function DesktopMenu({
     
     const onClickMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
-    }
+    };
     
     const onCloseMenu = () => {
         setAnchorEl(null);
-    }
+    };
+    
+    const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+    };
     
     return (
         <>
-            <div className="HomePage-navbar-searchBar">
-                <TextField 
-                    onChange={(event: any) => setSearch(event.target.value)}
-                    placeholder="Buscar por título"
-                    fullWidth
-                />
-            </div>
+            <SearchBar 
+                normalWidth={20}
+                widthOnHover={25}
+                onChange={onSearch}
+                value={search}
+                placeholder="Buscar por título"
+            />
             
             <Tabs
                 textColor="inherit"
                 value={tab}
-                onChange={(event: any, newTab: 0|1) => setTab(newTab)}
+                onChange={(event: any, tabIndex: number) => setTab(tabIndex)}
             >
                 {menuItems.map((item, i) => (
                     <Tab
@@ -100,4 +107,4 @@ export default function DesktopMenu({
             </Menu>
         </>
     )
-}
+};

@@ -1,4 +1,5 @@
 // Libs
+import { ChangeEvent } from "react";
 import {
     Drawer,
     List,
@@ -8,7 +9,7 @@ import {
 } from "@mui/material";
 
 // Components
-import { ProfileImage } from "@local/components";
+import { ProfileImage, SearchBar } from "@local/components";
 import { MenuProps } from "./RightSide";
 import { User } from "@local/interfaces";
 
@@ -28,6 +29,10 @@ export default function MobileMenu({
     onClose = () => { },
     ...user
 }: MenuProps & MobileMenuProps & User) {
+    const onSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
+    };
+    
     return (
         <Drawer
             className="HomePage-navbar-burgerMenu"
@@ -38,16 +43,23 @@ export default function MobileMenu({
         >
             <Box
                 className="HomePage-navbar-burgerMenu-header"
-                sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    flexDirection: "column"
-                }}
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="column"
             >
                 <ProfileImage
                     src={user.photoURL}
                     alt={user.displayName}
+                />
+            </Box>
+            <Box sx={{ p: 2 }}>
+                <SearchBar 
+                    normalWidth={100}
+                    widthOnHover={100}
+                    onChange={onSearch}
+                    value={search}
+                    placeholder="Buscar por título"
                 />
             </Box>
             <List className="HomePage-navbar-burgerMenu-list">
@@ -56,7 +68,7 @@ export default function MobileMenu({
                         button
                         key={i}
                         sx={{ opacity: tab as number === i ? "1" : ".5" }}
-                        onClick={() => setTab(i as 0 | 1)}
+                        onClick={() => setTab(i)}
                     >
                         <ListItemText>
                             {label}
