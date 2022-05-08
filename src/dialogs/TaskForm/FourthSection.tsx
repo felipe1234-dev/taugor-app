@@ -31,7 +31,8 @@ export default function FourthSection() {
             placeholder: "Nome do produto",
             maxLength: 20,
             value: updates.product || task.product,
-            onChange: (event: any) => updateTask({ product: event.target.value })
+            onChange: (event: any) => updateTask({ product: event.target.value }),
+            inputProps: { maxLength: 50 }
         }
     ];
     
@@ -98,7 +99,7 @@ export default function FourthSection() {
                             placeholder={item.placeholder}
                             value={item.value}
                             onChange={item.onChange}
-                            inputProps={{ maxLength: item.maxLength }}
+                            inputProps={item.inputProps}
                             sx={{ mb: 0, mt: 2 }}
                         />
                     </Grid>
