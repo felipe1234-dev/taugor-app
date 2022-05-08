@@ -1,8 +1,4 @@
-import {
-    useState, 
-    useEffect, 
-    useContext 
-} from "react";
+import { useContext, ChangeEvent } from "react";
 import {
     Grid,
     DialogTitle,
@@ -11,7 +7,7 @@ import {
     MenuItem 
 } from "@mui/material";
 
-import { TaskFormContext } from "./index";
+import { TaskFormContext } from "../index";
 import { ChipField } from "@local/components";
 import { 
     STATUS_TYPES, 
@@ -20,9 +16,15 @@ import {
     INFLUENCED_USERS,
     TAGS
 } from "@local/constants";
-import { Tag } from "@local/types";
+import { 
+    Status,
+    Influence,
+    Environment,
+    Priority,
+    Tag 
+} from "@local/types";
 
-export default function FourthSection() {
+export default function FourthStep() {
     const { updateTask, updates, task } = useContext(TaskFormContext);
     
     const textInputs = [
@@ -31,7 +33,9 @@ export default function FourthSection() {
             placeholder: "Nome do produto",
             maxLength: 20,
             value: updates.product || task.product,
-            onChange: (event: any) => updateTask({ product: event.target.value }),
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ product: event.target.value })
+            ),
             inputProps: { maxLength: 50 }
         }
     ];
@@ -40,25 +44,33 @@ export default function FourthSection() {
         {
             label: "Situação atual",
             value: updates.status || task.status,
-            onChange: (event: any) => updateTask({ status: event.target.value }),
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ status: event.target.value as Status })
+            ),
             options: [ ...STATUS_TYPES ]
         },
         {
             label: "Nível de urgência",
             value: updates.priority || task.priority,
-            onChange: (event: any) => updateTask({ priority: event.target.value }),
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ priority: event.target.value as Priority })
+            ),
             options: [ ...PRIORITY_TYPES ]
         },
         {
             label: "Ambiente",
             value: updates.environment || task.environment,
-            onChange: (event: any) => updateTask({ environment: event.target.value }),
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ environment: event.target.value as Environment })
+            ),
             options: [ ...ENV_TYPES ]
         },
         {
             label: "Usuários influenciados",
             value: updates.influencedUsers || task.influencedUsers,
-            onChange: (event: any) => updateTask({ influencedUsers: event.target.value }),
+            onChange: (event: ChangeEvent<HTMLInputElement>) => (
+                updateTask({ influencedUsers: event.target.value as Influence })
+            ),
             options: [ ...INFLUENCED_USERS ]
         }
     ];
@@ -129,4 +141,4 @@ export default function FourthSection() {
             </Grid>
         </>
     );
-}
+};

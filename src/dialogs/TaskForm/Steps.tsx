@@ -20,7 +20,7 @@ import {
 import FirstStep from "./FirstStep";
 import SecondStep from "./SecondStep";
 import ThirdStep from "./ThirdStep";
-import FourthSection from "./FourthSection";
+import FourthStep from "./FourthStep";
 
 // Contexts
 import { TaskFormContext } from "./index";
@@ -39,7 +39,7 @@ export default function Steps() {
         <FirstStep />,
         <SecondStep />,
         <ThirdStep />,
-        <FourthSection />
+        <FourthStep />
     ];
     
     const formIsValid = formElem?.checkValidity() || false;
