@@ -13,8 +13,8 @@ export default function FirstSection() {
         {
             placeholder: "Título",
             maxLength: 50,
-            value: updates.title || task.title,
-            onChange: (event: any) => update({ title: event.target.value })
+            value: updates.title?.join(" ") || task.title?.join(" "),
+            onChange: (event: any) => update({ title: event.target.value.split(" ") })
         },
         { 
             placeholder: "Explicação breve",
