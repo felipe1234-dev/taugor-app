@@ -30,7 +30,7 @@ interface TaskFormValue {
     updates: Partial<Task>,
     uploads: Array<File>,
     update: (newData: Partial<Task>) => void,
-    upload: (fileList: Array<File>) => void,
+    upload: (mode: "reset"|"add", list: Array<File>) => void,
     submit: () => void,
 };
 
@@ -90,8 +90,12 @@ export default function TaskForm({
                     { ...prevState, ...newData }
                 ))
             ),
-            upload: (fileList: Array<File>) => (
-                setUploads(fileList)
+            upload: (mode: "reset"|"add", list: Array<File>) => (
+                setUploads(prevState => (
+                    mode === "add" ? (
+                        [ ...prevState, ...list ]
+                    ) : list
+                ))
             )
         }}>
             <Steps />
