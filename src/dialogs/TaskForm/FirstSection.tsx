@@ -7,20 +7,20 @@ import {
 import { TaskFormContext } from "./index";
 
 export default function FirstSection() {
-    const { update, updates, task } = useContext(TaskFormContext);
+    const { updateTask, updates, task } = useContext(TaskFormContext);
     
     const textInputs = [
         {
             placeholder: "Título",
             maxLength: 50,
             value: updates.title?.join(" ") || task.title?.join(" "),
-            onChange: (event: any) => update({ title: event.target.value.split(" ") })
+            onChange: (event: any) => updateTask({ title: event.target.value.split(" ") })
         },
         { 
             placeholder: "Explicação breve",
             maxLength: 150,
             value: updates.brief || task.brief,
-            onChange: (event: any) => update({ brief: event.target.value })
+            onChange: (event: any) => updateTask({ brief: event.target.value })
         }
     ];
     

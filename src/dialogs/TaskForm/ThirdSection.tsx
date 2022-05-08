@@ -28,11 +28,21 @@ export default function ThirdSection() {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     
     const { setSeverity, setMessage } = useContext(AlertContext);
-    const { update, upload, uploads, task } = useContext(TaskFormContext);
+    const { 
+        updateTask, 
+        updates, 
+        uploadFiles, 
+        uploads, 
+        task 
+    } = useContext(TaskFormContext);
     
     useEffect(() => {
-        if (uploads.length > 0) {
-            return;
+        if (!!updates)  {
+            const attachList = updates.attachments ?? [];
+            
+            if (attachList.length > 0) {
+                return;
+            }
         }
         
         setIsLoading(true);
@@ -45,7 +55,7 @@ export default function ThirdSection() {
                     fileList.push(attach.file);
                     
                     if (fileList.length === task.attachments?.length) {
-                        upload("reset", fileList);
+                        uploadFiles("reset", fileList);
                         setIsLoading(false);
                     }
                 })
@@ -57,7 +67,7 @@ export default function ThirdSection() {
     }, [task.attachments]);
     
     useEffect(() => {
-        update({
+        updateTask({
             attachments: uploads.map((file) => {
                 const ext  = file.name.replace(/^.+\.(\w+)$/, "$1");
                 const name = file.name.replace("." + ext, "");
@@ -70,11 +80,11 @@ export default function ThirdSection() {
     
     const onUpload = (event: any) => {
         const file: File = event.target.files[0];
-        upload("add", [ file ]);
+        uploadFiles("add", [ file ]);
     }
     
     const onDelete = (file: File) => {
-        upload("reset", uploads.filter(item => item !== file));
+        uploadFiles("reset", uploads.filter(item => item !== file));
     }
     
     return (
@@ -103,13 +113,13 @@ export default function ThirdSection() {
                         <Button 
                             variant="contained"
                             color="primary" 
-                            aria-label="upload file" 
+                            aria-label="uploadFiles file" 
                             component="span"
                             endIcon={<UploadFileIcon />}
                             disableElevation
                             sx={{ textTransform: "none" }}
                         >
-                            Fazer upload
+                            Fazer uploadFiles
                         </Button>
                     </label>
                 </Grid>

@@ -9,7 +9,7 @@ import { TextEditor } from "@local/components";
 import { stripTags } from "@local/functions";
 
 export default function SecondSection() {
-    const { update, updates, task } = useContext(TaskFormContext);
+    const { updateTask, updates, task } = useContext(TaskFormContext);
  
     return (
         <>
@@ -24,7 +24,7 @@ export default function SecondSection() {
             <TextEditor
                 placeholder="Descrição..."
                 initialContent={updates.description || task.description}
-                onChange={(html) => update({ description: html })}
+                onChange={(html) => updateTask({ description: html })}
                 readOnly={false}
             />
             <textarea

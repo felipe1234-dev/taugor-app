@@ -20,102 +20,44 @@ import {
     INFLUENCED_USERS,
     TAGS
 } from "@local/constants";
-import { 
-    Status, 
-    Environment,
-    Priority,
-    Influence,
-    Tag
-} from "@local/types";
+import { Tag } from "@local/types";
 
 export default function FourthSection() {
-    const [status, setStatus]           = useState<Status>();
-    const [priority, setPriority]       = useState<Priority>();
-    const [environment, setEnvironment] = useState<Environment>();
-    const [influence, setInfluence]     = useState<Influence>();
-    const [product, setProduct]         = useState<string>("");
-    const [tags, setTags]               = useState<Array<Tag>>([]);
-    
-    const { update, updates, task } = useContext(TaskFormContext);
-    
-    useEffect(() => {
-        if (!!task.status || !!updates.status)
-            setStatus(updates.status || task.status || STATUS_TYPES[0]);
-        
-        if (!!task.priority || !!updates.priority)
-            setPriority(updates.priority || task.priority || PRIORITY_TYPES[0]);
-        
-        if (!!task.environment || !!updates.environment)
-            setEnvironment(updates.environment || task.environment || ENV_TYPES[0]);
-            
-        if (!!task.influencedUsers || !!updates.influencedUsers)
-            setInfluence(updates.influencedUsers || task.influencedUsers || INFLUENCED_USERS[0]);
-        
-        if (!!task.product || !!updates.status)
-            setProduct(updates.status || task.status || STATUS_TYPES[0]);
-            
-        if (!!task.tags || !!updates.tags)
-            setTags(updates.tags || task.tags || [ TAGS[0] ]);
-    }, [
-        task.status, 
-        task.priority, 
-        task.environment, 
-        task.influencedUsers, 
-        task.product,
-        task.tags
-    ]);
-    
-    useEffect(() => {
-        update({
-            status,
-            priority,
-            environment,
-            influencedUsers: influence,
-            product,
-            tags
-        });
-    }, [
-        status, 
-        priority, 
-        environment, 
-        influence, 
-        product, 
-        tags
-    ]);
+    const { updateTask, updates, task } = useContext(TaskFormContext);
     
     const textInputs = [
         {
             label: "Nome do produto",
             placeholder: "Nome do produto",
             maxLength: 20,
-            value: product,
-            onChange: (event: any) => setProduct(event.target.value)
+            value: updates.product || task.product,
+            onChange: (event: any) => updateTask({ product: event.target.value })
         }
     ];
     
     const selects = [
         {
             label: "Situação atual",
-            value: status || "",
-            onChange: (event: any) => setStatus(event.target.value),
+            value: updates.status || task.status,
+            onChange: (event: any) => updateTask({ status: event.target.value }),
             options: [ ...STATUS_TYPES ]
         },
         {
             label: "Nível de urgência",
-            value: priority || "",
-            onChange: (event: any) => setPriority(event.target.value),
+            value: updates.priority || task.priority,
+            onChange: (event: any) => updateTask({ priority: event.target.value }),
             options: [ ...PRIORITY_TYPES ]
         },
         {
             label: "Ambiente",
-            value: environment || "",
-            onChange: (event: any) => setEnvironment(event.target.value),
+            value: updates.environment || task.environment,
+            onChange: (event: any) => updateTask({ environment: event.target.value }),
             options: [ ...ENV_TYPES ]
         },
         {
             label: "Usuários influenciados",
-            value: influence || "",
-            onChange: (event: any) => setInfluence(event.target.value),
+            value: updates.influencedUsers || task.influencedUsers,
+            onChange: (event: any) => updateTask({ influencedUsers: event.target.value }),
             options: [ ...INFLUENCED_USERS ]
         }
     ];
@@ -136,8 +78,8 @@ export default function FourthSection() {
                 multiline
                 options={[...TAGS]}
                 maxRows={4}
-                value={tags}
-                onChange={(value) => setTags(value as Array<Tag>)}
+                value={updates.tags || task.tags}
+                onChange={(value) => updateTask({ tags: value as Array<Tag> })}
                 placeholder="Categorias"
                 sx={{ mb: 0, mt: 2 }}
             />

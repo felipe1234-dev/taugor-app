@@ -30,7 +30,7 @@ export default function Steps() {
         [key: number]: boolean
     }>({});
     
-    const { formTitle, submit } = useContext(TaskFormContext);
+    const { formTitle, submitTask } = useContext(TaskFormContext);
     const formRef = useRef<HTMLFormElement>(null);
     const formElem = formRef.current;
     
@@ -48,7 +48,7 @@ export default function Steps() {
     const onSubmit = (event: any) => {
         event.preventDefault();
     
-        submit();
+        submitTask();
     }
     
     const goBack = () => {

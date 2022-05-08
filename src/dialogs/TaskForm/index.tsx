@@ -29,9 +29,9 @@ interface TaskFormValue {
     task: Partial<Task>,
     updates: Partial<Task>,
     uploads: Array<File>,
-    update: (newData: Partial<Task>) => void,
-    upload: (mode: "reset"|"add", list: Array<File>) => void,
-    submit: () => void,
+    updateTask: (newData: Partial<Task>) => void,
+    uploadFiles: (mode: "reset"|"add", list: Array<File>) => void,
+    submitTask: () => void,
 };
 
 export const TaskFormContext = createContext<TaskFormValue>({
@@ -39,9 +39,9 @@ export const TaskFormContext = createContext<TaskFormValue>({
     task: sampleTask,
     updates: {},
     uploads: [],
-    update: () => {},
-    upload: () => {},
-    submit: () => {}
+    updateTask: () => {},
+    uploadFiles: () => {},
+    submitTask: () => {}
 });
 
 interface TaskFormProps {
@@ -80,17 +80,17 @@ export default function TaskForm({
             task: !!task ? task : sampleTask,
             updates,
             uploads,
-            submit: () => {
+            submitTask: () => {
                 if (!!onSubmit) {
                     onSubmit({ updates, uploads });
                 }
             },
-            update: (newData) => (
+            updateTask: (newData) => (
                 setUpdates(prevState => (
                     { ...prevState, ...newData }
                 ))
             ),
-            upload: (mode: "reset"|"add", list: Array<File>) => (
+            uploadFiles: (mode: "reset"|"add", list: Array<File>) => (
                 setUploads(prevState => (
                     mode === "add" ? (
                         [ ...prevState, ...list ]
