@@ -49,7 +49,7 @@ export interface Attach {
     type: "pdf" | "txt",
     url: string,
     id: string | number,
-    file?: File
+    file: File
 };
 
 export interface RouteState { 
