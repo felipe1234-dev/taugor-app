@@ -11,8 +11,8 @@ import {
 export default function Loading() {
     return (
         <List>
-            {[...Array(10).keys()].map((item, i) => (
-                <ListItem key={i}>
+            {[...Array(10).keys()].map((key) => (
+                <ListItem key={key}>
                     <ListItemIcon>
                         <Skeleton
                             variant="circular"
