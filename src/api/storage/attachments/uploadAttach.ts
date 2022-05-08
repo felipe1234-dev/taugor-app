@@ -9,13 +9,14 @@ import toAlert from "@local/api/toAlert";
 
 export default function uploadAttach(storage: FirebaseStorage, file: File): Promise<UploadResult> {
     return new Promise((resolve, reject) => {
-        const fileType = file.name.match(/\.(\w+)$/)![1];
-        const filename = file.name.replace("." + fileType, "");
-        const filenameInStorage = `${filename}-id${file.lastModified}.${fileType}`;
+        const ext  = file.name.match(/\.(\w+)$/)![1];
+        const name = file.name.replace("." + ext, "");
+        const id   = file.lastModified;
+        const filenameInStorage = `${name}-id${id}.${ext}`;
         
         try {
             const fileRef = ref(storage, `attachments/${filenameInStorage}`);
-
+            
             uploadBytes(fileRef, file)
                 .then((snap) => resolve(snap))
                 .catch((error) => reject(toAlert(error)));
