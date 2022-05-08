@@ -26,7 +26,7 @@ import { getAttach } from "@local/api/storage/attachments";
 import { Alert } from "@local/interfaces";
 
 export default function ThirdStep() {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [syncIsDone, setSyncIsDone] = useState<boolean>(false);
     
     const { setSeverity, setMessage } = useContext(AlertContext);
     const { 
@@ -38,15 +38,13 @@ export default function ThirdStep() {
     } = useContext(TaskFormContext);
     
     useEffect(() => {
-        if (!!updates)  {
-            const attachList = updates.attachments ?? [];
-            
-            if (attachList.length > 0) {
-                return;
-            }
+        if (syncIsDone)  {
+            return;
         }
         
-        setIsLoading(true);
+        if (task.attachments?.length === 0 || !("attachments" in task)) {
+            setSyncIsDone(true);
+        }
         
         const fileList: Array<File> = [];
         
@@ -57,7 +55,7 @@ export default function ThirdStep() {
                     
                     if (fileList.length === task.attachments?.length) {
                         uploadFiles("reset", fileList);
-                        setIsLoading(false);
+                        setSyncIsDone(true);
                     }
                 })
                 .catch((error) => {
@@ -78,7 +76,7 @@ export default function ThirdStep() {
             })
         });
     }, [uploads]);
-    
+ 
     const onUpload = (event: ChangeEvent<HTMLInputElement>) => {
         const files = event.target?.files || [];
         const file  = files.length > 0 ? files[0] : null;
@@ -130,7 +128,7 @@ export default function ThirdStep() {
                 </Grid>
             </Grid>
             <List>
-                {!isLoading ? (
+                {syncIsDone ? (
                     uploads.map((file, i) => (
                         <ListItem
                             key={i}
@@ -152,7 +150,7 @@ export default function ThirdStep() {
                         </ListItem>
                     ))
                 ) : (
-                    [...Array(4).keys()].map((key) => (
+                    [...Array(1).keys()].map((key) => (
                         <ListItem
                             key={key}
                             secondaryAction={(
