@@ -17,12 +17,12 @@ import { Spinner } from "@local/components";
 import { AlertContext, FirebaseContext } from "@local/contexts";
 
 // Interfaces
-import { Task } from "@local/interfaces";
+import { Alert, Task } from "@local/interfaces";
 
 // API
 import { getTask, updateTask } from "@local/api/collections/Tasks";
 import { uploadAttach } from "@local/api/storage/attachments";
-
+ 
 export default function EditDialog() {
     const [sourceTask, setSourceTask] = useState<Task|null>(null);
     
@@ -57,14 +57,15 @@ export default function EditDialog() {
         
         const { updates, uploads } = params;
         
-        uploads.forEach((file) => {
-            uploadAttach(storage, file)
-                .catch((error) => {
-                    setSeverity(error.severity);
-                    setMessage(error.message);
-                });
+        uploads.forEach(async (file) => {
+            try {
+                await uploadAttach(storage, file);
+            } catch (error) {               
+                setSeverity((error as Alert).severity);
+                setMessage((error as Alert).message);
+            }
         });
-    
+        
         updateTask(db, taskUuid, updates)
             .then(() => {
                 setSeverity("success"); 
