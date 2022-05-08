@@ -1,11 +1,14 @@
 // Libs
+import { useState, MouseEvent } from "react";
 import { 
     Tabs, 
     Tab, 
     Tooltip, 
     IconButton, 
     Paper, 
-    TextField
+    TextField,
+    Menu,
+    MenuItem
 } from "@mui/material";
 
 // Local components
@@ -24,8 +27,20 @@ export default function DesktopMenu({
     tab,
     setTab,
     menuItems,
+    profileItems,
     ...user 
 }: MenuProps & User) {
+    const [anchorEl, setAnchorEl] = useState<null|HTMLElement>(null);
+    const menuIsOpen = !!anchorEl;
+    
+    const onClickMenu = (event: MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    }
+    
+    const onCloseMenu = () => {
+        setAnchorEl(null);
+    }
+    
     return (
         <>
             <div className="HomePage-navbar-searchBar">
@@ -51,10 +66,12 @@ export default function DesktopMenu({
                     />
                 ))}
             </Tabs>
-            <Tooltip title="Abrir configurações">
+            
+            <Tooltip title="Abrir opções de perfil">
                 <IconButton 
                     component={Paper}
                     elevation={1}
+                    onClick={onClickMenu}
                     sx={{
                         border: `.05em solid ${stringToColor(user.displayName)} !important`,
                         padding: "0 !important",
@@ -69,6 +86,18 @@ export default function DesktopMenu({
                     />
                 </IconButton>
             </Tooltip>
+            
+            <Menu
+                anchorEl={anchorEl}
+                open={menuIsOpen}
+                onClose={onCloseMenu}
+            >
+                {Object.entries(profileItems).map(([label, props]) => (
+                    <MenuItem key={label} {...props}>
+                        {label}
+                    </MenuItem>
+                ))}
+            </Menu>
         </>
     )
 }

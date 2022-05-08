@@ -4,13 +4,14 @@ import {
     useState, 
     useEffect 
 } from "react";
-import { IconButton } from "@mui/material";
+import { IconButton, MenuItemProps } from "@mui/material";
 import {
     ListAltTwoTone as ListIcon,
     Face as FaceIcon,
     MoreVertTwoTone as MenuIcon,
     CloseRounded as CloseIcon
 } from "@mui/icons-material";
+import { Link, useNavigate } from "react-router-dom";
 
 // Navbar components
 import DesktopMenu from "./DesktopMenu";
@@ -20,23 +21,14 @@ import MobileMenu from "./MobileMenu";
 import { User } from "@local/interfaces";
 
 // Hooks
-import { useQueryParams } from "@local/hooks";
+import { useQueryParams, useOnMobile } from "@local/hooks";
 
 // Contexts
+import { AlertContext } from "@local/contexts";
 import { FilterContext } from "../contexts";
-import { useOnMobile } from "@local/hooks";
 
-// Constants
-const menuItems = [
-    {
-        label: "Todas as atividades",
-        icon: <ListIcon />
-    },
-    {
-        label: "Suas atividades",
-        icon: <FaceIcon />
-    }
-];
+// API
+import { logOut } from "@local/api/auth";
 
 // Props interface
 export interface MenuProps {
@@ -44,7 +36,13 @@ export interface MenuProps {
     setSearch(newSearch: string): void,
     tab: number,
     setTab(newTab: number): void,
-    menuItems: typeof menuItems
+    menuItems: Array<{
+        label: string,
+        icon: JSX.Element
+    }>,
+    profileItems: {
+        [label: string]: MenuItemProps
+    }
 };
 
 export default function RightSide(user: User) {
@@ -57,8 +55,11 @@ export default function RightSide(user: User) {
     
     const [burgerIsOpen, setBurgerIsOpen] = useState<boolean>(false);
     
+    const { setMessage, setSeverity } = useContext(AlertContext);
     const { filter, setFilter } = useContext(FilterContext);
+    
     const isMobile = useOnMobile("md");
+    const navigate = useNavigate();
     
     useEffect(() => {
         const { where } = filter;
@@ -91,13 +92,57 @@ export default function RightSide(user: User) {
         });
     }, [search, tab]);
     
+    const onLogOut = () => {
+        logOut()
+            .then(() => {
+                setSeverity("success"); 
+                setMessage("Log out feito com sucesso");
+                    
+                setTimeout(() => (
+                    navigate("/login", { state: { enableLoader: true } })
+                ), 4000);
+            })
+            .catch((error) => {
+                setMessage(error.message);
+                setSeverity(error.severity);
+            });
+    };
+    
+    const menuItems = [
+        {
+            label: "Todas as atividades",
+            icon: <ListIcon />
+        },
+        {
+            label: "Suas atividades",
+            icon: <FaceIcon />
+        }
+    ];
+    
+    const profileItems = {
+        "Perfil": {
+            component: Link,
+            disabled: true,
+            to: `/user/${user.uuid}`
+        },
+        "Configurações": {
+            component: Link,
+            disabled: true,
+            to: "/settings/"
+        },
+        "Sair": {
+            onClick: () => onLogOut()
+        }
+    };
+    
     const baseProps = {
         search,
         setSearch,
         tab,
         setTab,
-        menuItems
-    }
+        menuItems,
+        profileItems
+    };
     
     return (
         !isMobile ? (
