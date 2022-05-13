@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/taugor-app/static/css/main.35cfced6.css",
-    "main.js": "/taugor-app/static/js/main.faa45f2e.js",
+    "main.js": "/taugor-app/static/js/main.63967685.js",
     "static/media/no-results-found.webp": "/taugor-app/static/media/no-results-found.b022665d0ca6fb07f957.webp",
     "static/media/white-taugor-logo.png": "/taugor-app/static/media/white-taugor-logo.344ad57cae8bf3c27497.png",
     "index.html": "/taugor-app/index.html",
     "main.35cfced6.css.map": "/taugor-app/static/css/main.35cfced6.css.map",
-    "main.faa45f2e.js.map": "/taugor-app/static/js/main.faa45f2e.js.map"
+    "main.63967685.js.map": "/taugor-app/static/js/main.63967685.js.map"
   },
   "entrypoints": [
     "static/css/main.35cfced6.css",
-    "static/js/main.faa45f2e.js"
+    "static/js/main.63967685.js"
   ]
 }
