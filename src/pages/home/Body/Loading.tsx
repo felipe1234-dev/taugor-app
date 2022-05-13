@@ -7,8 +7,11 @@ import {
     Typography, 
     Grid 
 } from "@mui/material";
+import { useOnMobile } from "@local/hooks";
 
 export default function Loading() {
+    const isMobile = useOnMobile("md");
+    
     return (
         <List>
             {[...Array(10).keys()].map((key) => (
@@ -26,7 +29,7 @@ export default function Loading() {
                                 component="div"
                                 variant="h4"
                             >
-                                <Skeleton width={300} />
+                                <Skeleton width={isMobile ? "100%" : "60%"} />
                             </Typography>
                         )}
                         secondary={(
@@ -35,14 +38,14 @@ export default function Loading() {
                                     component="div"
                                     variant="body2"
                                 >
-                                    <Skeleton width={260} />
+                                    <Skeleton width={isMobile ? "85%" : "45%"} />
                                 </Typography>
                                 <Grid container spacing={1}>
                                     <Grid item>
-                                        <Skeleton width={180} />
+                                        <Skeleton width={60} />
                                     </Grid>
                                     <Grid item>
-                                        <Skeleton width={180} />
+                                        <Skeleton width={60} />
                                     </Grid>
                                 </Grid>
                             </>
