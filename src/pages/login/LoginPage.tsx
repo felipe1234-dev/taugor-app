@@ -18,11 +18,19 @@ export default function LoginPage() {
 			justifyContent="center"
 			sx={{
 				minHeight: "100vh",
-				minWidth: "100%"
+				minWidth: "100vw"
 			}}
 		>
-			<Heading />
-			<Form />
+			<Box 
+				display="flex"
+				flexDirection="column"
+				alignItems="center"
+				justifyContent="center"
+				sx={{ p: 2 }}
+			>
+				<Heading />
+				<Form />
+			</Box>
 		</Box>
 	);
 };
