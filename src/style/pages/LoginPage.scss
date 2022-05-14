@@ -36,7 +36,8 @@
                 }
                 
                 .MuiInputBase-input {
-                    --autofill-color: #{map-deep-get($theme, "primary", "normal")};
+                    --autofill-bg-color: #{map-deep-get($theme, "primary", "normal")};
+                    --autofill-text-color: #{map-deep-get($theme, "text", "light")};
                 }
                 
                 .MuiInputBase-root {
