@@ -8,7 +8,7 @@
         
         .MuiInputBase-input {
             --autofill-bg-color: #{map-deep-get($theme, "secondary", "normal")};
-            --autofill-text-coolor: #{map-deep-get($theme, "text", "light")};
+            --autofill-text-color: #{map-deep-get($theme, "text", "dark")};
         }
     }
 }
