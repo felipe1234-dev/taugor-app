@@ -99,7 +99,6 @@ export default function Form() {
                 name="email"
                 label="Email"
                 type="email"
-                defaultValue="Seu email"
                 InputProps={{
                     endAdornment: (
                         <InputAdornment style={{ padding: "12px" }} position="end">
@@ -113,7 +112,6 @@ export default function Form() {
                 name="password"
                 label="Senha"
                 type={passIsMasked ? "password" : "text"}
-                defaultValue="12345"
                 InputProps={{
                     autoComplete: "new-password",
                     endAdornment: (

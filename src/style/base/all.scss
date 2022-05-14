@@ -7,7 +7,8 @@
         background-color: map-deep-get($theme, "secondary", "normal");
         
         .MuiInputBase-input {
-            --autofill-color: #{map-deep-get($theme, "secondary", "normal")};
+            --autofill-bg-color: #{map-deep-get($theme, "secondary", "normal")};
+            --autofill-text-coolor: #{map-deep-get($theme, "text", "light")};
         }
     }
 }
@@ -68,14 +69,16 @@ body {
     }
 
     &:-internal-autofill-selected {
-        -webkit-box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
-        box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
+        -webkit-box-shadow: 0 0 0 1000px var(--autofill-bg-color) inset !important;
+        box-shadow: 0 0 0 1000px var(--autofill-bg-color) inset !important;
+        -webkit-text-fill-color: var(--autofill-text-color) !important;
 
         &:hover,
         &:focus,
         &:active {
-            -webkit-box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
-            box-shadow: 0 0 0 1000px var(--autofill-color) inset !important;
+            -webkit-box-shadow: 0 0 0 1000px var(--autofill-bg-color) inset !important;
+            box-shadow: 0 0 0 1000px var(--autofill-bg-color) inset !important;
+            -webkit-text-fill-color: var(--autofill-text-color) !important;
         }
     }
 }
