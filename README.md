@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+<div align="center">
+    <img 
+        src="src/media/blue-taugor-logo.png"
+        alt="TaugorApp"
+    />
+    <h2>App de Gestão de Atividades Taugor</h2>
+</div>
+<p>
+    Uma aplicação WEB, desenhada para controlar atividades dentro da empresa
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Demo
+Clique [aqui](https://felipe1234-dev.github.io/taugor-app/#/login) está uma demo funcional.
+<b>Email</b>: <i>user1@gmail.com</i>
+<b>Senha</b>: <i>123456</i>
 
-In the project directory, you can run:
 
-### `npm start`
+## Site
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Página de Login
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![LoginPage](src/media/login-page-screenshot.png)
 
-### `npm test`
+### Página de Erro 404
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![404ErrorPage](src/media/404-error-page-screenshot.png)
 
-### `npm run build`
+### Transição de Páginas
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![LoadingEffect](src/media/loading-effect.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Página inicial - Todas as atividades
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![LoadingEffect](src/media/start-page-screenshot.png)
 
-### `npm run eject`
+### Suporte para Mobile
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+O TaugorApp é compatível com dispositivos de todos os tamanhos e sistemas operacionais, e melhorias consistentes estão sendo feitas.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![MobileSupport](src/media/start-page-mobile-screenshot.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Uso
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Desenvolvimento
+Quer contribuir? Excelente!
 
-## Learn More
+Para corrigir um bug ou aprimorar um módulo existente, siga estas etapas:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- Faça um fork do repositório
+- Crie um novo branch (`git checkout -b improve-feature`)
+- Faça as alterações apropriadas nos arquivos
+- Adicione alterações para refletir as alterações feitas
+- Confirme suas alterações (`git commit -am 'Melhorar recurso'`)
+- Faça um pull na branch (`git push origin improve-feature`)
+- Criar uma pull request
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Funcionaliades
 
-### Code Splitting
+* Buscar por: Título, Status, Prioridade, Tags.
+* Barra de pesquisa imita o operador "LIKE" do MySQL, porém, no MongoDB (bd oficial do Firebase).
+* Efeito de rolagem infinita de 30 em 30 (igual ao Facebook e outras redes sociais).
+* Criar e editar uma atividade com os seguintes campos: 
+    * Título 
+    * Descrição (com rich text - WYSIWYG Editor)
+    * Produto 
+    * Tags 
+    * Prioridade (Alta, Média, Baixa) 
+    * Problema em uma frase (descrição curta)
+    * Anexos
+* Visualizador de documentos
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Construído com
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- [React](https://pt-br.reactjs.org/) - Uma biblioteca JavaScript para criar interfaces de usuário criada pela Meta.
+- [Typescript](https://www.typescriptlang.org/pt/) - TypeScript é uma linguagem de programação fortemente tipada que se baseia em JavaScript, oferecendo melhores ferramentas em qualquer escala.
+- [Firebase](https://firebase.google.com/) - O Firebase é uma plataforma de desenvolvimento de aplicativos que ajuda você a criar e desenvolver aplicativos e jogos que os usuários adoram. Apoiado pelo Google e confiável por milhões de empresas em todo o mundo.
+- [SASS](https://sass-lang.com/) - Sass é a linguagem de extensão CSS de nível profissional mais madura, estável e poderosa do mundo.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## To-do
+- Biblioteca de documentos (anexos)
 
-### Advanced Configuration
+## Equipe
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<div align="center">
+    <a href="https://github.com/felipe1234-dev">
+        <img 
+            src="src/media/creator-photo.jpg"
+            alt="Felipe Alves"
+            width="30%"
+        /> 
+        <br/>
+        Felipe Alves
+    </a>
+</div>
 
-### Deployment
+## [License](LICENSE.md)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+MIT © [Felipe Alves](https://github.com/felipe1234-dev)
