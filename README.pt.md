@@ -14,7 +14,8 @@
 </p>
 
 ## Demo
-Clique [aqui](https://felipe1234-dev.github.io/taugor-app/#/login) está uma demo funcional.
+Clique [aqui](https://felipe1234-dev.github.io/taugor-app/#/login) para uma demo funcional.
+
 <b>Email</b>: <i>user1@gmail.com</i>
 <b>Senha</b>: <i>123456</i>
 
