@@ -3,86 +3,89 @@
         src="src/media/blue-taugor-logo.png"
         alt="TaugorApp"
     />
-    <h2>App de Gestão de Atividades Taugor</h2>
+    <h2>Taugor Activity Management App</h2>
 </div>
 <p>
-    Uma aplicação WEB, desenhada para controlar atividades dentro da empresa
+    A web application designed to control activities inside a corporation
 </p>
 
+<p>
+    <i>Read this in other languages: <a href="README.md">English</a>, <a href="README.pt.md">Portuguese</a></i>
+</p>
 
 ## Demo
-Clique [aqui](https://felipe1234-dev.github.io/taugor-app/#/login) está uma demo funcional.
+Click [here](https://felipe1234-dev.github.io/taugor-app/#/login) for a functional demo.
 <b>Email</b>: <i>user1@gmail.com</i>
-<b>Senha</b>: <i>123456</i>
+<b>Password</b>: <i>123456</i>
 
 
-## Site
+## Website
 
-### Página de Login
+### Login Page
 
 ![LoginPage](src/media/login-page-screenshot.png)
 
-### Página de Erro 404
+### Error 404 Page
 
 ![404ErrorPage](src/media/404-error-page-screenshot.png)
 
-### Transição de Páginas
+### Loading page
 
 ![LoadingEffect](src/media/loading-effect.png)
 
-### Página inicial - Todas as atividades
+### Start page - All activities
 
 ![LoadingEffect](src/media/start-page-screenshot.png)
 
-### Suporte para Mobile
+### Mobile support
 
-O TaugorApp é compatível com dispositivos de todos os tamanhos e sistemas operacionais, e melhorias consistentes estão sendo feitas.
+TaugorApp is compatible with devices of all sizes and operating systems, and consistent improvements are being made.
 
 ![MobileSupport](src/media/start-page-mobile-screenshot.png)
 
-## Uso
+## Usage
 
 ### Desenvolvimento
-Quer contribuir? Excelente!
+Want to contribute? Great!
 
-Para corrigir um bug ou aprimorar um módulo existente, siga estas etapas:
+To fix a bug or improve an existing module, follow these steps:
 
-- Faça um fork do repositório
-- Crie um novo branch (`git checkout -b improve-feature`)
-- Faça as alterações apropriadas nos arquivos
-- Adicione alterações para refletir as alterações feitas
-- Confirme suas alterações (`git commit -am 'Melhorar recurso'`)
-- Faça um pull na branch (`git push origin improve-feature`)
-- Criar uma pull request
+- Fork the repository
+- Create a new branch (`git checkout -b improve-feature`)
+- Make appropriate changes to files
+- Add changes to reflect changes made
+- Commit your changes (`git commit -am 'Improve feature'`)
+- Pull the branch (`git push origin improve-feature`)
+- Create a pull request
 
-### Funcionaliades
+### Features
 
-* Buscar por: Título, Status, Prioridade, Tags.
-* Barra de pesquisa imita o operador "LIKE" do MySQL, porém, no MongoDB (bd oficial do Firebase).
-* Efeito de rolagem infinita de 30 em 30 (igual ao Facebook e outras redes sociais).
-* Criar e editar uma atividade com os seguintes campos: 
-    * Título 
-    * Descrição (com rich text - WYSIWYG Editor)
-    * Produto 
-    * Tags 
-    * Prioridade (Alta, Média, Baixa) 
-    * Problema em uma frase (descrição curta)
-    * Anexos
-* Visualizador de documentos
+* Search by: Title, Status, Priority, Tags.
+* Search bar mimics MySQL's "LIKE" operator, however, in MongoDB (Firebase's official db).
+* 30 by 30 infinite scrolling effect (same as Facebook and other social networks).
+* Create and edit an activity with the following fields:
+    * Title
+    * Description (with rich text - WYSIWYG Editor)
+    * Product
+    * tags
+    * Priority (High, Medium, Low)
+    * One sentence problem (short description)
+    * Attachments
+* Document viewer
 
 
-## Construído com
+## Built with
 
-- [React](https://pt-br.reactjs.org/) - Uma biblioteca JavaScript para criar interfaces de usuário criada pela Meta.
-- [Typescript](https://www.typescriptlang.org/pt/) - TypeScript é uma linguagem de programação fortemente tipada que se baseia em JavaScript, oferecendo melhores ferramentas em qualquer escala.
-- [Firebase](https://firebase.google.com/) - O Firebase é uma plataforma de desenvolvimento de aplicativos que ajuda você a criar e desenvolver aplicativos e jogos que os usuários adoram. Apoiado pelo Google e confiável por milhões de empresas em todo o mundo.
-- [SASS](https://sass-lang.com/) - Sass é a linguagem de extensão CSS de nível profissional mais madura, estável e poderosa do mundo.
+- [React](https://pt-br.reactjs.org/) - A JavaScript library to create user interfaces created by Meta.
+- [Typescript](https://www.typescriptlang.org/en/) - TypeScript is a strongly typed programming language that is based on JavaScript, offering better tools at any scale.
+- [Firebase](https://firebase.google.com/) - Firebase is an app development platform that helps you build and develop apps and games that users love. Backed by Google and trusted by millions of businesses around the world.
+- [SASS](https://sass-lang.com/) - Sass is the world's most mature, stable and powerful professional grade CSS extension language.
 
 
 ## To-do
-- Biblioteca de documentos (anexos)
+- Document (attachment) library 
 
-## Equipe
+## Team
 
 <div align="center">
     <a href="https://github.com/felipe1234-dev">
