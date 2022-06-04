@@ -6,7 +6,7 @@
     <h2>Taugor Activity Management App</h2>
 </div>
 <p>
-    A web application designed to control activities inside a corporation
+    A web application designed to control activities inside a company
 </p>
 
 <p>
